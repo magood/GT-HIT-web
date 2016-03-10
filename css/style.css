@@ -137,7 +137,7 @@ b, strong {
 .app-version {
 	position: absolute;
 	bottom: 7px;
-	left: 50%;
+	left: 30%;
 	z-index: 4;
 	text-shadow: 0 1px 0px #000;
 	color: #FFF;
