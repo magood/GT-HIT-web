@@ -1,26 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Coordinator Facing Application - Patient Questions</title>
+        <link rel="stylesheet" type="text/css" href="css/reset.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/gc-pview.css">
+        <link rel="stylesheet" type="text/css" href="themes/custom-theme/jquery-ui-1.8.18.custom.css">
 
-    <!-- Bootstrap -->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- Bootstrap -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        <!-- Standard JS Libraries -->
+        <script src="js/polyfills.js"></script>
+        <script src="../../js/fhir-client.js"></script>
+        <script type="text/javascript" src="load-fhir-data.js"></script>
+        <script type="text/javascript" src="lib/jquery-1.8.2.js"></script>
+        <script type="text/javascript" src="lib/jquery-ui-1.9.1.js"></script>
+        <script type="text/javascript" src="lib/raphael.js"></script>
+        <script type="text/javascript" src="lib/xdate.js"></script>
 
-    <link rel="stylesheet" href="style.css">
+        <!-- GC Modules -->
+        <script type="text/javascript" src="js/util.js"></script>
+        <script type="text/javascript" src="js/gc-model.js"></script>
+        <script type="text/javascript" src="js/gc-chart-config.js"></script>
+        <script type="text/javascript" src="js/gc-smart-data.js"></script>
+        <script type="text/javascript" src="js/gc-sample-patients.js"></script>
+        <script type="text/javascript" src="js/gc-translations.js"></script>
+        <script type="text/javascript" src="js/gc-pointset.js"></script>
+        <script type="text/javascript" src="js/gc-charts-data.js"></script>
+        <script type="text/javascript" src="js/gc-statistics.js"></script>
+        <script type="text/javascript" src="js/gc-chart.js"></script>
+        <script type="text/javascript" src="js/gc-parental-view.js"></script> 
+        <script type="text/javascript" src="js/gc-app.js"></script>
+        <script type="text/javascript" src="js/chart-pane.js"></script>
+        <script type="text/javascript" src="js/charts/chart.js"></script>
+        <script type="text/javascript" src="js/charts/weight-chart.js"></script>
+        <script type="text/javascript" src="js/charts/head-chart.js"></script>
+        <script type="text/javascript" src="js/charts/length-chart.js"></script>
+        <script type="text/javascript" src="js/charts/percentile-chart.js"></script>
+        <script type="text/javascript" src="js/charts/body-mass-index-chart.js"></script>
+        <script type="text/javascript" src="js/charts/chart-stack.js"></script>
+        <script type="text/javascript" src="js/gc-grid-view.js"></script>
+        <script type="text/javascript" src="js/gc-boneage-calculator.js"></script>
+        <script type="text/javascript" src="js/gc-style-generator.js"></script>
+        <script src="js/charts/mini_charts.js"></script>
+        <link href="resource://jid1-mnnxcxisbpnsxq-at-jetpack/data/skin/socialwidgets.css" type="text/css" rel="stylesheet">
+    </head>
+    <body style="font-family: 'Helvetica Neue',Helvetica,Arial,Sans-Serif; font-size: 14px; min-width: 1200px;">
+        <div id="header">
+            <div class="header-inner">
+                <span id="mouse-coords" class="hide-on-prod"></span>
+                <div class="header-table-wrap">
+                    <table class="header-table" border="0" cellpadding="4" cellspacing="0">
+                        <tbody><tr class="patient-row">
+                            <th class="patient-name-cell">
+                                <div class="icon icon-user"></div>
+                                <span class="patient-name title">Kimberly Revis</span>
+                            </th>
+                            <td><span class="vertical-divider"></span></td>
+                            <td colspan="7"> 
+                                <span data-translatecontent="STR_3053">sex</span> 
+                                <span data-translatecontent="STR_SMART_GENDER_female" class="patient-gender title">female</span> 
+                                <span data-translatecontent="STR_3054">dob</span> 
+                                <span class="patient-birth title">16Aug2003</span> 
+                                <span data-translatecontent="STR_3055">age</span> 
+                                <span class="patient-age title">12y 6m</span>
+                                <span class="weeker" style="display:none;"> 
+                                { 
+                                    <span class="value title" style="margin-right: 0"></span> 
+                                    <span data-translatecontent="STR_3006">Weeker</span>
+                                }&nbsp;&nbsp; 
+                                </span>
+                                <span style="display: none;"> 
+                                    <span data-translatecontent="STR_3056">corrected age</span> 
+                                    <span id="corrected-age" class="title"></span> 
+                                </span>
+                            </td>
+                            <td colspan="3" align="right"></td>
+                        </tr>
+                        <tr>
+                            <th data-translatecontent="STR_3000">Actual vs. Expected Delivery</th>
+                            <td><span class="vertical-divider"></span></td>
+                            <td data-translatecontent="STR_3001" align="right">DOB</td>
+                            <td><input disabled="" class="hasDatepicker" id="dp1457614089471" placeholder="Child's DOB" data-translateattr="placeholder=STR_3002" name="DOB" type="text"></td>
+                            <td data-translatecontent="STR_3003" align="right">EDD</td>
+                            <td><input disabled="" class="hasDatepicker" id="dp1457614089472" placeholder="Child's EDD" data-translateattr="placeholder=STR_3004" name="EDD" type="text"></td>
+                            <td colspan="2" data-translatecontent="STR_3005" align="right">Gestational Correction</td>
+                            <td><input style="width:6em" readonly="" class="result" name="GA" value="N/A" type="text"></td>
+                            <td>
+                                <span class="weeker" style="display:none;color:#FFF;white-space:nowrap;">
+                                (<span class="value"></span> 
+                                <span data-translatecontent="STR_3006">Weeker</span>)
+                                </span>
+                            </td>
+                            <td width="100%"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th data-translatecontent="STR_3007">Parent’s Heights</th>
+                            <td><span class="vertical-divider"></span></td>
+                            <td data-translatecontent="STR_3008" align="right">Mother</td>
+                            <td style="white-space:nowrap">
+                            <span style="margin: 0px;" class="step-input-wrap disabled"><input aria-disabled="true" disabled="" spellcheck="false" class="step-input GC-stepInput-disabled ui-state-disabled" name="mother-height" style="width: 7em; margin: 0px;" type="text"><b class="up" title="Increase"></b><b class="down" title="Decrease"></b></span>
+                            <label style="white-space:nowrap;margin-right:-2em">
+                                <input disabled="" name="bio-mother" type="checkbox">
+                                <span data-translatecontent="STR_3009">Biological</span>
+                                </label></td>
+                            <td data-translatecontent="STR_3010" align="right">Father</td>
+                            <td colspan="2" style="white-space:nowrap">
+                            <span style="margin: 0px;" class="step-input-wrap disabled"><input aria-disabled="true" disabled="" spellcheck="false" class="step-input GC-stepInput-disabled ui-state-disabled" name="fader-height" style="width: 7em; margin: 0px;" type="text"><b class="up" title="Increase"></b><b class="down" title="Decrease"></b></span>
+                            <label style="white-space:nowrap">
+                                <input disabled="" name="bio-father" type="checkbox">
+                                <span data-translatecontent="STR_3011">Biological</span>
+                                </label></td>
+                            <td style="white-space:nowrap" data-translatecontent="STR_3012" align="right">Mid Parental Height</td>
+                            <td>
+                            <input readonly="" name="mid-height" style="width:6em" class="result" type="text">
+                            </td>
+                            <td><img title="Both parents must be biological parents and have height specified to calculate the Mid Parental Height Value" id="not-bio-parents-info" src="img/info.png" data-translateattr="title=STR_3013"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="empty-row">
+                            <td colspan="12"></td>
+                        </tr>
+                        <tr>
+                            <th class="prefs-header"><div class="icon" id="system-settings-icon"></div><span data-translatecontent="STR_3014">App Preferences</span></th>
+                            <td><span class="vertical-divider"></span></td>
+                            <td></td>
+                            <td>
+                            <input value="Advanced Settings" data-translateattr="value=STR_3015" onclick="GC.App.editSettings()" type="button">
+                            </td>
+                            <td colspan="2">
+                                <input value="About This App" data-translateattr="value=STR_3016" onclick="GC.App.aboutAppDialog()" type="button">
+                                <!--label>
+                                    <input type="checkbox" id="edit-enabled" checked="checked" />
+                                    Enable patient editing 
+                                </label-->
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th data-translatecontent="STR_3017">Default Units</th>
+                            <td><span class="vertical-divider"></span></td>
+                            <td colspan="4" style="white-space:nowrap; text-align:right">
+                            <span class="toggle-button-wrap"><input class="" name="metrics" value="metric" data-value1="metric" data-value2="eng" data-label1="kg/cm" data-label2="lb/ft" type="hidden"><table class="toggle-button"><tbody><tr><td><label class="active" data-value="metric">kg/cm</label></td><td class="action"><div><label class="active" data-value="metric"></label><label data-value="eng"></label></div></td><td><label data-value="eng">lb/ft</label></td></tr></tbody></table></span>
+                            &nbsp;<span class="vertical-divider"></span>&nbsp;
+                            <span class="toggle-button-wrap"><input class="" name="pctz" value="pct" data-value1="pct" data-value2="z" data-label1="%" data-label2="Z" type="hidden"><table class="toggle-button"><tbody><tr><td><label class="active" data-value="pct">%</label></td><td class="action"><div><label class="active" data-value="pct"></label><label data-value="z"></label></div></td><td><label data-value="z">Z</label></td></tr></tbody></table></span>
+                            &nbsp;<span class="vertical-divider"></span>&nbsp;
+                            <span class="language-selector"><span data-translatecontent="STR_0">Language</span>: <select name="language" class="styled language-select"><option value="en">English</option><option value="es">Spanish</option><option value="bg">Bulgarian</option></select></span>
+                            <!--input class="toggle-button" type="hidden" name="language" value="en" data-value1="en" data-value2="es" data-label1="English" data-label2="Spanish" /-->
+                            </td>
+                            <td data-translatecontent="STR_3018" align="right">Velocity</td>
+                            <td>
+                            <select name="roundPrecision.velocity.std" style="width:7em">
+                                <option value="year" data-translatecontent="STR_3020">Year</option>
+                                <option value="month" data-translatecontent="STR_3021">Month</option>
+                                <option value="week" data-translatecontent="STR_3022">Week</option>
+                                <option value="day" data-translatecontent="STR_3023">Day</option>
+                                <option value="auto" data-translatecontent="STR_3057">Auto</option>
+                            </select></td>
+                            <td style="white-space: nowrap;" data-translatecontent="STR_3019" align="right">NICU Velocity</td>
+                            <td>
+                            <select name="roundPrecision.velocity.nicu" style="width:7em">
+                                <option value="year" data-translatecontent="STR_3024">Year</option>
+                                <option value="month" data-translatecontent="STR_3025">Month</option>
+                                <option value="week" data-translatecontent="STR_3026">Week</option>
+                                <option value="day" data-translatecontent="STR_3027">Day</option>
+                                <option value="auto" data-translatecontent="STR_3058">Auto</option>
+                            </select></td>
+                            <td>&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th data-translatecontent="STR_3028">Gestational Correction</th>
+                            <td><span class="vertical-divider"></span></td>
+                            <td data-translatecontent="STR_3029" align="right">Type</td>
+                            <td>
+                                <select name="gest-correction-type">
+                                    <option value="fixed" data-translatecontent="STR_3030">Fixed Length</option>
+                                    <option value="declining" data-translatecontent="STR_3031">Variable Length</option>
+                                    <option value="both" data-translatecontent="STR_3032">Fixed &amp; Variable</option>
+                                    <option value="none" data-translatecontent="STR_3033">Hidden</option>
+                                </select>
+                            </td>
+                            <td style="white-space:nowrap" data-translatecontent="STR_3034" align="right">for 2 years if</td>
+                            <td>
+                                <span style="margin: 0px;" class="step-input-wrap"><input spellcheck="false" class="step-input" value="< 32 Weeker" name="gest-correction-treshold" style="width: 10em; margin: 0px;" data-translateattr="value=STR_3035" type="text"><b class="up" title="Increase"></b><b class="down" title="Decrease"></b></span>
+                            </td>
+                            <td style="white-space:nowrap" colspan="2" data-translatecontent="STR_3036">(or for 1 year otherwise)</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr class="last">
+                            <th data-translatecontent="STR_3037">Appearance</th>
+                            <td><span class="vertical-divider"></span></td>
+                            <td data-translatecontent="STR_3038" align="right">Aspect Ratio</td>
+                            <td>
+                            <select name="aspectRatio" title="Height-To-Width Ratio">
+                                <option value="0.8">1:1.25</option>
+                                <option value="0.625">1:1.6</option>
+                                <option value="1" data-translatecontent="STR_3059">1:1 (square)</option>
+                                <option value="0.5">1:2</option>
+                                <option value="0.6666666666666667">2:3</option>
+                                <option value="0.75">3:4</option>
+                                <option value="0.6">3:5</option>
+                                <option value="0.375">9:16</option>
+                                <option value="0" data-translatecontent="STR_3039">stretch (default)</option>
+                            </select></td>
+                            <td data-translatecontent="STR_3040" align="right">Font Size</td>
+                            <td>
+                            <span style="margin: 0px;" class="step-input-wrap"><input style="margin: 0px;" spellcheck="false" class="step-input" name="fontSize" type="text"><b class="up" title="Increase"></b><b class="down" title="Decrease"></b></span>
+                            </td>
+                            <td data-translatecontent="STR_3041" align="right">Colors</td>
+                            <td colspan="2">
+                                <select name="color-preset">
+                                    <option value="Default">Default</option>
+                                    <option value="Medium Contrast">Medium Contrast</option>
+                                    <option value="High Contrast">High Contrast</option>
+                                    <option value="Greyscale">Greyscale</option>
+                                    <option value="Greyscale - Low Contrast">Greyscale - Low Contrast</option>
+                                    <option value="Greyscale - High Contrast">Greyscale - High Contrast</option>
+                                </select>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td></td>
+                        </tr>
+                    </tbody></table>
+                </div>
+                
+                <div title="Toggle Settings" class="toolbar-btn settings-toggle" data-translateattr="title=STR_2999"></div>
+                <a title="Print View" class="toolbar-btn print" href="javascript:GC.App.print();" data-translateattr="title=STR_179"></a>
+                
+                <!-- View Mode -->
+                <div id="view-mode">
+                    <!-- hide the parent tab -->
+                    <span id="parent-tab" data-value="parent" data-translatecontent="STR_3042">PARENT</span>
+                    <span data-value="table" data-translatecontent="STR_3043">TABLE</span>
+                    <span class="active" data-value="graphs" data-translatecontent="STR_3044">GRAPHS</span>
+                </div>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
+                <div id="the-tab">
+                    <a id="tab-btn-left" class="button" title="Leave only the right data source as primary"></a>
+                    <div id="primary-ds" class="menu-button arrow-left button" title="Choose the primary data source"><div class="value"><span>CDC</span></div><div class="btn"></div><div class="menu"><div class="option selected" data-index="0"><a>CDC</a></div><div class="option" data-index="1"><a>WHO</a></div><div class="separator"></div><div class="option" data-index="2"><a>Fenton</a></div><div class="option" data-index="3"><a>Olsen</a></div></div></div>
+                    <a id="tab-btn-switch" class="button" title="Swap the data source places"></a>
+                    <div id="secondary-ds" class="menu-button arrow-right button secondary" title="Choose the secondary data source"><div class="value"><span data-translatecontent="STR_6049">PICK A CHART</span></div><div class="btn"></div><div class="menu"><div class="option" data-index="0"><a>CDC</a></div><div class="option" data-index="1"><a>WHO</a></div><div class="separator"></div><div class="option" data-index="2"><a>Fenton</a></div><div class="option" data-index="3"><a>Olsen</a></div></div></div>
+                    <a id="tab-btn-right" title="Add secondary data source"></a>
+                    <div class="disable-overlay"></div>
+                </div>
+
+                <span class="app-version"><span data-translatecontent="STR_3045">App Version: </span><span class="version">0.9.9-BETA</span> </span>
+
+            </div>
+
+            <div id="time-ranges">
+                <div class="row">
+                    <div class="cell angle-right">
+                        <label>
+                            <input name="time-range" value="0:13" type="radio">
+                            0 – 13 <span data-translatecontent="STR_19">Weeks</span>
+                        </label>
+                    </div>
+                    <div class="cell angle-left angle-right">
+                        <label class="">
+                            <input name="time-range" value="0:26.08928571428572" checked="" type="radio">
+                            0 – 6 <span data-translatecontent="STR_17">Months</span>
+                        </label>
+                    </div>
+                    <div class="cell angle-left">
+                        <label>
+                            <input name="time-range" value="0:104.3571428571429" type="radio">
+                            0 – 2 <span data-translatecontent="STR_15">Years</span>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label class="active">
+                            <input name="time-range" value="0:1043.571428571429" type="radio">
+                            0 – 20 <span data-translatecontent="STR_15">Years</span>
+                        </label>
+                    </div>
+                    <div class="cell" style="width:9px">
+                        <span class="vertical-divider" style="margin-left:4px;margin-right:4px"></span>
+                    </div>
+                    <div class="cell btn" style="width:120px;white-space:nowrap;" id="btn-fit-to-age" onclick="GC.App.fitToData();">
+                        <label>
+                            <input name="time-range" value="0:537.0745967741935" type="radio">
+                            <span data-translatecontent="STR_3050">Fit to Age</span>
+                        </label>
+                    </div>
+                    <div class="cell btn" style="width:140px;white-space:nowrap;" id="btn-toggle-zoom">
+                        <label class="ui-state-disabled" data-translatecontent="STR_3051">Zoom Out</label>
+                    </div>
+                </div>
+                <div class="disable-overlay"></div>
+            </div>
+
+            <div id="info-bar" style="padding-right: 11em;overflow: hidden">
+
+                <span class="last-recording"> <span style="color: #AAA" data-translatecontent="STR_3052">Last recording</span> <b><span class="date">01Dec2012</span>&nbsp;&nbsp;<span class="age">9y 3m</span></b> </span>
+                <span style="float:right;">
+                    <span>
+                        <span class="checkbox-button off"><input name="nicu" class="" data-label="NICU" type="checkbox"><span>NICU</span><div data-content="OFF" class="btn-wrap"><div class="btn"></div></div></span>
+                        <span class="vertical-divider"></span>
+                    </span>
+                    <span class="hide-on-parental hide-on-table">
+                        <span class="toggle-button-wrap"><input class="" name="pctz" value="pct" data-value1="pct" data-value2="z" data-label1="%" data-label2="Z" type="hidden"><table class="toggle-button"><tbody><tr><td><label class="active" data-value="pct">%</label></td><td class="action"><div><label class="active" data-value="pct"></label><label data-value="z"></label></div></td><td><label data-value="z">Z</label></td></tr></tbody></table></span>
+                        <span class="vertical-divider"></span>
+                    </span>
+                    <span class="hide-on-parental">
+                        <span class="toggle-button-wrap"><input class="" name="metrics" value="metric" data-value1="metric" data-value2="eng" data-label1="kg/cm" data-label2="lb/ft" type="hidden"><table class="toggle-button"><tbody><tr><td><label class="active" data-value="metric">kg/cm</label></td><td class="action"><div><label class="active" data-value="metric"></label><label data-value="eng"></label></div></td><td><label data-value="eng">lb/ft</label></td></tr></tbody></table></span>
+                        <span class="vertical-divider"></span>
+                    </span>
+                    <span class="language-selector"><span data-translatecontent="STR_0">Language</span>: <select name="language" class="styled language-select"><option value="en">English</option><option value="es">Spanish</option><option value="bg">Bulgarian</option></select></span>
+                </span>
+                <span class="add-entry ui-state-disabled" data-translatecontent="STR_178">Add Data</span>
+            </div>
+        </div>
 
       <!-- NAVIGATION -->
         <nav class="navbar navbar-default navbar-inverse">
