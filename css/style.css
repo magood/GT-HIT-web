@@ -45,6 +45,15 @@ a:hover {
 	text-decoration: underline;
 }
 
+.basicanchor {
+        color: #313D47;
+}
+
+.basicanchor:hover {
+        color: #FFF;
+        text-decoration: none;
+}
+
 i {
 	font-style: italic;
 }
