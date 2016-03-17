@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  class="prod has-rgba has-box-shadow has-border-radius has-transitions has-transforms has-patient-header view-clinical view-charts" lang="en">
+<html  class="prod has-rgba has-box-shadow has-border-radius has-transitions has-transforms view-clinical view-charts" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -254,9 +254,9 @@
                 <!-- View Mode -->
                 <div id="view-mode">
                     <!-- hide the parent tab -->
-                    <a class="basicanchor" href="currentPatients.html"><span id="patientlist-tab" data-value="patientlist" data-translatecontent="STR_3166">PATIENTS</span></a>
+                    <span class="active" id="patientlist-tab" data-value="patientlist" data-translatecontent="STR_3166">PATIENTS</span>
                     <a class="basicanchor" href="patientQuestions.html"><span id="questionnaire-tab" data-value="questionnaire" data-translatecontent="STR_3165">Q&amp;A</span></a>
-                    <a class="basicanchor" href="coordinatorInbox.html"><span class="active" id="inbox-tab" data-value="inbox" data-translatecontent="STR_3164">INBOX</span></a>
+                    <a class="basicanchor" href="coordinatorInbox.html"><span id="inbox-tab" data-value="inbox" data-translatecontent="STR_3164">INBOX</span></a>
                     <a class="basicanchor" href="aroundPatient.html"><span id="map-tab" data-value="map" data-translatecontent="STR_3163">MAP</span></a>
                     <span id="parent-tab" data-value="parent" data-translatecontent="STR_3042">PARENT</span>
                     <span data-value="table" data-translatecontent="STR_3043">TABLE</span>
@@ -342,7 +342,7 @@
 
       <div class="container">
          <div class="row" id="Heading">
-            <h1> Patient-Specific Message View</h1>
+            <h1> Patient List</h1>
             <a href="coordinatorInbox.html"><h4>All Messages</h4></a>
          </div>
       </div>
@@ -352,55 +352,68 @@
             <table class="table table-bordered table-striped table-hover">
               <thead>
                 <tr>
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Regarding</th>
-                  <th>Subject</th>
-                  <th>Date</th>
+                  <th>Name</th>
+                  <th>ID</th>
+                  <th>Zip</th>
+                  <th>Tel</th>
+                  <th>Address</th>
+                  <th>Email</th>
+                  <th>Referral Date</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Physician</td>
-                  <td>Coordinator</td>
-                  <td>Referral</td>
-                  <td>Referral to Community Resources</td>
-                  <td>March 3, 2016</td>
+                  <td>PATIENT, Anthony</td>
+                  <td>735</td>
+                  <td>30332</td>
+                  <td>404-894-2000</td>
+                  <td>North Avenue, Atlanta, GA</td>
+                  <td>info@gatech.edu</td>
+                  <td>2015-06-07</td>
                 </tr>
                 <tr>
-                  <td>Coordinator</td>
-                  <td>Parent</td>
-                  <td>Questionnaire</td>
-                  <td>Please Complete Referral Questionnaire</td>
-                  <td>March 4, 2016</td>
+                  <td>SMITH, John</td>
+                  <td>644</td>
+                  <td>30303</td>
+                  <td>123-456-7890</td>
+                  <td>Some Street, Atlanta, GA</td>
+                  <td>info@somedomain.com</td>
+                  <td>2016-01-17</td>
                 </tr>
                 <tr>
-                  <td>Parent</td>
-                  <td>Coordinator</td>
-                  <td>Questionnaire</td>
-                  <td>Answers to Referral Questionnaire</td>
-                  <td>March 6, 2016</td>
+                  <td>PATIENT, Anthonia</td>
+                  <td>736</td>
+                  <td>30332</td>
+                  <td>404-894-2000</td>
+                  <td>North Avenue, Atlanta, GA</td>
+                  <td>info3@gatech.edu</td>
+                  <td>2015-06-07</td>
                 </tr>
                 <tr>
-                  <td>Coordinator</td>
-                  <td>Community Resource 1</td>
-                  <td>Referral</td>
-                  <td>Referral for Nutrition Counseling</td>
-                  <td>March 7, 2016</td>
+                  <td>SMITH, Joanne</td>
+                  <td>645</td>
+                  <td>30303</td>
+                  <td>123-456-7890</td>
+                  <td>Some Street, Atlanta, GA</td>
+                  <td>info3@somedomain.com</td>
+                  <td>2016-01-17</td>
+                </tr><tr>
+                  <td>PATIENT, Tony</td>
+                  <td>737</td>
+                  <td>30332</td>
+                  <td>404-894-2000</td>
+                  <td>North Avenue, Atlanta, GA</td>
+                  <td>info7@gatech.edu</td>
+                  <td>2015-06-07</td>
                 </tr>
                 <tr>
-                  <td>Community Resource 1</td>
-                  <td>Coordinator</td>
-                  <td>Scheduling</td>
-                  <td>Available Counseling Appointments</td>
-                  <td>March 8, 2016</td>
-                </tr>
-                <tr>
-                  <td>Patient</td>
-                  <td>Coordinator</td>
-                  <td>Scheduling</td>
-                  <td>Arranging Counseling Appointment</td>
-                  <td>March 11, 2016</td>
+                  <td>SMITH, Johnathan</td>
+                  <td>646</td>
+                  <td>30303</td>
+                  <td>123-456-7890</td>
+                  <td>Some Street, Atlanta, GA</td>
+                  <td>info7@somedomain.com</td>
+                  <td>2016-01-17</td>
                 </tr>
               </tbody>
             </table>

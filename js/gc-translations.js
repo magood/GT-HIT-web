@@ -441,9 +441,9 @@ window.GC = (function(NS) {
             bg : "ГРАФИКИ"
         },
         STR_3045 : {
-            en : "App Version: ",
-            es : "App Versión: ",
-            bg : "App Версия: "
+            en : "Version ",
+            es : "Versión ",
+            bg : "Версия "
         },
         STR_3046 : {
             en : "0 – 13 Weeks ",
@@ -622,7 +622,8 @@ window.GC = (function(NS) {
         STR_3162  : { en : "Auto", es : "Automático", bg : "Автоматично" },
         STR_3163  : { en : "MAP", es : "MAPA", bg : "Kарта"},
         STR_3164  : { en : "INBOX", es : "ENTRADAS", bg : "Входящи"},
-        STR_3165  : { en : "Q&A", es : "PREGUNTAS", bg : "Въпроси"}
+        STR_3165  : { en : "Q&A", es : "PREGUNTAS", bg : "Въпроси"},
+        STR_3166  : { en : "PATIENTS", es : "PACIENTES", bg : "Пациенти"}
 
         // End Of Header Translations-----------------------------------------------------------------------------------------------------------------
         
