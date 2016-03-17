@@ -198,6 +198,11 @@ ul.bullet-list li {
 	margin: 10px;
 }
 
+.vscrollable-base {
+    max-height:50vh;
+    overflow-y:auto;
+}
+
 /******************************************************************************/
 table.header-table {
 	width: 100%;
