@@ -256,7 +256,8 @@
                     <!-- hide the parent tab -->
                     <a class="basicanchor" href="patientQuestions.html"><span id="questionnaire-tab" data-value="questionnaire" data-translatecontent="STR_3165">Q&amp;A</span></a>
                     <a class="basicanchor" href="coordinatorInboxPatient.html"><span id="inbox-tab" data-value="inbox" data-translatecontent="STR_3164">INBOX</span></a>
-                    <span class="active" id="map-tab" data-value="map" data-translatecontent="STR_3163">MAP</span>                    <span id="parent-tab" data-value="parent" data-translatecontent="STR_3042">PARENT</span>
+                    <span class="active" id="map-tab" data-value="map" data-translatecontent="STR_3163">MAP</span>
+                    <span id="parent-tab" data-value="parent" data-translatecontent="STR_3042">PARENT</span>
                     <span data-value="table" data-translatecontent="STR_3043">TABLE</span>
                     <span data-value="graphs" data-translatecontent="STR_3044">GRAPHS</span>
                 </div>
@@ -338,34 +339,38 @@
             </div>
         </div>
 
-        <div class="container">
-            <div class="col-sm-3">
-                <div class="row well">
-                    <div class="row"><h3>Kimberley's House</h3></div>
-			255 Ted Turner Dr SW
-			Atlanta, GA 30303
-                </div>
 
-                <div class="row well">
-                    <div class="row"><h3>Gourmet Foods International</h3></div>
-      	    
-			255 Ted Turner Dr SW
-			Atlanta, GA 30303
-                    <div class="row"><h5><span class="label label-default">Quality Score</span> 7/10</h5></div>
-                </div>
-                <div class="row">
-                </div>
-            </div>
-            <div class="col-sm-8">
-                <div style='overflow:hidden;height:440px;width:700px;'>
-                    <div id='gmap_canvas' style='height:440px;width:700px;'></div>
-                    <div><small><a href="http://embedgooglemaps.com">									embed google map							</a></small></div>
-                    <div><small><a href="http://freedirectorysubmissionsites.com">directory submission sites</a></small></div>
-                    <style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div>
-            </div>
-         </div>   
-      </div>
 
+        <!--begin main page content-->
+        <style type="text/css">
+            #gmap_canvas {
+                position: absolute;
+                left: 250px;
+                right:0;
+                top: 0px;
+                overflow: hidden;
+                height: 100%;
+                z-index: 0;
+            }
+        </style>
+
+    <div style="width:250px; padding:1em;">
+        <div class="well">
+            <div class="row"><h3>Kimberley's House</h3></div>
+            255 Ted Turner Dr SW
+            Atlanta, GA 30303
+        </div>
+
+        <div class="well">
+            <div class="row"><h3>Woodruff Park Playgound</h3></div>
+            Peachtree St NE
+            Atlanta, GA 30303
+            <div class="row"><h5><span class="label label-default">Quality Score</span> 7/10</h5></div>
+        </div>
+    </div>
+    <div style="height:100%">
+        <div id="gmap_canvas"></div>
+    </div>
 
 
 
@@ -374,6 +379,96 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script><script type='text/javascript'>function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(33.7489954,-84.3879824),mapTypeId: google.maps.MapTypeId.HYBRID};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(33.7489954,-84.3879824)});infowindow = new google.maps.InfoWindow({content:'<strong>Patients House</strong><br>Atlanta<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
+    <script type='text/javascript'>
+        var map; //gmaps obj.
+        function init_map() {
+            var myOptions = { zoom: 15, center: new google.maps.LatLng(33.7489954, -84.3879824), mapTypeId: google.maps.MapTypeId.HYBRID };
+            map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+            marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(33.7489954, -84.3879824) });
+            infowindow = new google.maps.InfoWindow({ content: '<strong>Patients House</strong><br>Atlanta<br>' });
+            google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
+            infowindow.open(map, marker);
+        }
+
+        function attachWindowListener(marker, loc) {
+            google.maps.event.addListener(marker, 'click', function () {
+                var o = marker.locationObj;
+                var iw = new google.maps.InfoWindow({ content: '<strong>' + o.name + '</strong>' });
+                iw.open(map, marker);
+            });
+        }
+
+        $(function () {
+            init_map();
+
+            var addedResources = [];
+
+            var debounceTimeout;
+            function updateDebounce() {
+                window.clearTimeout(debounceTimeout);
+                debounceTimeout = window.setTimeout(updateResources, 1000);
+            }
+
+            google.maps.event.addListener(map, "bounds_changed", updateDebounce);
+
+            function updateResources() {
+                console.log("grabbing parks from OSM Overpass...");
+                var bounds = map.getBounds();
+                var sw = bounds.getSouthWest();
+                var ne = bounds.getNorthEast();
+
+                //var oquery = 'node["name"="Gielgen"]; out body;';
+                var q2 = 'node [leisure=playground] (' + sw.lat() + ',' + sw.lng() + ',' + ne.lat() + ',' + ne.lng() + '); out;';
+                var params = {
+                    data: q2
+                };
+
+                $.post("http://overpass-api.de/api/interpreter", params, function (doc) {
+                    var items = doc.firstChild.children;
+                    var results = [];
+                    for (var i = 0; i < items.length; i++) {
+                        var item = items[i];
+                        if (item.tagName == "node") {
+                            var attrs = item.attributes;
+                            var id = attrs.id.nodeValue;
+                            var lat = attrs.lat.nodeValue;
+                            var lon = attrs.lon.nodeValue;
+                            var name = "Playground";
+                            for (var j = 0; j < item.children.length; j++) {
+                                var c = item.children[j];
+                                if (c.nodeName == "tag") {
+                                    if (c.attributes.k.nodeValue == "name") {
+                                        name = c.attributes.v.nodeValue;
+                                    }
+                                }
+                            }
+                            results.push({
+                                id: id,
+                                lat: lat,
+                                lng: lon,
+                                name: name
+                            });
+                        }
+                    }
+                    console.log("retrieved " + results.length + " results from OSM Overpass");
+                    
+                    for (var i = 0; i < results.length; i++) {
+                        var r = results[i];
+                        if (addedResources.indexOf(r.id) == -1) {
+                            addedResources.push(r.id);
+                            var m2 = new google.maps.Marker({
+                                map: map,
+                                position: new google.maps.LatLng(r.lat, r.lng),
+                                title: r.name,
+                                locationObj: r
+                            });
+                            attachWindowListener(m2, r);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
   </body>
 </html>
