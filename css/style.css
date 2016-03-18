@@ -143,6 +143,23 @@ b, strong {
 	zoom: 1;*/
 }
 
+.fixed-header {
+    position: fixed !important;
+    width: 100%;
+}
+
+.vscrollable-content {
+    overflow-y: auto;
+}
+
+.scrollable-base {
+    padding-top: 150px;
+}
+
+.scrollable-base-ph {
+    padding-top: 200px;
+}
+
 .app-version {
 	position: absolute;
 	bottom: 7px;
@@ -196,11 +213,6 @@ ul.bullet-list {
 
 ul.bullet-list li {
 	margin: 10px;
-}
-
-.vscrollable-base {
-    max-height:50vh;
-    overflow-y:auto;
 }
 
 /******************************************************************************/
