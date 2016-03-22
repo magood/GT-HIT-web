@@ -24,18 +24,20 @@
             var minorBirthdate = moment().subtract(18, 'years').startOf("day");
             var minorDateStr = minorBirthdate.format("YYYY-MM-DD");
             var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
-            var q = smart.api.search({ type: 'Patient', query: { birthdate: '>=' + minorDateStr , _count: "50"} });
-            q.done(mergeHTML);
-            
+/*            var q = smart.api.search({ type: 'Patient', query: { birthdate: '>=' + minorDateStr , _count: "50"} });
+            var initialCall = true;
+            q.done(function(patientResult) { mergeHTML(patientResult, true);}); */
+            $.ajax({
+                url: 'http://crossorigin.me/http://52.72.172.54:8080/fhir/baseDstu2/Patient?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
+                dataType: 'json',
+                success: function(patientResult) { mergeHTML(patientResult, true);}
+            });
             function clearLoadingDiv() {
                 $("#loadingdiv").html("");
             }
-            
-            function mergeHTML(patientResult) {
-                var initialCall = false;
+            function mergeHTML(patientResult, initialCall) {
                 if (!patientResult) return loadingDone();
                 if (patientResult.data) {
-                    initialCall = true;
                     patientResult = patientResult.data;
                 }
                 console.log(patientResult.entry);
@@ -61,7 +63,7 @@
                             async: false,
                             success: function (newResult) {
                                 console.log(newResult);
-                                mergeHTML(newResult);
+                                mergeHTML(newResult, false);
                             }
                         });
                         break;
