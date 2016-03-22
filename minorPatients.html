@@ -24,6 +24,7 @@
 
             var minorBirthdate = moment().subtract(18, 'years').startOf("day");
             var minorDateStr = minorBirthdate.format("YYYY-MM-DD");
+            var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
             var q = smart.api.search({ type: 'Patient', query: { birthdate: '>=' + minorDateStr } });
             q.done(function (patientResult) {
                 console.log(patientResult.data.entry);
@@ -32,6 +33,8 @@
                     //so we may need to manually filter out "future" births - yes, they exist in the DB.
                     //Also, we should filter out any p.deceased === true records.
                     var p = patientResult.data.entry[i];
+//                    if (Date.parse(p.resource.birthDate) > moment()) { continue;}
+// There is only one patient under 18 on the MiHIN server whose dob is <= today!
                     var heading = $("<h2>").text(p.resource.name[0].family + ", " + p.resource.name[0].given[0] + " " + p.resource.name[0].given[1] + " (" + p.resource.id + ")");
                     var dob = $("<p>").text("DOB: " + p.resource.birthDate);
                     var patientDom = $("<div>").append(heading).append(dob);
