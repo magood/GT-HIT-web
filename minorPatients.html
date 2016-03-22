@@ -71,7 +71,6 @@
                                 if ((item[0] === "_getpagesoffset") && (parseInt(item[1]) < nResults)) {
                                     for (var offsetResults = parseInt(item[1]); offsetResults < nResults; offsetResults += 50) {
                                         var newURL = theURL.replace(/(_getpagesoffset=)(\d+)/, '$1' + offsetResults.toString());
-                                        alert(newURL);
                                         console.log("rewritten to " + newURL);
                                         $.ajax({
                                             dataType: "json",
