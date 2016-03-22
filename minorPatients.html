@@ -9,8 +9,17 @@
     <script type="text/javascript">
         $(function () {
             //tutorial: http://docs.smarthealthit.org/tutorials/javascript/
+            //see http://docs.smarthealthit.org/clients/javascript/
+            //http://docs.smarthealthit.org/tutorials/server-quick-start/
+//            var proxyprefix='http://crossorigin.me/';
+
+            // $ sudo pip install corsa
+            // $ corsa --app-dir . --allow-proxy http://52.72.172.54:8080 --allow-origin ALL
+            // browse to localhost:8888/app/minorPatients.html
+            
+            var proxyprefix='http://localhost:8888/proxy/';
             var smart = FHIR.client({
-                serviceUrl: 'http://crossorigin.me/http://52.72.172.54:8080/fhir/baseDstu2',
+                serviceUrl: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2',
                 //patientId: '9995679'
                 patientId: 'Patient-14464'
             });
@@ -28,9 +37,9 @@
             var initialCall = true;
             q.done(function(patientResult) { mergeHTML(patientResult, true);}); */
             $.ajax({
-                url: 'http://crossorigin.me/http://52.72.172.54:8080/fhir/baseDstu2/Patient?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
+                url: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2/Patient?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
                 dataType: 'json',
-                success: function(patientResult) { mergeHTML(patientResult, true, 1000000);}
+                success: function(patientResult) { mergeHTML(patientResult, true);}
             });
             function mergeHTML(patientResult, initialCall) {
                 if (!patientResult) return loadingDone();
@@ -45,6 +54,7 @@
                     var p = patientResult.entry[i];
                     if (Date.parse(p.resource.birthDate) > moment()) { continue;}
                     var heading = $("<h2>").text(p.resource.name[0].family + ", " + p.resource.name[0].given[0] + " " + p.resource.name[0].given[1] + " (" + p.resource.id + ")");
+//                    if (p.resource.deceased) {alert(p.resource.deceased + " " + heading.text());}
                     var dob = $("<p>").text("DOB: " + p.resource.birthDate);
                     var patientDom = $("<div>").append(heading).append(dob);
                     $("#minorsContainer").append(patientDom);
@@ -70,7 +80,7 @@
                                         nRequests++;
                                         $.ajax({
                                             dataType: "json",
-                                            url: "http://crossorigin.me/" + newURL,
+                                            url: proxyprefix + newURL,
                                             success: function (newResult) {
                                                 console.log(newResult);
                                                 mergeHTML(newResult, false);
