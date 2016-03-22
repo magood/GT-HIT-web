@@ -32,16 +32,10 @@
                 dataType: 'json',
                 success: function(patientResult) { mergeHTML(patientResult, true, 1000000);}
             });
-            function clearLoadingDiv() {
-                $("#loadingdiv").html("");
-            }
-            function mergeHTML(patientResult, initialCall, nResults) {
+            function mergeHTML(patientResult, initialCall) {
                 if (!patientResult) return loadingDone();
                 if (patientResult.data) {
                     patientResult = patientResult.data;
-                }
-                if (initialCall) {
-                    nResults = patientResult.total;
                 }
                 console.log(patientResult.entry);
                 for (var i = 0; i < patientResult.entry.length; i++) {
@@ -58,6 +52,7 @@
 //                if (!patientResult.link) return loadingDone();
                 console.log("links " + patientResult.link.length);
                 if (initialCall) {
+                    var nResults = patientResult.total;
                     for (var ind = 0; ind < patientResult.link.length; ind++) {
                         if (patientResult.link[ind].relation == "next") {
                             theURL = patientResult.link[ind].url;
@@ -68,15 +63,18 @@
                             for (var qind = 0; qind < quedata.length; qind++) {
                                 var item = quedata[qind].split("=");
                                 if ((item[0] === "_getpagesoffset") && (parseInt(item[1]) < nResults)) {
+                                    var nRequests = 0;
                                     for (var offsetResults = parseInt(item[1]); offsetResults < nResults; offsetResults += 50) {
                                         var newURL = theURL.replace(/(_getpagesoffset=)(\d+)/, '$1' + offsetResults.toString());
                                         console.log("rewritten to " + newURL);
+                                        nRequests++;
                                         $.ajax({
                                             dataType: "json",
                                             url: "http://crossorigin.me/" + newURL,
                                             success: function (newResult) {
                                                 console.log(newResult);
-                                                mergeHTML(newResult, false, nResults);
+                                                mergeHTML(newResult, false);
+                                                if (--nRequests == 0) $("#loadingdiv").html("");
                                             }
                                         });
                                     }
@@ -85,13 +83,7 @@
                             break;
                         }
                     }
-                    loadingDone();
                 }
-            }
-            
-            function loadingDone() {
-                $("#loadingdiv").html("<h2>Loading - DONE</h2>");
-                window.setTimeout(clearLoadingDiv, 10000);
             }
 
             //example of population-level query:
