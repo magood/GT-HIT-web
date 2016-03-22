@@ -30,15 +30,19 @@
             $.ajax({
                 url: 'http://crossorigin.me/http://52.72.172.54:8080/fhir/baseDstu2/Patient?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
                 dataType: 'json',
-                success: function(patientResult) { mergeHTML(patientResult, true);}
+                success: function(patientResult) { mergeHTML(patientResult, true, 1000000);}
             });
             function clearLoadingDiv() {
                 $("#loadingdiv").html("");
             }
-            function mergeHTML(patientResult, initialCall) {
+            function mergeHTML(patientResult, initialCall, nResults) {
                 if (!patientResult) return loadingDone();
                 if (patientResult.data) {
                     patientResult = patientResult.data;
+                }
+                if (initialCall) {
+                    nResults = patientResult.total;
+                    alert(nResults);
                 }
                 console.log(patientResult.entry);
                 for (var i = 0; i < patientResult.entry.length; i++) {
@@ -52,21 +56,36 @@
                     var patientDom = $("<div>").append(heading).append(dob);
                     $("#minorsContainer").append(patientDom);
                 }
-                if (!patientResult.link) return loadingDone();
+//                if (!patientResult.link) return loadingDone();
                 console.log("links " + patientResult.link.length);
-                for (var ind = 0; ind < patientResult.link.length; ind++) {
-                    if (patientResult.link[ind].relation == "next") {
-                        console.log("url " + patientResult.link[ind].url);
-                        $.ajax({
-                            dataType: "json",
-                            url: "http://crossorigin.me/" + patientResult.link[ind].url,
-                            async: false,
-                            success: function (newResult) {
-                                console.log(newResult);
-                                mergeHTML(newResult, false);
+                if (initialCall) {
+                    for (var ind = 0; ind < patientResult.link.length; ind++) {
+                        if (patientResult.link[ind].relation == "next") {
+                            theURL = patientResult.link[ind].url;
+                            console.log("url " + theURL);
+                            var a = $('<a>', { href:theURL } )[0];
+                            var que = a.search.substring(1);
+                            var quedata = que.split("&");
+                            for (var qind = 0; qind < quedata.length; qind++) {
+                                var item = quedata[qind].split("=");
+                                if ((item[0] === "_getpagesoffset") && (parseInt(item[1]) < nResults)) {
+                                    for (var offsetResults = parseInt(item[1]); offsetResults < nResults; offsetResults += 50) {
+                                        var newURL = theURL.replace(/(_getpagesoffset=)(\d+)/, '$1' + offsetResults.toString());
+                                        alert(newURL);
+                                        console.log("rewritten to " + newURL);
+                                        $.ajax({
+                                            dataType: "json",
+                                            url: "http://crossorigin.me/" + newURL,
+                                            success: function (newResult) {
+                                                console.log(newResult);
+                                                mergeHTML(newResult, false, nResults);
+                                            }
+                                        });
+                                    }
+                                }
                             }
-                        });
-                        break;
+                            break;
+                        }
                     }
                 }
                 if (initialCall) loadingDone();
