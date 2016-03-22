@@ -8,16 +8,9 @@
 
     <script type="text/javascript">
         $(function () {
-            //tutorial: http://docs.smarthealthit.org/tutorials/javascript/
-            //see http://docs.smarthealthit.org/clients/javascript/
-            //http://docs.smarthealthit.org/tutorials/server-quick-start/
 //            var proxyprefix='http://crossorigin.me/';
 
-            // $ sudo pip install corsa
-            // $ corsa --app-dir . --allow-proxy http://52.72.172.54:8080 --allow-origin ALL
-            // browse to localhost:8888/app/minorPatients.html
-            
-            var proxyprefix='http://localhost:8888/proxy/';
+            var proxyprefix='http://localhost:8888/proxy/'; // corsa; see README
             var smart = FHIR.client({
                 serviceUrl: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2',
                 //patientId: '9995679'
@@ -59,7 +52,6 @@
                     var patientDom = $("<div>").append(heading).append(dob);
                     $("#minorsContainer").append(patientDom);
                 }
-//                if (!patientResult.link) return loadingDone();
                 console.log("links " + patientResult.link.length);
                 if (initialCall) {
                     var nResults = patientResult.total;
