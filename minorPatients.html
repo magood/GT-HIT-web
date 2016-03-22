@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="lib/jquery-1.8.2.js"></script>
+    <script src="node_modules/fhir-js-client/dist/fhir-client.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            //tutorial: http://docs.smarthealthit.org/tutorials/javascript/
+            var smart = FHIR.client({
+                serviceUrl: 'http://52.72.172.54:8080/fhir/baseDstu2',
+                //patientId: '9995679'
+                patientId: 'Patient-14464'
+            });
+
+            //example of patient-level query:
+            //var deferred = smart.patient.api.search({ type: 'Condition' });
+            //deferred.done(function (conditions) {
+            //    //console.log(conditions);
+            //    console.log(conditions.data.entry);
+            //});
+
+            var minorBirthdate = moment().subtract(18, 'years').startOf("day");
+            var minorDateStr = minorBirthdate.format("YYYY-MM-DD");
+            var q = smart.api.search({ type: 'Patient', query: { birthdate: '>=' + minorDateStr } });
+            q.done(function (patientResult) {
+                console.log(patientResult.data.entry);
+                for (var i = 0; i < patientResult.data.entry.length; i++) {
+                    //I don't think the server allows for a date range (or I can't figure out how to do one)
+                    //so we may need to manually filter out "future" births - yes, they exist in the DB.
+                    //Also, we should filter out any p.deceased === true records.
+                    var p = patientResult.data.entry[i];
+                    var heading = $("<h2>").text(p.resource.name[0].family + ", " + p.resource.name[0].given[0] + " " + p.resource.name[0].given[1] + " (" + p.resource.id + ")");
+                    var dob = $("<p>").text("DOB: " + p.resource.birthDate);
+                    var patientDom = $("<div>").append(heading).append(dob);
+                    $("#minorsContainer").append(patientDom);
+                }
+            });
+
+            //example of population-level query:
+            //returns: "Invalid request: The FHIR endpoint on this server does not know how to handle GET operation[Condition] with parameters [[dateRecorded, patient]]"
+            //var todaysDiagnoses = smart.patient.api.search({ type: 'Condition', query: { dateRecorded: '2014-05-01' } });
+            //var statinRxs = smart.patient.api.search({ type: 'MedicationOrder', query: { dateWritten: '2014-05-01', name: 'statin' } });
+        });
+    </script>
+</head>
+<body>
+    <h1>Patients under 18:</h1>
+    <div id="minorsContainer"></div>
+</body>
+</html>
