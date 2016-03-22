@@ -3,7 +3,7 @@
 <head>
     <title></title>
     <script src="lib/jquery-1.8.2.js"></script>
-    <script src="node_modules/fhir-js-client/dist/fhir-client.js"></script>
+    <script src="node_modules/fhirclient/fhir-client.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
 
     <script type="text/javascript">
@@ -25,48 +25,19 @@
             var minorDateStr = minorBirthdate.format("YYYY-MM-DD");
             var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
             var q = smart.api.search({ type: 'Patient', query: { birthdate: '>=' + minorDateStr , _count: "50"} });
-            q.done(function (patientResult) {
-                console.log('patientResult function');
-                console.log(patientResult);
-                patientResult = patientResult.data;
-                mergeHTML(patientResult);
-                whileloop: {
-                    while (true) {
-                        var loopind;
-                        console.log('patientResult loop');
-                        console.log(patientResult);
-                        if ((!patientResult) || (!patientResult.link)) break whileloop;
-                        console.log("links " + patientResult.link.length);
-                        for (loopind = 0; loopind < patientResult.link.length; loopind++) {
-                            if (patientResult.link[loopind].relation == "next") {
-                                console.log("url " + patientResult.link[loopind].url);
-                                $.ajax({
-                                    dataType: "json",
-                                    url: "http://crossorigin.me/" + patientResult.link[loopind].url,
-                                    async: false,
-                                    success: function (newResult) {
-                                        console.log('newResult');
-                                        console.log(newResult);
-                                        mergeHTML(newResult);
-                                        patientResult = newResult;
-                                    }
-                                });
-                                break;
-                            } else if (loopind == patientResult.link.length - 1) {
-                                break whileloop;
-                            }
-                        }
-                    }
-                }
-                $("#loadingdiv").html("<h2>Loading - DONE</h2>");
-                window.setTimeout(clearLoadingDiv, 10000);
-            });
+            q.done(mergeHTML);
             
             function clearLoadingDiv() {
                 $("#loadingdiv").html("");
             }
             
             function mergeHTML(patientResult) {
+                var initialCall = false;
+                if (!patientResult) return loadingDone();
+                if (patientResult.data) {
+                    initialCall = true;
+                    patientResult = patientResult.data;
+                }
                 console.log(patientResult.entry);
                 for (var i = 0; i < patientResult.entry.length; i++) {
                     //I don't think the server allows for a date range (or I can't figure out how to do one)
@@ -79,8 +50,30 @@
                     var patientDom = $("<div>").append(heading).append(dob);
                     $("#minorsContainer").append(patientDom);
                 }
+                if (!patientResult.link) return loadingDone();
+                console.log("links " + patientResult.link.length);
+                for (var ind = 0; ind < patientResult.link.length; ind++) {
+                    if (patientResult.link[ind].relation == "next") {
+                        console.log("url " + patientResult.link[ind].url);
+                        $.ajax({
+                            dataType: "json",
+                            url: "http://crossorigin.me/" + patientResult.link[ind].url,
+                            async: false,
+                            success: function (newResult) {
+                                console.log(newResult);
+                                mergeHTML(newResult);
+                            }
+                        });
+                        break;
+                    }
+                }
+                if (initialCall) loadingDone();
             }
-
+            
+            function loadingDone() {
+                $("#loadingdiv").html("<h2>Loading - DONE</h2>");
+                window.setTimeout(clearLoadingDiv, 10000);
+            }
 
             //example of population-level query:
             //returns: "Invalid request: The FHIR endpoint on this server does not know how to handle GET operation[Condition] with parameters [[dateRecorded, patient]]"
