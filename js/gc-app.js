@@ -302,6 +302,12 @@
                 GC.TableView.render();
                 $("#print-button").html("Print Table");
                 break;
+            case "patients":
+                // TODO
+            case "allmessages":
+                // TODO
+            default:
+                break;
         }
 
         drawn = true;
@@ -863,12 +869,13 @@
                     $(this).toggleClass("active", this.getAttribute("data-value") == type);
                 });
 
-                $("#view-clinical")[type == "graphs"      ? "show" : "hide"]();
-                $("#view-parental")[type == "parent"      ? "show" : "hide"]();
-                $("#view-table"   )[type == "table"       ? "show" : "hide"]();
-                $("#view-patients")[type == "patients"    ? "show" : "hide"]();
+                $("#view-clinical")   [type == "graphs"      ? "show" : "hide"]();
+                $("#view-parental")   [type == "parent"      ? "show" : "hide"]();
+                $("#view-table"   )   [type == "table"       ? "show" : "hide"]();
+                $("#view-patients")   [type == "patients"    ? "show" : "hide"]();
+                $("#view-messagesall")[type == "allmessages" ? "show" : "hide"]();
 
-                var hidepatientspecific = (type == "patients" || type == "coordglobalinbox");
+                var hidepatientspecific = (type == "patients" || type == "allmessages");
 
                 $("html")
                 .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader"))
