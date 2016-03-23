@@ -159,9 +159,10 @@ XDate, setTimeout, getDataSet*/
                         theEmail,
                         p.resource.birthDate
                     ]
-                ).draw(false);
+                )
 //                    if (p.resource.deceased) {alert(p.resource.deceased + " " + heading.text());}
             }
+            thedatatable.draw(false);
             console.log("links " + patientResult.link.length);
             if (initialCall) {
                 var nResults = patientResult.total;
