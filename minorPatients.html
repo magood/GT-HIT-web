@@ -10,8 +10,8 @@
     <script type="text/javascript">
         $(function () {
 //            var proxyprefix='http://crossorigin.me/';
-
             var proxyprefix='http://localhost:8888/proxy/'; // corsa; see README
+//            var proxyprefix = '';
             var smart = FHIR.client({
                 serviceUrl: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2',
                 //patientId: '9995679'
@@ -31,7 +31,9 @@
             var initialCall = true;
             q.done(function(patientResult) { mergeHTML(patientResult, true);}); */
             $.ajax({
-                url: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2/Patient?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
+                url: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2/Patient' +
+                    '?birthdate=%3E%3D' + minorDateStr +
+                    '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
                 dataType: 'json',
                 success: function(patientResult) { mergeHTML(patientResult, true);}
             });

@@ -90,15 +90,16 @@ XDate, setTimeout, getDataSet*/
             retrieveTableData(thedatatable, tabledata);
             return;
         }
-//      var proxyprefix='http://crossorigin.me/';
-
+//        var proxyprefix='http://crossorigin.me/';
         var proxyprefix='http://localhost:8888/proxy/'; // corsa; see README
-
+//        var proxyprefix="";
         var minorBirthdate = moment().subtract(18, 'years').startOf("day");
         var minorDateStr = minorBirthdate.format("YYYY-MM-DD");
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
         $.ajax({
-            url: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2/Patient?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
+            url: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2/Patient' +
+                '?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' +
+                todayDateStr + '&_count=50',
             dataType: 'json',
             success: function(patientResult) { mergeHTML(patientResult, true);}
         });
@@ -124,11 +125,23 @@ XDate, setTimeout, getDataSet*/
                     }
                 }
                 var rdata = [
-                        (p.resource.name) ? ((p.resource.name[0].family) ? p.resource.name[0].family + ", " : "") + ((p.resource.name[0].given[0]) ? p.resource.name[0].given[0] : "") + ((p.resource.name[0].given[1]) ? " " + p.resource.name[0].given[1] : "") : "Not known",
+                        (p.resource.name) ?
+                            ((p.resource.name[0].family) ? p.resource.name[0].family + ", " : "") +
+                            ((p.resource.name[0].given[0]) ? p.resource.name[0].given[0] : "") +
+                            ((p.resource.name[0].given[1]) ? " " + p.resource.name[0].given[1] : "") :
+                            "Not known",
                         (p.resource.id) ? p.resource.id : "",
-                        (p.resource.address && p.resource.address[0].postalCode) ? p.resource.address[0].postalCode : "",
+                        (p.resource.address && p.resource.address[0].postalCode) ?
+                            p.resource.address[0].postalCode : "",
                         thePhone,
-                        (p.resource.address) ? ((p.resource.address[0].line) ? p.resource.address[0].line.join(", ") + ", " : "") + ((p.resource.address[0].city) ? p.resource.address[0].city + ", "  : "" )+ ((p.resource.address[0].state) ? p.resource.address[0].state : "") : "Not known",
+                        (p.resource.address) ?
+                            ((p.resource.address[0].line) ?
+                                p.resource.address[0].line.join(", ") + ", " : "") +
+                            ((p.resource.address[0].city) ?
+                                p.resource.address[0].city + ", "  : "" ) +
+                            ((p.resource.address[0].state) ?
+                                p.resource.address[0].state : "") :
+                            "Not known",
                         theEmail,
                         (p.resource.birthDate) ? p.resource.birthDate : ""
                     ];
@@ -140,42 +153,48 @@ XDate, setTimeout, getDataSet*/
             window.sessionStorage.setItem('patientstable', JSON.stringify(thedataset));
             console.log("links " + patientResult.link.length);
             if (initialCall) {
-                var nResults = patientResult.total;
-                for (var ind = 0; ind < patientResult.link.length; ind++) {
-                    if (patientResult.link[ind].relation == "next") {
-                        var theURL = patientResult.link[ind].url;
-                        console.log("url " + theURL);
-                        var a = $('<a>', { href:theURL } )[0];
-                        var que = a.search.substring(1);
-                        var quedata = que.split("&");
-                        for (var qind = 0; qind < quedata.length; qind++) {
-                            var item = quedata[qind].split("=");
-                            if ((item[0] === "_getpagesoffset") && (parseInt(item[1]) < nResults)) {
-                                var nRequests = 0;
-                                for (var offsetResults = parseInt(item[1]); offsetResults < nResults; offsetResults += 50) {
-                                    var newURL = theURL.replace(/(_getpagesoffset=)(\d+)/, '$1' + offsetResults.toString());
-                                    console.log("rewritten to " + newURL);
-                                    nRequests++;
-                                    $.ajax({
-                                        dataType: "json",
-                                        url: proxyprefix + newURL,
-                                        success: function (newResult) {
-                                            console.log(newResult);
-                                            mergeHTML(newResult, false);
-                                            //if (--nRequests == 0) $(container).remove(loadingdiv);
-                                        }
-                                    });
-                                }
+                getMultiResults(patientResult);
+            }
+        }
+        function getMultiResults(patientResult) {
+            var nResults = patientResult.total;
+            for (var ind = 0; ind < patientResult.link.length; ind++) {
+                if (patientResult.link[ind].relation == "next") {
+                    var theURL = patientResult.link[ind].url;
+                    console.log("url " + theURL);
+                    var a = $('<a>', { href:theURL } )[0];
+                    var que = a.search.substring(1);
+                    var quedata = que.split("&");
+                    for (var qind = 0; qind < quedata.length; qind++) {
+                        var item = quedata[qind].split("=");
+                        if ((item[0] === "_getpagesoffset") &&
+                            (parseInt(item[1]) < nResults)) {
+                            var nRequests = 0;
+                            for (var offsetResults = parseInt(item[1]);
+                                offsetResults < nResults; offsetResults += 50) {
+                                var newURL = theURL.replace(/(_getpagesoffset=)(\d+)/, '$1' +
+                                                            offsetResults.toString());
+                                console.log("rewritten to " + newURL);
+                                nRequests++;
+                                $.ajax({
+                                    dataType: "json",
+                                    url: proxyprefix + newURL,
+                                    success: function (newResult) {
+                                        console.log(newResult);
+                                        mergeHTML(newResult, false);
+                                        //if (--nRequests == 0) $(container).remove(loadingdiv);
+                                    }
+                                });
                             }
                         }
-                        break;
                     }
+                    break;
                 }
             }
         }
     }
 
-     
+
     NS.PatientsView = {
         render : function() {
 //            if (PRINT_MODE) {
