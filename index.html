@@ -43,6 +43,9 @@
         <script type="text/javascript" src="js/gc-boneage-calculator.js"></script>
         <script type="text/javascript" src="js/gc-style-generator.js"></script>
         <script src="js/charts/mini_charts.js"></script>
+
+        <!-- coordinator-facing modules -->
+        <script type="text/javascript" src="js/coord-patients-view.js"></script>
     </head>
     <body>
 
@@ -233,7 +236,7 @@
                 <!-- View Mode -->
                 <div id="view-mode">
                     <!-- hide the parent tab -->
-                    <span id="patientlist-tab" data-value="patientlist" data-translatecontent="STR_3166">PATIENTS</span>
+                    <span id="patientlist-tab" data-value="patients" data-translatecontent="STR_3166">PATIENTS</span>
                     <span id="parent-tab" data-value="parent" data-translatecontent="STR_3042"></span>
                     <span data-value="table" data-translatecontent="STR_3043"></span>
                     <span data-value="graphs" data-translatecontent="STR_3044"></span>
@@ -441,6 +444,7 @@
                 </div>
             </div>
             <div id="view-table" class="tab-panel"></div>
+            <div id="view-patients" class="tab-panel"></div>
         </div>
         <div id="timeline-bottom" class="timeline">
             <div class="gest"></div>
