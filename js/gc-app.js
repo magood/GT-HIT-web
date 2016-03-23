@@ -863,16 +863,18 @@
                     $(this).toggleClass("active", this.getAttribute("data-value") == type);
                 });
 
-                $("#view-clinical")[type == "graphs" ? "show" : "hide"]();
-                $("#view-parental")[type == "parent" ? "show" : "hide"]();
-                $("#view-table"   )[type == "table"  ? "show" : "hide"]();
+                $("#view-clinical")[type == "graphs"      ? "show" : "hide"]();
+                $("#view-parental")[type == "parent"      ? "show" : "hide"]();
+                $("#view-table"   )[type == "table"       ? "show" : "hide"]();
+                $("#view-patients")[type == "patientlist" ? "show" : "hide"]();
 
                 $("html")
                 .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader"))
                 .toggleClass("view-clinical", type == "graphs" || type == "table")
                 .toggleClass("view-parental", type == "parent")
                 .toggleClass("view-charts", type == "graphs")
-                .toggleClass("view-table", type == "table");
+                .toggleClass("view-table", type == "table")
+                .toggleClass("view-patients", type == "patientlist");
 
                 //hide parent tab
                 if ( ! GC.Preferences._data.isParentTabShown) {
