@@ -75,6 +75,14 @@ XDate, setTimeout, getDataSet*/
             ]
         } );
 
+        $("<button>Reload Patient List From Server</button>")
+            .prop("style", "margin-left:100px")
+            .click(function() {
+                window.sessionStorage.removeItem('patientstable');
+                renderPatientsView(container);
+            })
+            .appendTo('div.dataTables_length');
+
         var thedataset = [];
 
         var tabledata = window.sessionStorage.getItem('patientstable');
