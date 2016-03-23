@@ -92,13 +92,36 @@ XDate, setTimeout, getDataSet*/
     function renderPatientsView( container ) {
         $(container).empty();
         
-        createHeaderPatientsTable(container);
+//        createHeaderPatientsTable(container);
+        var sampleData = [
+            ["PATIENT, Anthony", "735", "30332", "404-894-2000", "North Avenue, Atlanta, GA", "info@gatech.edu", "2015-06-07"],
+            ["SMITH, John", "644", "30303", "123-456-7890", "Some Street, Atlanta, GA", "info@somedomain.com", "2016-01-17"],
+            ["PATIENT, Anthonia", "736", "30332", "404-894-2000", "North Avenue, Atlanta, GA", "info3@gatech.edu", "2015-06-07"],
+            ["SMITH, Joanne", "645", "30303", "123-456-7890", "Some Street, Atlanta, GA", "info3@somedomain.com", "2016-01-17"],["PATIENT, Tony", "737", "30332", "404-894-2000", "North Avenue, Atlanta, GA", "info7@gatech.edu", "2015-06-07"],
+            ["SMITH, Johnathan", "646", "30303", "123-456-7890", "Some Street, Atlanta, GA", "info7@somedomain.com", "2016-01-17"]
+        ];
+        var thetable = $("<table></table>").addClass("display");
+        thetable.prop("id", "patient-table").prop("width","100%");
+        $(container).append(thetable);
+        $("#patient-table").DataTable( {
+            data: sampleData,
+            columns: [
+                { title: "Name" },
+                { title: "ID" },
+                { title: "Zip" },
+                { title: "Tel" },
+                { title: "Address" },
+                { title: "Email" },
+                { title: "DoB" }
+            ]
+        } );
+        
     }
     
     /**
      * The scheme used to create and render the grid
      */
-    scheme = {
+/*    scheme = {
         header : {
             rows : [
                 // Annotation
@@ -278,14 +301,14 @@ XDate, setTimeout, getDataSet*/
             ]
         }
     };
-    
+*/    
      
     NS.PatientsView = {
         render : function() {
 //            if (PRINT_MODE) {
 //                renderTableViewForPrint("#view-table");
 //            } else {
-                renderPatientsView("#view-table");
+                renderPatientsView("#view-patients");
 //            }
         }//,
 //        selectByAge : PRINT_MODE ? $.noop : selectByAge
@@ -311,13 +334,13 @@ XDate, setTimeout, getDataSet*/
 */            
             $("html").bind("set:viewType set:language", function(e) {
                 if (isPatientsViewVisible()) {
-                    renderPatientsView("#view-table");
+                    renderPatientsView("#view-patients");
                 }
             });
             
             GC.Preferences.bind("set:metrics set:nicu set:currentColorPreset", function(e) {
                 if (isPatientsViewVisible()) {
-                    renderPatientsView("#view-table");
+                    renderPatientsView("#view-patients");
                 }
             });
             
@@ -325,7 +348,7 @@ XDate, setTimeout, getDataSet*/
                 if (e.data.path == "roundPrecision.velocity.nicu" || 
                     e.data.path == "roundPrecision.velocity.std") {
                     if (isPatientsViewVisible()) {
-                        renderPatientsView("#view-table");
+                        renderPatientsView("#view-patients");
                     }
                 }
             });
@@ -335,7 +358,7 @@ XDate, setTimeout, getDataSet*/
             });
 */            
             GC.Preferences.bind("set:timeFormat", function(e) {
-                renderPatientsView("#view-table");
+                renderPatientsView("#view-patients");
             });
             
 /*            $("#stage")
