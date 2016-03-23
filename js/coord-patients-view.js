@@ -158,7 +158,8 @@ XDate, setTimeout, getDataSet*/
         }
         function getMultiResults(patientResult) {
             var nResults = patientResult.total;
-            for (var ind = 0; ind < patientResult.link.length; ind++) {
+            for (var ind = 0; ind < (patientResult.link ?
+                                    patientResult.link.length : 0); ind++) {
                 if (patientResult.link[ind].relation == "next") {
                     var theURL = patientResult.link[ind].url;
                     console.log("url " + theURL);

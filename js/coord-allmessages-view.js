@@ -147,7 +147,8 @@ XDate, setTimeout, getDataSet*/
         }
         function getMultiResults(allMessagesResult) {
             var nResults = allMessagesResult.total;
-            for (var ind = 0; ind < allMessagesResult.link.length; ind++) {
+            for (var ind = 0; ind < (allMessagesResult.link ?
+                                    allMessagesResult.link.length : 0); ind++) {
                 if (allMessagesResult.link[ind].relation == "next") {
                     var theURL = allMessagesResult.link[ind].url;
                     console.log("url " + theURL);
