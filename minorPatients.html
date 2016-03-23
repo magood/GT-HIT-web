@@ -58,7 +58,7 @@
                     var nResults = patientResult.total;
                     for (var ind = 0; ind < patientResult.link.length; ind++) {
                         if (patientResult.link[ind].relation == "next") {
-                            theURL = patientResult.link[ind].url;
+                            var theURL = patientResult.link[ind].url;
                             console.log("url " + theURL);
                             var a = $('<a>', { href:theURL } )[0];
                             var que = a.search.substring(1);

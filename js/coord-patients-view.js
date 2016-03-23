@@ -91,6 +91,8 @@ XDate, setTimeout, getDataSet*/
     
     function renderPatientsView( container ) {
         $(container).empty();
+//        var loadingdiv = $("<div><h2>Loading</h2></div>");
+//        $(container).append(loadingdiv);
         
 //        createHeaderPatientsTable(container);
         var sampleData = [
@@ -103,8 +105,7 @@ XDate, setTimeout, getDataSet*/
         var thetable = $("<table></table>").addClass("display");
         thetable.prop("id", "patient-table").prop("width","100%");
         $(container).append(thetable);
-        $("#patient-table").DataTable( {
-            data: sampleData,
+        var thedatatable = $("#patient-table").DataTable( {
             columns: [
                 { title: "Name" },
                 { title: "ID" },
@@ -116,6 +117,76 @@ XDate, setTimeout, getDataSet*/
             ]
         } );
         
+//      var proxyprefix='http://crossorigin.me/';
+
+        var proxyprefix='http://localhost:8888/proxy/'; // corsa; see README
+
+        var minorBirthdate = moment().subtract(18, 'years').startOf("day");
+        var minorDateStr = minorBirthdate.format("YYYY-MM-DD");
+        var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
+        $.ajax({
+            url: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2/Patient?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
+            dataType: 'json',
+            success: function(patientResult) { mergeHTML(patientResult, true);}
+        });
+        function mergeHTML(patientResult, initialCall) {
+            if (!patientResult) return;
+            if (patientResult.data) {
+                patientResult = patientResult.data;
+            }
+            console.log(patientResult.entry);
+            for (var i = 0; i < patientResult.entry.length; i++) {
+                // Maybe we should filter out p.deceased === true even though apparently none in the dataset
+                var p = patientResult.entry[i];
+                if (Date.parse(p.resource.birthDate) > moment()) { continue;}
+
+                thedatatable.row.add([
+                        p.resource.name[0].family + ", " + p.resource.name[0].given[0] + " " + p.resource.name[0].given[1],
+                        p.resource.id,
+                        "placeholder Zip",
+                        "placeholder Tel",
+                        "placeholder Address",
+                        "placeholder Email",
+                        p.resource.birthDate
+                    ]
+                ).draw(false);
+//                    if (p.resource.deceased) {alert(p.resource.deceased + " " + heading.text());}
+            }
+            console.log("links " + patientResult.link.length);
+            if (initialCall) {
+                var nResults = patientResult.total;
+                for (var ind = 0; ind < patientResult.link.length; ind++) {
+                    if (patientResult.link[ind].relation == "next") {
+                        var theURL = patientResult.link[ind].url;
+                        console.log("url " + theURL);
+                        var a = $('<a>', { href:theURL } )[0];
+                        var que = a.search.substring(1);
+                        var quedata = que.split("&");
+                        for (var qind = 0; qind < quedata.length; qind++) {
+                            var item = quedata[qind].split("=");
+                            if ((item[0] === "_getpagesoffset") && (parseInt(item[1]) < nResults)) {
+                                var nRequests = 0;
+                                for (var offsetResults = parseInt(item[1]); offsetResults < nResults; offsetResults += 50) {
+                                    var newURL = theURL.replace(/(_getpagesoffset=)(\d+)/, '$1' + offsetResults.toString());
+                                    console.log("rewritten to " + newURL);
+                                    nRequests++;
+                                    $.ajax({
+                                        dataType: "json",
+                                        url: proxyprefix + newURL,
+                                        success: function (newResult) {
+                                            console.log(newResult);
+                                            mergeHTML(newResult, false);
+                                            //if (--nRequests == 0) $(container).remove(loadingdiv);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
     
     /**
