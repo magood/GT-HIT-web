@@ -215,6 +215,10 @@ ul.bullet-list li {
 	margin: 10px;
 }
 
+.hide-patient-specific {
+        display: none !important;
+}
+
 /******************************************************************************/
 table.header-table {
 	width: 100%;
@@ -1335,6 +1339,7 @@ span.title {
 	display: none;
 }
 
+
 #time-ranges > .row {
 	display: table;
 	width: 100%;
@@ -1515,7 +1520,8 @@ span.title {
 	background: url(../img/tab-sprite.png) -20px -42px no-repeat;
 }
 .view-table #the-tab .disable-overlay,
-.view-parental #the-tab .disable-overlay {
+.view-parental #the-tab .disable-overlay,
+.view-coord #the-tab .disable-overlay {
 	display: block;
 }
 
@@ -2967,6 +2973,8 @@ svg marker use {
 .view-parental .chart-stack-panel,
 .view-table #timeline-top, 
 .view-table #timeline-bottom, 
+.view-coord #timeline-top,
+.view-coord #timeline-bottom,
 .view-table .chart-stack-panel {
 	display: none !important;
 }

@@ -866,7 +866,9 @@
                 $("#view-clinical")[type == "graphs"      ? "show" : "hide"]();
                 $("#view-parental")[type == "parent"      ? "show" : "hide"]();
                 $("#view-table"   )[type == "table"       ? "show" : "hide"]();
-                $("#view-patients")[type == "patients" ? "show" : "hide"]();
+                $("#view-patients")[type == "patients"    ? "show" : "hide"]();
+
+                var hidepatientspecific = (type == "patients" || type == "coordglobalinbox");
 
                 $("html")
                 .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader"))
@@ -874,13 +876,17 @@
                 .toggleClass("view-parental", type == "parent")
                 .toggleClass("view-charts", type == "graphs")
                 .toggleClass("view-table", type == "table")
-                .toggleClass("view-patients", type == "patients");
+                .toggleClass("view-coord", hidepatientspecific);
 
                 //hide parent tab
                 if ( ! GC.Preferences._data.isParentTabShown) {
                     $("#parent-tab")["hide"]();
                     $("#view-parental")["hide"]();
                 }
+
+                //hide patient-specific headers
+                $("#time-ranges").toggleClass("hide-patient-specific", hidepatientspecific);
+                $("#info-bar").toggleClass("hide-patient-specific", hidepatientspecific);
 
                 setStageHeight();
 
