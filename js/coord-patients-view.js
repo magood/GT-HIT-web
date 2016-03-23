@@ -139,14 +139,24 @@ XDate, setTimeout, getDataSet*/
                 // Maybe we should filter out p.deceased === true even though apparently none in the dataset
                 var p = patientResult.entry[i];
                 if (Date.parse(p.resource.birthDate) > moment()) { continue;}
-
+                var theEmail = "";
+                var thePhone = "";
+                if (p.resource.telecom) {
+                    for (var ind = p.resource.telecom.length - 1; ind >= 0; ind--) {
+                        if (p.resource.telecom[ind].system == "phone") {
+                            thePhone = p.resource.telecom[ind].value;
+                        } else if (p.resource.telecom[ind].system == "email") {
+                            theEmail = p.resource.telecom[ind].value;
+                        }
+                    }
+                }
                 thedatatable.row.add([
-                        p.resource.name[0].family + ", " + p.resource.name[0].given[0] + " " + p.resource.name[0].given[1],
+                        (p.resource.name) ? p.resource.name[0].family + ", " + p.resource.name[0].given[0] + ((p.resource.name[0].given[1]) ? " " + p.resource.name[0].given[1] : "") : "Not known",
                         p.resource.id,
-                        "placeholder Zip",
-                        "placeholder Tel",
-                        "placeholder Address",
-                        "placeholder Email",
+                        (p.resource.address) ? p.resource.address[0].postalCode: "",
+                        thePhone,
+                        (p.resource.address) ? p.resource.address[0].line.join(", ") + ", " + p.resource.address[0].city + ", " + p.resource.address[0].state : "Not known",
+                        theEmail,
                         p.resource.birthDate
                     ]
                 ).draw(false);
