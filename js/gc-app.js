@@ -1404,6 +1404,7 @@
             //this jquery ajax call will read that file async, and then parse it into the needed structure
             $.ajax({
                 url: "GCCurveDataJSON.txt",
+                dataType: "text",
                 success: function (data) {
                     try {
                         GC.DATA_SETS = JSON.parse(data);

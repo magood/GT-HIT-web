@@ -2198,6 +2198,7 @@ if ( !Array.prototype.indexOf ) {
 
         $.ajax({
             url: "GCMenuItemsJSON.txt",
+            dataType: "text",
             success: function (data) {
                 try {
                     GC.MENU_MAP = JSON.parse(data);
