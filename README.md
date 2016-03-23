@@ -8,7 +8,7 @@ $ sudo pip install corsa
 [$ cd sc-web]
 $ corsa --app-dir . --allow-proxy http://52.72.172.54:8080 --allow-origin ALL
 ```
-Then browse to [localhost:8888/app/pageName.html](http://localhost:8888/app/pageName.html)
+Then browse to [localhost:8888/app/index.html](http://localhost:8888/app/index.html)
 
 ### Development tutorials, useful resource URLs, etc
 [docs.smarthealthit.org/tutorials/javascript/](http://docs.smarthealthit.org/tutorials/javascript/)  

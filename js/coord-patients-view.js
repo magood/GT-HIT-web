@@ -43,53 +43,26 @@ XDate, setTimeout, getDataSet*/
     function isPatientsViewVisible() {
         return GC.App.getViewType() == "patients";
     }
-    
-    function createHeaderPatientsTable(container) {
-        var headerTable = $(
-            '<table class="datatable-headers" cellspacing="0">' +
-                '<tr class="date"><th colspan="2">' + GC.str("STR_35") + '</th></tr>' +
-                '<tr class="age"><th colspan="2">' + GC.str("STR_36") + '</th></tr>' +
-            '</table>'
-        ).appendTo(container);
-        
-        $.each(scheme.header.rows, function(i, o) {
-            var tr = $("<tr/>"), 
-                colspan = 2,
-                td, units;
-            
-            if ( o.rowClass ) {
-                tr.addClass( o.rowClass );
-            }
-            
-            if ( o.units ) {
-                colspan = 1;
-                units = o.units[metrics];
-                if ($.isFunction(units)) {
-                    units = units();
-                }
-                $('<td/>').html(units).appendTo( tr );
-            } else if (o.secondCell) {
-                colspan = 1;
-                $('<td/>').html(o.secondCell).appendTo( tr );
-            }
-            
-            td = $('<td/>').html('<div>' + GC.str(o.label) + '</div>');
-            td.attr( "colspan", colspan );
-            td.prependTo( tr );
-            tr.appendTo(headerTable);
-        });
-        
-        $('<tr class="footer-row"><td colspan="2">&nbsp;</td></tr>').appendTo(headerTable);
-        
-        return headerTable;
+
+    function retrieveTableData(somedatatable, sometabledata) {
+        console.log('sometabledata ' + sometabledata.length);
+        console.log(sometabledata);
+        var somedataset = JSON.parse(sometabledata);
+        console.log('somedataset ' + somedataset.length);
+        console.log(somedataset);
+        for (var ind = 0; ind < somedataset.length; ind++) {
+            somedatatable.row.add(somedataset[ind]);
+        }
+        somedatatable.draw(false);
     }
-    
+
     function renderPatientsView( container ) {
         $(container).empty();
         
         var thetable = $("<table></table>").addClass("display");
         thetable.prop("id", "patient-table").prop("width", "100%");
         $(container).append(thetable);
+
         var thedatatable = $("#patient-table").DataTable( {
             columns: [
                 { title: "Name" },
@@ -101,7 +74,14 @@ XDate, setTimeout, getDataSet*/
                 { title: "DoB" }
             ]
         } );
-        
+
+        var thedataset = [];
+
+        var tabledata = window.sessionStorage.getItem('patientstable');
+        if (tabledata) {
+            retrieveTableData(thedatatable, tabledata);
+            return;
+        }
 //      var proxyprefix='http://crossorigin.me/';
 
         var proxyprefix='http://localhost:8888/proxy/'; // corsa; see README
@@ -135,19 +115,21 @@ XDate, setTimeout, getDataSet*/
                         }
                     }
                 }
-                thedatatable.row.add([
-                        (p.resource.name) ? p.resource.name[0].family + ", " + p.resource.name[0].given[0] + ((p.resource.name[0].given[1]) ? " " + p.resource.name[0].given[1] : "") : "Not known",
-                        p.resource.id,
-                        (p.resource.address) ? p.resource.address[0].postalCode: "",
+                var rdata = [
+                        (p.resource.name) ? ((p.resource.name[0].family) ? p.resource.name[0].family + ", " : "") + ((p.resource.name[0].given[0]) ? p.resource.name[0].given[0] : "") + ((p.resource.name[0].given[1]) ? " " + p.resource.name[0].given[1] : "") : "Not known",
+                        (p.resource.id) ? p.resource.id : "",
+                        (p.resource.address && p.resource.address[0].postalCode) ? p.resource.address[0].postalCode : "",
                         thePhone,
-                        (p.resource.address) ? p.resource.address[0].line.join(", ") + ", " + p.resource.address[0].city + ", " + p.resource.address[0].state : "Not known",
+                        (p.resource.address) ? ((p.resource.address[0].line) ? p.resource.address[0].line.join(", ") + ", " : "") + ((p.resource.address[0].city) ? p.resource.address[0].city + ", "  : "" )+ ((p.resource.address[0].state) ? p.resource.address[0].state : "") : "Not known",
                         theEmail,
-                        p.resource.birthDate
-                    ]
-                )
-//                    if (p.resource.deceased) {alert(p.resource.deceased + " " + heading.text());}
+                        (p.resource.birthDate) ? p.resource.birthDate : ""
+                    ];
+                thedatatable.row.add(rdata);
+                thedataset.push(rdata);
+//              if (p.resource.deceased) {alert(p.resource.deceased + " " + heading.text());}
             }
             thedatatable.draw(false);
+            window.sessionStorage.setItem('patientstable', JSON.stringify(thedataset));
             console.log("links " + patientResult.link.length);
             if (initialCall) {
                 var nResults = patientResult.total;
