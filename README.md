@@ -7,6 +7,10 @@ Security Council web interface
 [$ cd sc-web]
 $ python -m SimpleHTTPServer
 ```
+or
+```
+$ python3 -m http.server
+```
 Then browse to [localhost:8000](http://localhost:8000)
 
 ### Development tutorials, useful resource URLs, etc
