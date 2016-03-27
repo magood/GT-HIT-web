@@ -1,24 +1,24 @@
-/*global 
+/*global
 Chart, GC, PointSet, Raphael, console, $,
 jQuery, debugLog,
 XDate, setTimeout, getDataSet*/
 
 /*jslint undef: true, eqeq: true, nomen: true, plusplus: true, forin: true*/
 (function(NS, $) {
-    
+
     "use strict";
-    
+
     var selectedIndex = -1,
-    
+
         /**
          * The cached value from GC.App.getMetrics()
          */
         metrics = null,
-        
+
         PRINT_MODE = $("html").is(".before-print"),
-        
+
         EMPTY_MARK = PRINT_MODE ? "" : "&#8212;",
-        
+
         MILISECOND = 1,
         SECOND     = MILISECOND * 1000,
         MINUTE     = SECOND * 60,
@@ -27,7 +27,7 @@ XDate, setTimeout, getDataSet*/
         WEEK       = DAY * 7,
         MONTH      = WEEK * 4.348214285714286,
         YEAR       = MONTH * 12,
-        
+
         shortDateFormat = {
             "Years"   : "y",
             "Year"    : "y",
@@ -58,7 +58,7 @@ XDate, setTimeout, getDataSet*/
 
     function renderAllMessagesView( container ) {
         $(container).empty();
-        
+
         var thetable = $("<table></table>").addClass("display");
         thetable.prop("id", "allmessages-table").prop("width", "100%");
         $(container).append(thetable);
@@ -89,12 +89,10 @@ XDate, setTimeout, getDataSet*/
             retrieveTableData(thedatatable, tabledata);
             return;
         }
-//        var proxyprefix='http://crossorigin.me/';
-        var proxyprefix='http://localhost:8888/proxy/'; // corsa; see README
-//        var proxyprefix="";
+
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
         $.ajax({
-            url: proxyprefix + 'http://52.72.172.54:8080/fhir/baseDstu2/Communication' +
+            url: 'http://mihin.shib.al/fhir/baseDstu2/Communication' +
                 '?sent=%3C%3D' + todayDateStr + '&_count=50',
             dataType: 'json',
             success: function(allMessagesResult) { mergeHTML(allMessagesResult, true);}
@@ -168,7 +166,7 @@ XDate, setTimeout, getDataSet*/
                                 nRequests++;
                                 $.ajax({
                                     dataType: "json",
-                                    url: proxyprefix + newURL,
+                                    url: newURL,
                                     success: function (newResult) {
                                         console.log(newResult);
                                         mergeHTML(newResult, false);
@@ -195,15 +193,15 @@ XDate, setTimeout, getDataSet*/
         }//,
 //        selectByAge : PRINT_MODE ? $.noop : selectByAge
     };
-    
+
     $(function() {
         if (!PRINT_MODE) {
 //            $("#stage").bind("scroll resize", updateDataTableLayout);
 //            $(window).bind("resize", updateDataTableLayout);
-            
+
 //            updateDataTableLayout();
 //            initAnnotationPopups();
-            
+
 /*            $("#stage").on("click", ".datatable td, .datatable th", function() {
                 //debugger;
                 var i = 0, tmp = this;
@@ -213,36 +211,36 @@ XDate, setTimeout, getDataSet*/
                 }
                 GC.App.setSelectedRecord(GC.App.getPatient().getModel()[i], "selected");
             });
-*/            
+*/
             $("html").bind("set:viewType set:language", function(e) {
                 if (isAllMessagesViewVisible()) {
                     renderAllMessagesView("#view-messagesall");
                 }
             });
-            
+
             GC.Preferences.bind("set:metrics set:nicu set:currentColorPreset", function(e) {
                 if (isAllMessagesViewVisible()) {
                     renderAllMessagesView("#view-messagesall");
                 }
             });
-            
+
             GC.Preferences.bind("set", function(e) {
-                if (e.data.path == "roundPrecision.velocity.nicu" || 
+                if (e.data.path == "roundPrecision.velocity.nicu" ||
                     e.data.path == "roundPrecision.velocity.std") {
                     if (isAllMessagesViewVisible()) {
                         renderAllMessagesView("#view-messagesall");
                     }
                 }
             });
-            
+
 /*            GC.Preferences.bind("set:fontSize", function(e) {
                 setTimeout(updateDataTableLayout, 0);
             });
-*/            
+*/
             GC.Preferences.bind("set:timeFormat", function(e) {
                 renderAllMessagesView("#view-messagesall");
             });
-            
+
 /*            $("#stage")
             .on("dblclick", ".datatable td", function() {
                 var i = $(this).closest("tr").find("td").index(this);
@@ -252,7 +250,7 @@ XDate, setTimeout, getDataSet*/
                 var i = $(this).closest("tr").find("th").index(this);
                 GC.App.editEntry(GC.App.getPatient().getModel()[i]);
             });
-*/            
+*/
 /*            $("html").bind("appSelectionChange", function(e, selType, sel) {
                 if (selType == "selected") {
                     selectByAge(sel.age.getMilliseconds());
@@ -260,5 +258,5 @@ XDate, setTimeout, getDataSet*/
             });
 */        }
     });
-    
+
 }(GC, jQuery));
