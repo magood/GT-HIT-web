@@ -660,6 +660,10 @@ select.styled {
 	background-color: #445360;
 }
 
+.google-map-container {
+    height: 100%;
+}
+
 #google-map-canvas {
     position: absolute;
     left: 250px;
