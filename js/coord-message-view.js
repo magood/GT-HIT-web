@@ -48,7 +48,7 @@ XDate, setTimeout, getDataSet*/
         $(container).empty();
 
         var themessage = $("<div></div>").addClass("themessage");
-        themessage.prop("id", "themessage-div").prop("width", "100%");
+        themessage.attr("id", "themessage-div").attr("width", "100%");
         $(container).append(themessage);
         var message_id = (window.sessionStorage.getItem('message_id')) ?
                             window.sessionStorage.getItem('message_id') : "Communication-5679";
@@ -101,36 +101,46 @@ XDate, setTimeout, getDataSet*/
                                 ((messageResult.requestDetail.display) ?
                                     messageResult.requestDetail.display : "") : "";
             // TODO presentation, style, etcetera
-            var theid = $("<div></div>").addClass("message-id").html("ID: " + id);
-            theid.prop("message-id");
-            themessage.append(theid);
-            var thesender = $("<div></div>").addClass("message-sender").html("Sender: " + sender);
-            thesender.prop("message-sender")
-            themessage.append(thesender);
-            var therecipient = $("<div></div>").addClass("message-recipient").html("Recipient: " + recipient);
-            therecipient.prop("message-recipient")
-            themessage.append(therecipient);
-            var thesubject = $("<div></div>").addClass("message-subject").html("Subject: " + subject);
-            thesubject.prop("message-subject");
-            themessage.append(thesubject);
-            var thecategory = $("<div></div>").addClass("message-category").html("Category: " + category);
-            thecategory.prop("message-category");
-            themessage.append(thecategory);
-            var theencounter = $("<div></div>").addClass("message-encounter").html("Encounter: " + encounter);
-            theencounter.prop("message-encounter")
-            themessage.append(theencounter);
-            var thesent_time = $("<div></div>").addClass("message-sent-time").html("Sent: " + sent_time);
-            thesent_time.prop("message-sent-time")
-            themessage.append(thesent_time);
-            var therec_time = $("<div></div>").addClass("message-rec-time").html("Received: " + rec_time);
-            therec_time.prop("message-rec-time")
-            themessage.append(therec_time);
-            var thecontent = $("<div></div>").addClass("message-content").html("Content: " + content);
-            thecontent.prop("message-content");
-            themessage.append(thecontent);
-            var therequest_detail = $("<div></div>").addClass("message-request-detail").html("Request: " + request_detail);
-            therequest_detail.prop("message-request-detail")
-            themessage.append(therequest_detail);
+            themessage.append($("<div></div>")
+                                .addClass("message-id")
+                                .attr("id", "message-id")
+                                .html("ID: " + id));
+            themessage.append($("<div></div>")
+                                .addClass("message-sender")
+                                .attr("id", "message-sender")
+                                .html("Sender: " + sender));
+            themessage.append($("<div></div>")
+                                .addClass("message-recipient")
+                                .attr("id", "message-recipient")
+                                .html("Recipient: " + recipient));
+            themessage.append($("<div></div>")
+                                .addClass("message-subject")
+                                .attr("id", "message-subject")
+                                .html("Subject: " + subject));
+            themessage.append($("<div></div>")
+                                .addClass("message-category")
+                                .attr("id", "message-category")
+                                .html("Category: " + category));
+            themessage.append($("<div></div>")
+                                .addClass("message-encounter")
+                                .attr("id", "message-encounter")
+                                .html("Encounter: " + encounter));
+            themessage.append($("<div></div>")
+                                .addClass("message-sent-time")
+                                .attr("id", "message-sent-time")
+                                .html("Sent: " + sent_time));
+            themessage.append($("<div></div>")
+                                .addClass("message-rec-time")
+                                .attr("id", "message-rec-time")
+                                .html("Received: " + rec_time));
+            themessage.append($("<div></div>")
+                                .addClass("message-content")
+                                .attr("id", "message-content")
+                                .html("Content: " + content));
+            themessage.append($("<div></div>")
+                                .addClass("message-request-detail")
+                                .attr("id", "message-request-detail")
+                                .html("Request: " + request_detail));
         }
     }
 
