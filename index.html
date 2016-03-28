@@ -54,6 +54,7 @@
         <!-- coordinator-facing modules -->
         <script type="text/javascript" src="js/coord-patients-view.js"></script>
         <script type="text/javascript" src="js/coord-allmessages-view.js"></script>
+        <script type="text/javascript" src="js/coord-message-view.js"></script>
     </head>
     <body>
 
@@ -244,8 +245,8 @@
                 <!-- View Mode -->
                 <div id="view-mode">
                     <!-- hide the parent tab -->
-                    <span id="allmessages-tab" data-value="allmessages" data-translatecontent="STR_3164">INBOX</span>
-                    <span id="patientlist-tab" data-value="patients" data-translatecontent="STR_3166">PATIENTS</span>
+                    <span id="allmessages-tab" data-value="allmessages" data-translatecontent="STR_3164"></span>
+                    <span id="patientlist-tab" data-value="patients" data-translatecontent="STR_3166"></span>
                     <span id="parent-tab" data-value="parent" data-translatecontent="STR_3042"></span>
                     <span data-value="table" data-translatecontent="STR_3043"></span>
                     <span data-value="graphs" data-translatecontent="STR_3044"></span>
@@ -455,6 +456,7 @@
             <div id="view-table" class="tab-panel"></div>
             <div id="view-patients" class="tab-panel"></div>
             <div id="view-messagesall" class="tab-panel"></div>
+            <div id="view-message" class="tab-panel"></div>
         </div>
         <div id="timeline-bottom" class="timeline">
             <div class="gest"></div>

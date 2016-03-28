@@ -624,6 +624,7 @@ window.GC = (function(NS) {
         STR_3164  : { en : "INBOX", es : "ENTRADAS", bg : "Входящи"},
         STR_3165  : { en : "Q&A", es : "PREGUNTAS", bg : "Въпроси"},
         STR_3166  : { en : "PATIENTS", es : "PACIENTES", bg : "Пациенти"},
+        STR_3167  : { en : "MESSAGE", es : "MENSAJE", bg : "съобщение"},
 
         // End Of Header Translations-----------------------------------------------------------------------------------------------------------------
         

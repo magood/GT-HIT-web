@@ -82,6 +82,11 @@ XDate, setTimeout, getDataSet*/
             })
             .appendTo('div.dataTables_length');
 
+        $("#allmessages-table").click(function () {
+            // TODO "#allmessages-table tbody tr" send Communication FHIR URL to message view page
+            GC.App.setViewType("message");
+        });
+
         var thedataset = [];
 
         var tabledata = window.sessionStorage.getItem('allmessagestable');

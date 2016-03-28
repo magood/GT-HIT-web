@@ -303,9 +303,17 @@
                 $("#print-button").html("Print Table");
                 break;
             case "patients":
-                // TODO
+                GC.PatientsView.render();
+                //TODO printing
+                break;
             case "allmessages":
-                // TODO
+                GC.AllMessagesView.render();
+                //TODO printing
+                break;
+            case "message":
+                GC.MessageView.render();
+                //TODO printing
+                break;
             default:
                 break;
         }
@@ -874,6 +882,7 @@
                 $("#view-table"   )   [type == "table"       ? "show" : "hide"]();
                 $("#view-patients")   [type == "patients"    ? "show" : "hide"]();
                 $("#view-messagesall")[type == "allmessages" ? "show" : "hide"]();
+                $("#view-message")    [type == "message"     ? "show" : "hide"]();
 
                 var hidepatientspecific = (type == "patients" || type == "allmessages");
 
