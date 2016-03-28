@@ -13,8 +13,8 @@
         <link rel="stylesheet" type="text/css" href="css/scroller.dataTables.css"/>
 
         <!-- Standard JS Libraries -->
-        <script src="js/polyfills.js"></script>
-        <script src="node_modules/fhirclient/fhir-client.js"></script>
+        <script type="text/javascript" src="js/polyfills.js"></script>
+        <script type="text/javascript" src="node_modules/fhirclient/fhir-client.js"></script>
         <script type="text/javascript" src="load-fhir-data.js"></script>
         <script type="text/javascript" src="lib/jquery-1.8.2.js"></script>
         <script type="text/javascript" src="lib/jquery-ui-1.9.1.js"></script>
@@ -49,12 +49,16 @@
         <script type="text/javascript" src="js/gc-grid-view.js"></script>
         <script type="text/javascript" src="js/gc-boneage-calculator.js"></script>
         <script type="text/javascript" src="js/gc-style-generator.js"></script>
-        <script src="js/charts/mini_charts.js"></script>
+        <script type="text/javascript" src="js/charts/mini_charts.js"></script>
 
         <!-- coordinator-facing modules -->
         <script type="text/javascript" src="js/coord-patients-view.js"></script>
         <script type="text/javascript" src="js/coord-allmessages-view.js"></script>
         <script type="text/javascript" src="js/coord-message-view.js"></script>
+        <script type="text/javascript" src="js/coord-map-view.js"></script>
+
+        <!-- google maps -->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     </head>
     <body>
 
@@ -245,6 +249,7 @@
                 <!-- View Mode -->
                 <div id="view-mode">
                     <!-- hide the parent tab -->
+                    <span id="map-tab" data-value="maps" data-translatecontent="STR_3163"></span>
                     <span id="allmessages-tab" data-value="allmessages" data-translatecontent="STR_3164"></span>
                     <span id="patientlist-tab" data-value="patients" data-translatecontent="STR_3166"></span>
                     <span id="parent-tab" data-value="parent" data-translatecontent="STR_3042"></span>
@@ -457,6 +462,7 @@
             <div id="view-patients" class="tab-panel"></div>
             <div id="view-messagesall" class="tab-panel"></div>
             <div id="view-message" class="tab-panel"></div>
+            <div id="view-map" class="tab-panel"></div>
         </div>
         <div id="timeline-bottom" class="timeline">
             <div class="gest"></div>

@@ -314,6 +314,10 @@
                 GC.MessageView.render();
                 //TODO printing
                 break;
+            case "map":
+                GC.MapView.render();
+                //TODO printing
+                break;
             default:
                 break;
         }
@@ -883,6 +887,7 @@
                 $("#view-patients")   [type == "patients"    ? "show" : "hide"]();
                 $("#view-messagesall")[type == "allmessages" ? "show" : "hide"]();
                 $("#view-message")    [type == "message"     ? "show" : "hide"]();
+                $("#view-map")        [type == "maps"         ? "show" : "hide"]();
 
                 var hidepatientspecific = (type == "patients" || type == "allmessages");
 
