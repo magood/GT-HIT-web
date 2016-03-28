@@ -660,6 +660,21 @@ select.styled {
 	background-color: #445360;
 }
 
+#google-map-canvas {
+    position: absolute;
+    left: 250px;
+    right:0;
+    top: 0px;
+    overflow: hidden;
+    height: 100%;
+    z-index: 0;
+}
+
+.map-address-list {
+    width:250px;
+    padding:1em;
+}
+
 /* ---------------------------- toggle-button ------------------------------- */
 input.toggle-button {
 	display: none;

@@ -46,7 +46,32 @@ XDate, setTimeout, getDataSet*/
 
     function renderMapView( container ) {
         $(container).empty();
-        $(container).append($("<div></div>").html("TODO Map goes here"));
+        $(container).append($("<div></div>")
+                        .addClass("map-address-list")
+                        .append($("<div></div>")
+                            .addClass("well")
+                            .append($("<div></div>")
+                                .addClass("row")
+                                .append($("<h3></h3>")
+                                    .html("Patient's House"))
+                                .append("255 Ted Turner Dr SW, Atlanta, GA 30303")))
+                        .append($("<div></div>")
+                            .addClass("well")
+                            .append($("<div></div>")
+                                .addClass("row")
+                                .append($("<h3></h3>")
+                                    .append("Woodruff Park Playground"))
+                                .append("Peachtree St NE, Atlanta, GA 30303"))
+                            .append($("<div></div>")
+                                .addClass("row")
+                                .append($("<h5></h5>")
+                                    .append($("<span></span>")
+                                        .addClass("label label-default")
+                                        .append("Quality Score"))
+                                    .append(" 7/10")))));
+        //address1 = $("<div></div>").addClass("well");
+        //$(container).append(addresslist);
+        $(container).append($("<div></div>").attr("id", "google-map-canvas").html("TODO Map goes here"));
         
     }
 
