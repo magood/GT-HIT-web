@@ -50,9 +50,11 @@ XDate, setTimeout, getDataSet*/
         var themessage = $("<div></div>").addClass("themessage");
         themessage.prop("id", "themessage-div").prop("width", "100%");
         $(container).append(themessage);
+        var message_id = (window.sessionStorage.getItem('message_id')) ?
+                            window.sessionStorage.getItem('message_id') : "Communication-5679";
         
         $.ajax({
-            url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication/Communication-5679',
+            url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication/' + message_id,
             dataType: 'json',
             success: mergeHTML
         });
