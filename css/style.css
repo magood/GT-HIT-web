@@ -215,7 +215,8 @@ ul.bullet-list li {
 	margin: 10px;
 }
 
-.hide-patient-specific {
+.hide-patient-specific,
+.hide-gc-specific {
         display: none !important;
 }
 

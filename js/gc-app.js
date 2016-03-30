@@ -915,6 +915,15 @@
                 //hide patient-specific headers
                 $("#time-ranges").toggleClass("hide-patient-specific", hidepatientspecific);
                 $("#info-bar").toggleClass("hide-patient-specific", hidepatientspecific);
+                // we keep the 2 different variables as there's a patient details header
+                // (that is currently, incorrectly, not displaying at all in our modification of the app)
+                // that we'll need visible for the patient-specific coordinator views
+                // see .has-patient-header class for the <HTML> tag
+                // TODO modify the injection of that in JS
+
+                //hide chart-specific headers
+                $("#time-ranges").toggleClass("hide-gc-specific", coord_patientspecific);
+                $("#info-bar").toggleClass("hide-gc-specific", coord_patientspecific);
 
                 setStageHeight();
 
