@@ -67,6 +67,7 @@ XDate, setTimeout, getDataSet*/
             }
             console.log(questionsResult);
             var id = (questionsResult.id) ? questionsResult.id : "";
+            var narrative = (questionsResult.text) ? questionsResult.text.div : "";
             var version = (questionsResult.version) ? questionsResult.version : "";
             var status = questionsResult.status;
             var qdate = questionsResult.date ? questionsResult.date : "";
@@ -112,6 +113,10 @@ XDate, setTimeout, getDataSet*/
                                 .addClass("questions-contact")
                                 .attr("id", "questions-contact")
                                 .html("Contact: " + contact));
+            thequestions.append($("<div></div>")
+                                .addClass("questions-narrative")
+                                .attr("id", "questions-narrative")
+                                .html(narrative));
             for (var qind = 0; qind < llgroup.question.length; qind++) {
                 var questiondata = llgroup.question[qind];
                 var thequestion = questiondata.text ? questiondata.text : "";
@@ -123,11 +128,11 @@ XDate, setTimeout, getDataSet*/
                 }
                 thequestions.append($("<div></div>")
                                     .addClass("questions-thequestion")
-                                    .attr("id", "questions-thequestion")
+                                    .attr("id", "questions-thequestion-" + qind)
                                     .html("Question: " + thequestion));
                 thequestions.append($("<div></div>")
                                     .addClass("questions-theoptions")
-                                    .attr("id", "questions-theoptions")
+                                    .attr("id", "questions-theoptions-" + qind)
                                     .html("Options: " + theoptions));
             }
         }
