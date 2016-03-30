@@ -47,7 +47,7 @@ XDate, setTimeout, getDataSet*/
     function renderMapView( container ) {
         $(container).empty();
         $(container).append($("<div></div>")
-                        .addClass("map-address-list")
+                        .addClass("map-address-list bb")
                         .append($("<div></div>")
                             .addClass("well")
                             .append($("<div></div>")

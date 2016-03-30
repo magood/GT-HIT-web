@@ -215,10 +215,6 @@ ul.bullet-list li {
 	margin: 10px;
 }
 
-.hide-patient-specific {
-        display: none !important;
-}
-
 /******************************************************************************/
 table.header-table {
 	width: 100%;
@@ -278,6 +274,10 @@ table.header-table tr.last td {
 }
 .has-patient-header .header-table-wrap {
 	height  : 2.8em;
+}
+
+.view-coord .header-table-wrap > * {
+    display : none;
 }
 
 
@@ -1540,7 +1540,8 @@ span.title {
 }
 .view-table #the-tab .disable-overlay,
 .view-parental #the-tab .disable-overlay,
-.view-coord #the-tab .disable-overlay {
+.view-coord #the-tab .disable-overlay,
+.view-coord-ps #the-tab .disable-overlay {
 	display: block;
 }
 
@@ -2994,6 +2995,8 @@ svg marker use {
 .view-table #timeline-bottom, 
 .view-coord #timeline-top,
 .view-coord #timeline-bottom,
+.view-coord-ps #timeline-top,
+.view-coord-ps #timeline-bottom,
 .view-table .chart-stack-panel {
 	display: none !important;
 }

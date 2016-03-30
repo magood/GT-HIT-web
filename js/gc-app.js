@@ -318,6 +318,10 @@
                 GC.MapView.render();
                 //TODO printing
                 break;
+            case "questions":
+                GC.QuestionView.render();
+                //TODO printing
+                break;
             default:
                 break;
         }
@@ -887,17 +891,21 @@
                 $("#view-patients")   [type == "patients"    ? "show" : "hide"]();
                 $("#view-messagesall")[type == "allmessages" ? "show" : "hide"]();
                 $("#view-message")    [type == "message"     ? "show" : "hide"]();
-                $("#view-map")        [type == "maps"         ? "show" : "hide"]();
+                $("#view-map")        [type == "maps"        ? "show" : "hide"]();
+                $("#view-questions")  [type == "questions"   ? "show" : "hide"]();
 
                 var hidepatientspecific = (type == "patients" || type == "allmessages");
+                var coord_patientspecific = (type == "maps" || type == "message" || type == "questions");
 
                 $("html")
-                .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader"))
+                .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader") || true)
+                // TODO grapple with the preferences setting
                 .toggleClass("view-clinical", type == "graphs" || type == "table")
                 .toggleClass("view-parental", type == "parent")
                 .toggleClass("view-charts", type == "graphs")
                 .toggleClass("view-table", type == "table")
-                .toggleClass("view-coord", hidepatientspecific);
+                .toggleClass("view-coord", hidepatientspecific)
+                .toggleClass("view-coord-ps", coord_patientspecific);
 
                 //hide parent tab
                 if ( ! GC.Preferences._data.isParentTabShown) {
@@ -905,9 +913,12 @@
                     $("#view-parental")["hide"]();
                 }
 
-                //hide patient-specific headers
-                $("#time-ranges").toggleClass("hide-patient-specific", hidepatientspecific);
-                $("#info-bar").toggleClass("hide-patient-specific", hidepatientspecific);
+                //hide gc-specific headers
+                $("#time-ranges") [(hidepatientspecific || coord_patientspecific) ? "hide" : "show"]();
+                $("#info-bar")    [(hidepatientspecific || coord_patientspecific) ? "hide" : "show"]();
+                // we keep the 2 different variables as there's a patient details header
+                // (that is currently, somewhat incorrectly, not displaying in the gc app as a
+                // result of funky preferences override
 
                 setStageHeight();
 
