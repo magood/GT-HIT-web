@@ -57,6 +57,7 @@
         <script type="text/javascript" src="js/coord-allmessages-view.js"></script>
         <script type="text/javascript" src="js/coord-message-view.js"></script>
         <script type="text/javascript" src="js/coord-map-view.js"></script>
+        <script type="text/javascript" src="js/coord-question-view.js"></script>
 
         <!-- google maps -->
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -250,6 +251,7 @@
                 <!-- View Mode -->
                 <div id="view-mode">
                     <!-- hide the parent tab -->
+                    <span id="question-tab" data-value="questions" data-translatecontent="STR_3165"></span>
                     <span id="map-tab" data-value="maps" data-translatecontent="STR_3163"></span>
                     <span id="allmessages-tab" data-value="allmessages" data-translatecontent="STR_3164"></span>
                     <span id="patientlist-tab" data-value="patients" data-translatecontent="STR_3166"></span>
@@ -464,6 +466,7 @@
             <div id="view-messagesall" class="tab-panel"></div>
             <div id="view-message" class="tab-panel"></div>
             <div id="view-map" class="tab-panel"></div>
+            <div id="view-questions" class="tab-panel"></div>
         </div>
         <div id="timeline-bottom" class="timeline">
             <div class="gest"></div>
