@@ -116,25 +116,44 @@ XDate, setTimeout, getDataSet*/
             thequestions.append($("<div></div>")
                                 .addClass("questions-narrative")
                                 .attr("id", "questions-narrative")
-                                .html(narrative));
+                                .html("<h2>" + narrative + "</h2>"));
+            var questiondom = $("<div></div>")
+                            .addClass("container")
             for (var qind = 0; qind < llgroup.question.length; qind++) {
                 var questiondata = llgroup.question[qind];
                 var thequestion = questiondata.text ? questiondata.text : "";
-                var theoptions = "";
+                var theoptions = [];
                 for (var ind = 0; (questiondata.option) && (ind < questiondata.option.length); ind++) {
-                    theoptions += questiondata.option[ind].code ? questiondata.option[ind].code + "→" : "";
-                    theoptions += questiondata.option[ind].display ? questiondata.option[ind].display : "";
-                    theoptions += " &nbsp ";
+                    theoptions.push([(questiondata.option[ind].code ? questiondata.option[ind].code : ""),
+                                     (questiondata.option[ind].display ? questiondata.option[ind].display : "")]);
                 }
-                thequestions.append($("<div></div>")
-                                    .addClass("questions-thequestion")
-                                    .attr("id", "questions-thequestion-" + qind)
-                                    .html("Question: " + thequestion));
-                thequestions.append($("<div></div>")
-                                    .addClass("questions-theoptions")
-                                    .attr("id", "questions-theoptions-" + qind)
-                                    .html("Options: " + theoptions));
+                var optdom = $("<div></div>")
+                                .addClass("btn-group btn-group-justified")
+                                .attr("data-toggle", "buttons");
+                for (var optind = 0; optind < theoptions.length; optind++) {
+                    optdom.append($("<label></label>")
+                                        .addClass("btn btn-default btn-responsive questions-theoptions")
+                                        .attr("id", "questions-theoptions-" + qind + "-" + optind)
+                                        .append($("<input />")
+                                            .attr("type", "radio")
+                                            .attr("id", "qopt-" + qind + "-" + optind)
+                                            .attr("name", "qopt-" + qind)
+                                            .attr("value", theoptions[optind][0]))
+                                        .append(theoptions[optind][1]));
+                    $("#questions-theoptions-" + qind + "-0").addClass("active")
+                    $("#qopt-" + qind + "-0").prop("checked", true);
+                }
+                questiondom.append($("<div></div>")
+                                        .addClass("row well")
+                                        .append($("<div></div>")
+                                            .addClass("questions-thequestion col-sm-3 bb")
+                                            .attr("id", "questions-thequestion-" + qind)
+                                        .html(thequestion))
+                                        .append($("<div></div>")
+                                            .addClass("col-sm-9 bb")
+                                            .append(optdom)));
             }
+            thequestions.append(questiondom);
         }
     }
 
