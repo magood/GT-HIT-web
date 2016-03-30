@@ -215,11 +215,6 @@ ul.bullet-list li {
 	margin: 10px;
 }
 
-.hide-patient-specific,
-.hide-gc-specific {
-        display: none !important;
-}
-
 /******************************************************************************/
 table.header-table {
 	width: 100%;

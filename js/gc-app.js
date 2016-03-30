@@ -898,7 +898,8 @@
                 var coord_patientspecific = (type == "maps" || type == "message" || type == "questions");
 
                 $("html")
-                .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader"))
+                .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader") || coord_patientspecific) // TODO better logic needed when we grapple with the reason for the
+                // preferences setting
                 .toggleClass("view-clinical", type == "graphs" || type == "table")
                 .toggleClass("view-parental", type == "parent")
                 .toggleClass("view-charts", type == "graphs")
@@ -912,18 +913,12 @@
                     $("#view-parental")["hide"]();
                 }
 
-                //hide patient-specific headers
-                $("#time-ranges").toggleClass("hide-patient-specific", hidepatientspecific);
-                $("#info-bar").toggleClass("hide-patient-specific", hidepatientspecific);
+                //hide gc-specific headers
+                $("#time-ranges") [(hidepatientspecific || coord_patientspecific) ? "hide" : "show"]();
+                $("#info-bar")    [(hidepatientspecific || coord_patientspecific) ? "hide" : "show"]();
                 // we keep the 2 different variables as there's a patient details header
-                // (that is currently, incorrectly, not displaying at all in our modification of the app)
-                // that we'll need visible for the patient-specific coordinator views
-                // see .has-patient-header class for the <HTML> tag
-                // TODO modify the injection of that in JS
-
-                //hide chart-specific headers
-                $("#time-ranges").toggleClass("hide-gc-specific", coord_patientspecific);
-                $("#info-bar").toggleClass("hide-gc-specific", coord_patientspecific);
+                // (that is currently, somewhat incorrectly, not displaying in the gc app as a
+                // result of funky preferences override
 
                 setStageHeight();
 
