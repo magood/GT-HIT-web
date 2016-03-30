@@ -276,6 +276,10 @@ table.header-table tr.last td {
 	height  : 2.8em;
 }
 
+.view-coord .header-table-wrap > * {
+    display : none;
+}
+
 
 .settings-expanded .header-table-wrap {
 	height: auto;

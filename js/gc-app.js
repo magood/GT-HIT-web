@@ -898,8 +898,8 @@
                 var coord_patientspecific = (type == "maps" || type == "message" || type == "questions");
 
                 $("html")
-                .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader") || coord_patientspecific) // TODO better logic needed when we grapple with the reason for the
-                // preferences setting
+                .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader") || true)
+                // TODO grapple with the preferences setting
                 .toggleClass("view-clinical", type == "graphs" || type == "table")
                 .toggleClass("view-parental", type == "parent")
                 .toggleClass("view-charts", type == "graphs")

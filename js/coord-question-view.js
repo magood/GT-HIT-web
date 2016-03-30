@@ -113,7 +113,7 @@ XDate, setTimeout, getDataSet*/
                                 .attr("id", "questions-contact")
                                 .html("Contact: " + contact));
             for (var qind = 0; qind < llgroup.question.length; qind++) {
-                var questiondata = llgroup.question[qind]; // TODO replace with loop
+                var questiondata = llgroup.question[qind];
                 var thequestion = questiondata.text ? questiondata.text : "";
                 var theoptions = "";
                 for (var ind = 0; (questiondata.option) && (ind < questiondata.option.length); ind++) {
