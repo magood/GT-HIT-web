@@ -87,15 +87,6 @@ XDate, setTimeout, getDataSet*/
                 }
                 break;
             } // temporary for initial code; TODO replace with loop / more advanced logic
-            var question1 = llgroup.question[0]; // TODO replace with loop
-            var thequestion = question1.text ? question1.text : "";
-            var theoptions = "";
-            
-            for (var ind = 0; (question1.option) && (ind < question1.option.length); ind++) {
-                theoptions += question1.option[ind].code ? question1.option[ind].code + "→" : "";
-                theoptions += question1.option[ind].display ? question1.option[ind].display : "";
-                theoptions += " &nbsp ";
-            }
             // TODO presentation, style, etcetera
             thequestions.append($("<div></div>")
                                 .addClass("questions-id")
@@ -121,14 +112,24 @@ XDate, setTimeout, getDataSet*/
                                 .addClass("questions-contact")
                                 .attr("id", "questions-contact")
                                 .html("Contact: " + contact));
-            thequestions.append($("<div></div>")
-                                .addClass("questions-thequestion")
-                                .attr("id", "questions-thequestion")
-                                .html("Question: " + thequestion));
-            thequestions.append($("<div></div>")
-                                .addClass("questions-theoptions")
-                                .attr("id", "questions-theoptions")
-                                .html("Options: " + theoptions));
+            for (var qind = 0; qind < llgroup.question.length; qind++) {
+                var questiondata = llgroup.question[qind]; // TODO replace with loop
+                var thequestion = questiondata.text ? questiondata.text : "";
+                var theoptions = "";
+                for (var ind = 0; (questiondata.option) && (ind < questiondata.option.length); ind++) {
+                    theoptions += questiondata.option[ind].code ? questiondata.option[ind].code + "→" : "";
+                    theoptions += questiondata.option[ind].display ? questiondata.option[ind].display : "";
+                    theoptions += " &nbsp ";
+                }
+                thequestions.append($("<div></div>")
+                                    .addClass("questions-thequestion")
+                                    .attr("id", "questions-thequestion")
+                                    .html("Question: " + thequestion));
+                thequestions.append($("<div></div>")
+                                    .addClass("questions-theoptions")
+                                    .attr("id", "questions-theoptions")
+                                    .html("Options: " + theoptions));
+            }
         }
     }
 
