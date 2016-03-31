@@ -889,7 +889,7 @@
                 $("#view-parental") [type == "parent"      ? "show" : "hide"]();
                 $("#view-table"   ) [type == "table"       ? "show" : "hide"]();
                 $("#view-patients") [type == "patients"    ? "show" : "hide"]();
-                $("#view-messages") [((type == "allmessages") || (type == "messages"))? "show" : "hide"]();
+                $("#view-messages") [((type == "allmessages") || (type == "psmessages"))? "show" : "hide"]();
                 $("#view-message")  [type == "message"     ? "show" : "hide"]();
                 $("#view-map")      [type == "maps"        ? "show" : "hide"]();
                 $("#view-questions")[type == "questions"   ? "show" : "hide"]();
