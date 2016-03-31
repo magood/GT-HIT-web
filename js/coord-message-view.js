@@ -65,7 +65,6 @@ XDate, setTimeout, getDataSet*/
             if (messageResult.data) {
                 messageResult = messageResult.data;
             }
-            console.log(messageResult);
             var id = (messageResult.id) ? messageResult.id : "";
             var sender = ((messageResult.sender) ?
                             ((messageResult.sender.display) ? messageResult.sender.display + " " : "") +
