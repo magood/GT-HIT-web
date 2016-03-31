@@ -105,7 +105,7 @@ XDate, setTimeout, getDataSet*/
             success: function(psMessagesResult) { mergeHTML(psMessagesResult, true);}
         });
         function mergeHTML(psMessagesResult, initialCall) {
-            if (!psMessagesResult) return;
+            if (!psMessagesResult || psMessagesResult.total == "0") return;
             if (psMessagesResult.data) {
                 psMessagesResult = psMessagesResult.data;
             }
