@@ -29,10 +29,10 @@ window.GC = window.GC || {};
         // See the toString method for the rendering template
         version : {
             major    : 0,
-            minor    : 9,
-            build    : 9,
+            minor    : 0,
+            build    : 0,
             revision : 0,
-            state    : "BETA", // dev|alpha|beta|rc|r
+            state    : "DEV", // dev|alpha|beta|rc|r
             
             asString : function() {
                 return  this.major    + "." + 
