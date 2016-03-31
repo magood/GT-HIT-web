@@ -193,7 +193,7 @@ XDate, setTimeout, getDataSet*/
 //            if (PRINT_MODE) {
 //                renderTableViewForPrint("#view-table");
 //            } else {
-                renderAllMessagesView("#view-messagesall");
+                renderAllMessagesView("#view-messages");
 //            }
         }//,
 //        selectByAge : PRINT_MODE ? $.noop : selectByAge
@@ -219,13 +219,13 @@ XDate, setTimeout, getDataSet*/
 */
             $("html").bind("set:viewType set:language", function(e) {
                 if (isAllMessagesViewVisible()) {
-                    renderAllMessagesView("#view-messagesall");
+                    renderAllMessagesView("#view-messages");
                 }
             });
 
             GC.Preferences.bind("set:metrics set:nicu set:currentColorPreset", function(e) {
                 if (isAllMessagesViewVisible()) {
-                    renderAllMessagesView("#view-messagesall");
+                    renderAllMessagesView("#view-messages");
                 }
             });
 
@@ -233,7 +233,7 @@ XDate, setTimeout, getDataSet*/
                 if (e.data.path == "roundPrecision.velocity.nicu" ||
                     e.data.path == "roundPrecision.velocity.std") {
                     if (isAllMessagesViewVisible()) {
-                        renderAllMessagesView("#view-messagesall");
+                        renderAllMessagesView("#view-messages");
                     }
                 }
             });
@@ -243,7 +243,7 @@ XDate, setTimeout, getDataSet*/
             });
 */
             GC.Preferences.bind("set:timeFormat", function(e) {
-                renderAllMessagesView("#view-messagesall");
+                renderAllMessagesView("#view-messages");
             });
 
 /*            $("#stage")
