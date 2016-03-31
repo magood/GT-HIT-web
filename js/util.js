@@ -119,6 +119,31 @@ if ( !Array.prototype.indexOf ) {
         return Math.round( floatVal( x, defaultValue ) );
     }
     
+    function urlParam(p, forceArray) {
+        if (forceArray === undefined) {
+            forceArray = false;
+        }
+
+        var theq = location.search.substr(1);
+        var qdata = theq.split("&");
+        var result = [];
+
+        for (var ind = 0; ind < qdata.length; ind++) {
+            var theitem = qdata[ind].split("=");
+            if (theitem[0] === p) {
+                result.push(decodeURIComponent(theitem[1]));
+            }
+        }
+
+        if (forceArray) {
+            return result;
+        }
+        if (result.length === 0) {
+            return null;
+        }
+        return result[0];
+    }
+    
     function roundToPrecision(n, precision) {
         n = parseFloat(n);
         if ( isNaN(n) || !isFinite(n) ) {
@@ -1193,6 +1218,7 @@ if ( !Array.prototype.indexOf ) {
         floatVal              : floatVal,
         intVal                : intVal,
         round                 : round,
+        urlParam              : urlParam,
         TaskQueue             : TaskQueue,
         luma                  : luma,
         mixColors             : mixColors,

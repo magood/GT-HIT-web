@@ -61,6 +61,7 @@ window.GC = window.GC || {};
     // These settings are just default (initial) values. They can be overriden 
     // by whatever is stored on the server as preferences
     // =========================================================================
+    var role = GC.Util.urlParam("role");
     var settings = {
         isParentTabShown : true,
         hidePatientHeader: true,
@@ -81,7 +82,9 @@ window.GC = window.GC || {};
         fontSize : 14,
         fontFamily: "'Helvetica Neue', Arial, Helvetica, sans-serif",
         
-        initialView : "graphs", // graphs | table | parent
+        initialView : ((role && (role == "patient" || role == "parent")) ? "graphs" : "allmessages"),
+        // patient/parent {graphs | table | parent} |
+        // coordinator {graphs | table | parent | patients | maps | questions | allmessages }
         
         // ref: http://arshaw.com/xdate/#Formatting
         dateFormat : "ddMMMyyyy",
