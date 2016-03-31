@@ -54,14 +54,14 @@ window.GC = window.GC || {};
         
         // set to true to enable the editing of the parents in the header
         patientFamilyHistoryEditable : false,
-        patientDataEditable : false
+        patientDataEditable : false,
+        role : (GC.Util.urlParam("role") ? GC.Util.urlParam("role") : 'coordinator')
     };
     
     // =========================================================================
     // These settings are just default (initial) values. They can be overriden 
     // by whatever is stored on the server as preferences
     // =========================================================================
-    var role = GC.Util.urlParam("role");
     var settings = {
         isParentTabShown : true,
         hidePatientHeader: true,
@@ -82,9 +82,9 @@ window.GC = window.GC || {};
         fontSize : 14,
         fontFamily: "'Helvetica Neue', Arial, Helvetica, sans-serif",
         
-        initialView : ((role && (role == "patient" || role == "parent")) ? "graphs" : "allmessages"),
-        // patient/parent {graphs | table | parent} |
-        // coordinator {graphs | table | parent | patients | maps | questions | allmessages }
+        initialView : (readOnlySettings.role == "coordinator" ? "allmessages" : "graphs"),
+        // patient/parent {graphs | table | parent | questions | maps | psmessages} |
+        // coordinator {graphs | table | parent | patients | maps | questions | allmessages | psmessages}
         
         // ref: http://arshaw.com/xdate/#Formatting
         dateFormat : "ddMMMyyyy",
@@ -522,19 +522,35 @@ window.GC = window.GC || {};
     setChartSettingsColors("lengthChart",   settings.colorPrresets.Default["Length"]);
     setChartSettingsColors("headChart",     settings.colorPrresets.Default["Head C"]);
     setChartSettingsColors("bodyMassChart", settings.colorPrresets.Default["BMI"]);
-    
+
     GC.chartSettings  = $.extend(true, {}, settings, readOnlySettings);
     GC.scratchpadData = $.extend(true, {}, scratchpadData);
     
     GC.__INITIAL__chartSettings = $.extend(true, {}, GC.chartSettings);
     
+    if (localStorage.preferences) { // not the neatest, yet the various layers of indirection make this
+                                    // the most direct approach
+        var pref = JSON.parse(localStorage.getItem("preferences"));
+        switch(pref.initialView) {
+            case "allmessages":
+            case "patients":
+                if (readOnlySettings.role !== "coordinator") {
+                    pref.initialView = "graphs"
+                    localStorage.setItem("preferences", JSON.stringify(pref));
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     // GC.Preferences
     // =========================================================================
     GC.Preferences = new GC.Model(
         GC.chartSettings, 
         readOnlySettings
     );
-    
+
     // GC.Scratchpad
     // =========================================================================
     GC.Scratchpad  = new GC.Model(
