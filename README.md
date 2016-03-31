@@ -12,7 +12,7 @@ or
 $ python3 -m http.server
 ```
 Then browse to [localhost:8000](http://localhost:8000)  
-For the patient/parent view, that's [localhost:8000/index.html?role=patient](localhost:8000/index.html?role=patient) or [localhost:8000/index.html?role=parent](localhost:8000/index.html?role=parent)
+For the patient/parent view, that's [localhost:8000/index.html?role=patient](http://localhost:8000/index.html?role=patient) or [localhost:8000/index.html?role=parent](http://localhost:8000/index.html?role=parent)
 
 ### Development tutorials, useful resource URLs, etc
 [docs.smarthealthit.org/tutorials/javascript/](http://docs.smarthealthit.org/tutorials/javascript/)  
