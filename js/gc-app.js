@@ -894,6 +894,8 @@
                 $("#view-map")        [type == "maps"        ? "show" : "hide"]();
                 $("#view-questions")  [type == "questions"   ? "show" : "hide"]();
 
+                $("#patientlist-tab") [GC.chartSettings.role == "coordinator" ? "show" : "hide"]();
+
                 var hidepatientspecific = (type == "patients" || type == "allmessages");
                 var coord_patientspecific = (type == "maps" || type == "message" || type == "questions");
 
