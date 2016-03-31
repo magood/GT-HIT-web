@@ -885,14 +885,14 @@
                     $(this).toggleClass("active", this.getAttribute("data-value") == type);
                 });
 
-                $("#view-clinical")   [type == "graphs"      ? "show" : "hide"]();
-                $("#view-parental")   [type == "parent"      ? "show" : "hide"]();
-                $("#view-table"   )   [type == "table"       ? "show" : "hide"]();
-                $("#view-patients")   [type == "patients"    ? "show" : "hide"]();
-                $("#view-messagesall")[type == "allmessages" ? "show" : "hide"]();
-                $("#view-message")    [type == "message"     ? "show" : "hide"]();
-                $("#view-map")        [type == "maps"        ? "show" : "hide"]();
-                $("#view-questions")  [type == "questions"   ? "show" : "hide"]();
+                $("#view-clinical") [type == "graphs"      ? "show" : "hide"]();
+                $("#view-parental") [type == "parent"      ? "show" : "hide"]();
+                $("#view-table"   ) [type == "table"       ? "show" : "hide"]();
+                $("#view-patients") [type == "patients"    ? "show" : "hide"]();
+                $("#view-messages") [((type == "allmessages") || (type == "messages"))? "show" : "hide"]();
+                $("#view-message")  [type == "message"     ? "show" : "hide"]();
+                $("#view-map")      [type == "maps"        ? "show" : "hide"]();
+                $("#view-questions")[type == "questions"   ? "show" : "hide"]();
 
                 $("#patientlist-tab") [GC.chartSettings.role == "coordinator" ? "show" : "hide"]();
 
