@@ -78,9 +78,9 @@ XDate, setTimeout, getDataSet*/
                             .html("TODO Map goes here")));
         var map; //gmaps obj.
         function init_map() {
-            var myOptions = { zoom: 15, center: new google.maps.LatLng(33.7489954, -84.3879824), mapTypeId: google.maps.MapTypeId.HYBRID };
+            var myOptions = { zoom: 12, center: new google.maps.LatLng(42.3314, -83.0458), mapTypeId: google.maps.MapTypeId.HYBRID };
             map = new google.maps.Map(document.getElementById('google-map-canvas'), myOptions);
-            var marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(33.7489954, -84.3879824) });
+            var marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(42.3314, -83.0458) });
             var infowindow = new google.maps.InfoWindow({ content: '<strong>Patients House</strong><br>Atlanta<br>' });
             google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
             infowindow.open(map, marker);
@@ -94,24 +94,115 @@ XDate, setTimeout, getDataSet*/
             });
         }
         init_map();
+        getFromFHIR('48823', 'Detroit', 'MI');
 
         var addedResources = [];
 
         var debounceTimeout;
         function updateDebounce() {
             window.clearTimeout(debounceTimeout);
-            debounceTimeout = window.setTimeout(updateResources, 1000);
+            debounceTimeout = window.setTimeout(updateOSMResources, 1000);
         }
 
-        google.maps.event.addListener(map, "bounds_changed", updateDebounce);
+        //google.maps.event.addListener(map, "bounds_changed", updateDebounce);
 
-        function updateResources() {
+        function getFromFHIR(zip, city, state) {
+            
+            //$.ajax({
+            //    url: 'http://52.72.172.54:8080/fhir/baseDstu2/Organization' +
+            //        '?address-postalcode=' + zip + '&_count=50',
+            //    dataType: 'json',
+            //    success: function (zipResults) {
+            //        //todo
+            //        console.log("got " + zipResults.total + " zip code results");
+            //    }
+            //});
+            $.ajax({
+                url: 'http://52.72.172.54:8080/fhir/baseDstu2/Organization' +
+                    '?address-city=' + city + '&address-state=' + state + '&_count=50',
+                dataType: 'json',
+                success: function (cityResults) {
+                    //todo
+                    console.log("got " + cityResults.total + " city results");
+                    if (cityResults.total > 0) {
+                        var results = [];
+                        for (var i = 0; i < cityResults.entry.length; i++) {
+                            var item = cityResults.entry[i].resource;
+                            if (item.address.length > 0 && item.type) {
+                                var type = item.type.text;
+                                var name = item.name + "(" + type + ")";
+                                var id = item.id;
+                                var addr = "";
+                                var addrObj = item.address[0];
+                                for (var ai = 0; ai < addrObj.line.length; ai++) {
+                                    var line = addrObj.line[ai];
+                                    addr += line + ' ';
+                                }
+                                addr += ', ' + addrObj.city;
+                                addr += ', ' + addrObj.state + ' ' + addrObj.postalCode;
+
+                                var resultObject = {
+                                    id: id,
+                                    lat: null,
+                                    lng: null,
+                                    name: name
+                                };
+
+                                (function (r) {
+                                    $.get({
+                                        url: "https://maps.googleapis.com/maps/api/geocode/json",
+                                        data: {
+                                            address: addr,
+                                            key: "AIzaSyC2lIWgJTOezqi3-VVnD65eiNhGGHyHZTk" //Health Informatics Project Maps Key
+                                        },
+                                        success: function (data) {
+                                            if (data.results.length > 0) {
+                                                var loc = data.results[0].geometry.location;
+                                                var myResult = r;
+                                                r.lat = loc.lat;
+                                                r.lng = loc.lng;
+                                                addResource(r);
+                                            }
+                                            else if (data.error_message) {
+                                                console.log(data.error_message);
+                                            }
+                                        }
+                                    });
+                                })(resultObject);
+                            }
+                        }
+
+                    }
+                }
+            });
+        }
+
+        function addResources(resources) {
+            for (var i = 0; i < resources.length; i++) {
+                var r = resources[i];
+                addResource(r);
+            }
+        }
+        function addResource(r) {
+            if (addedResources.indexOf(r.id) == -1) {
+                console.log("adding resource: " + r.name);
+                addedResources.push(r.id);
+                var m2 = new google.maps.Marker({
+                    map: map,
+                    position: new google.maps.LatLng(r.lat, r.lng),
+                    title: r.name,
+                    locationObj: r
+                });
+                attachWindowListener(m2, r);
+            }
+        }
+
+        function updateOSMResources() {
             console.log("grabbing parks from OSM Overpass...");
             var bounds = map.getBounds();
             var sw = bounds.getSouthWest();
             var ne = bounds.getNorthEast();
 
-            //var oquery = 'node["name"="Gielgen"]; out body;';
             var q2 = 'node [leisure=playground] (' + sw.lat() + ',' + sw.lng() + ',' + ne.lat() + ',' + ne.lng() + '); out;';
             var params = {
                 data: q2
