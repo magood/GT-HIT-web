@@ -140,8 +140,8 @@ XDate, setTimeout, getDataSet*/
                                             .attr("name", "qopt-" + qind)
                                             .attr("value", theoptions[optind][0]))
                                         .append(theoptions[optind][1]));
-                    $("#questions-theoptions-" + qind + "-0").addClass("active")
-                    $("#qopt-" + qind + "-0").prop("checked", true);
+                    $("#questions-theoptions-" + qind + "-0").addClass("active") // TODO active setting
+                    $("#qopt-" + qind + "-0").prop("checked", true); // TODO according to patient data
                 }
                 questiondom.append($("<div></div>")
                                         .addClass("row well")
