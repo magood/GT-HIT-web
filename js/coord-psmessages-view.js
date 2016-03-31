@@ -97,8 +97,10 @@ XDate, setTimeout, getDataSet*/
 
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
         $.ajax({
-            url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication' +
-                '?sent=%3C%3D' + todayDateStr + '&_count=50',
+            url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication?subject=Patient%2F' +
+                    (window.sessionStorage.getItem("patient_id") ?
+                        window.sessionStorage.getItem("patient_id") : 'Patient-15479') +
+                    '&_count=50',
             dataType: 'json',
             success: function(psMessagesResult) { mergeHTML(psMessagesResult, true);}
         });
