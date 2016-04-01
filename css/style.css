@@ -130,7 +130,7 @@ b, strong {
 #header {
 	position: relative;
 	z-index: 102;
-	color: #FFF;
+	color: #3AF;
 	background: #0AF;
 	padding : 10px 10px 0;
 	/*background: rgb(129,145,161);
@@ -231,7 +231,7 @@ table.header-table th {
 	text-align: left;
 	white-space: nowrap;
 	padding-left: 8px;
-	text-shadow: 0 1px 0 #000;
+	text-shadow: 0 1px 0 #AFF;
 	/*box-shadow: 0 0 -2px 1px red inset;*/
 	line-height: normal;
 }
@@ -286,7 +286,7 @@ table.header-table tr.last td {
 }
 .settings-expanded table.header-table td,
 .settings-expanded table.header-table th {
-	background-color: #4D5B66;
+	background-color: #DFF;
 }
 
 table.header-table .icon {
@@ -484,7 +484,7 @@ select.styled {
 }
 .toolbar-btn:hover,
 .settings-expanded .toolbar-btn.settings-toggle {
-	background-color: #384653;
+	background-color: #AAF;
 	box-shadow: 0 0 3px -1px #FFF;
 }
 
@@ -494,9 +494,9 @@ select.styled {
 	border-radius: 8px 8px 0 0;
 	position: relative;
 	z-index: 4;
-	background: #DEF; /* TODO add gradient; was url(../img/mode-bg.png) 0 0 repeat-x scroll #88939D;*/
-	border: 1px solid #4F5F6B;
-	border-bottom: 1px solid #4F5F6B;
+	background: url(../img/mode-bg-blue.png) 0 0 repeat-x scroll #DEF;
+	border: 1px solid #DEF;
+	border-bottom: 1px solid #AAF;
 }
 #view-mode:after {
 	content: "";
@@ -507,7 +507,7 @@ select.styled {
 	display: block;
 	float: right;
 	padding: 5px 20px 5px 12px;
-	border-left: 1px solid #4F5F6B;
+	border-left: 1px solid #AAF;
 	color: #777;
 	font-weight: bold;
 	font-size: 1em;
