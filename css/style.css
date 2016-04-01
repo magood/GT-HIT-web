@@ -66,7 +66,7 @@ i {
 	right: 0;
 	height: 100%;
 	width: 100%;
-	background: #4D5B66;
+	background: #DFF;
 }
 
 #loading-indicator h2 {
@@ -78,8 +78,8 @@ i {
 	margin : -35px auto auto -110px;
 	line-height : 30px;
 	padding: 10px 10px 10px 60px;
-	color: #FFF;
-	background: url(../img/spinner2.gif) 10px 50% no-repeat #728391;
+	color: #777;
+	background: url(../img/spinner2blue.gif) 10px 50% no-repeat #DEF;
 	font-size: 18px;
 	border-radius: 10px;
 }
@@ -131,7 +131,7 @@ b, strong {
 	position: relative;
 	z-index: 102;
 	color: #FFF;
-	background: #728391;
+	background: #0AF;
 	padding : 10px 10px 0;
 	/*background: rgb(129,145,161);
 	background: -moz-linear-gradient(top,  rgba(129,145,161,1) 0%, #001C3C);
@@ -165,13 +165,13 @@ b, strong {
 	bottom: 7px;
 	left: 25%;
 	z-index: 4;
-	text-shadow: 0 1px 0px #000;
-	color: #FFF;
+	text-shadow: 0 1px 0px #AAA;
+	color: #111;
 	font-size: 12px;
 	width: 200px;
 	margin-left: -100px;
 	opacity: 0.5;
-	background: #4D5B66;
+	background: #BFB;
 	border-radius: 30px;
 	padding: 3px 0 4px;
 	text-align: center;
@@ -186,7 +186,7 @@ b, strong {
 }
 
 .header-inner {
-	background: #4D5B66;
+	background: #DFF;
 	border-radius: 10px 10px 0 0;
 	padding: 0;
 	position: relative;
@@ -238,7 +238,7 @@ table.header-table th {
 table.header-table > tbody > tr > td {
 	padding: 0.4em 4px;
 	vertical-align: middle;
-	color: #AAA;
+	color: #676;
 	border-bottom: 1px solid #384550;
 	border-bottom-color: rgba(0, 0, 0, 0.1);
 	/*box-shadow: 0 0 -2px 1px red inset;*/
@@ -494,7 +494,7 @@ select.styled {
 	border-radius: 8px 8px 0 0;
 	position: relative;
 	z-index: 4;
-	background: url(../img/mode-bg.png) 0 0 repeat-x scroll #88939D;
+	background: #DEF; /* TODO add gradient; was url(../img/mode-bg.png) 0 0 repeat-x scroll #88939D;*/
 	border: 1px solid #4F5F6B;
 	border-bottom: 1px solid #4F5F6B;
 }
@@ -508,7 +508,7 @@ select.styled {
 	float: right;
 	padding: 5px 20px 5px 12px;
 	border-left: 1px solid #4F5F6B;
-	color: #313D47;
+	color: #777;
 	font-weight: bold;
 	font-size: 1em;
 	line-height: 25px;
@@ -551,8 +551,8 @@ select.styled {
 }
 #view-mode span.active,
 #view-mode span:hover {
-	color: #FFF;
-	text-shadow: 0 1px 2px rgb(0, 0, 0);
+	color: #0A2;
+	text-shadow: 0 1px 2px #5F7;
 }
 
 span span, label span, span label {
@@ -1320,8 +1320,8 @@ input[type="radio"][disabled] {
 
 span.title {
 	margin-right: 20px;
-	text-shadow: 0 1px 1px #000;
-	color: #FFF;
+	text-shadow: 0 1px 1px #6F6;
+	color: #0A0;
 	font-weight: bold;
 }
 

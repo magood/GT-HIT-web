@@ -48,12 +48,12 @@
 #PatientHeader, 
 #PredictedHeightHeader {
     height: 50px;
-    background-color: #2a353e;
+    background-color: #DEF;
     padding: 5px;
     position: relative;
     z-index: 1;
     overflow: hidden;
-    color: #FFFFFF;
+    color: #456;
 }
 
 #PredictedHeightHeader {
