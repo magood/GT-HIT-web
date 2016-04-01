@@ -542,6 +542,20 @@ select.styled {
 #view-mode span.active[data-value="allmessages"]:before {
 	background-position: -78px -56px;
 }
+#view-mode span[data-value="maps"]:before {
+	background-position: -110px 0;
+}
+#view-mode span:hover[data-value="maps"]:before,
+#view-mode span.active[data-value="maps"]:before {
+	background-position: -130px 0;
+}
+#view-mode span[data-value="questions"]:before {
+	background-position: -106px -25px;
+}
+#view-mode span:hover[data-value="questions"]:before,
+#view-mode span.active[data-value="questions"]:before {
+	background-position: -130px -25px;
+}
 #view-mode span[data-value="parent"]:before {
 	background-position: 0 -128px;
 }
