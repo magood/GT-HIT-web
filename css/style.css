@@ -524,9 +524,23 @@ select.styled {
 	width: 24px;
 	height: 24px;
 	margin: 0 8px 0 0;
-	background: url(../img/icons.png);
+	background: url(../img/icons-new.png);
 	display: inline-block;
 	vertical-align: top;
+}
+#view-mode span[data-value="patients"]:before {
+	background-position: -50px -78px;
+}
+#view-mode span:hover[data-value="patients"]:before,
+#view-mode span.active[data-value="patients"]:before {
+	background-position: -50px -50px;
+}
+#view-mode span[data-value="allmessages"]:before {
+	background-position: -78px -79px;
+}
+#view-mode span:hover[data-value="allmessages"]:before,
+#view-mode span.active[data-value="allmessages"]:before {
+	background-position: -78px -56px;
 }
 #view-mode span[data-value="parent"]:before {
 	background-position: 0 -128px;
