@@ -536,11 +536,11 @@ select.styled {
 	background-position: -50px -50px;
 }
 #view-mode span[data-value="allmessages"]:before {
-	background-position: -78px -79px;
+	background-position: -79px -77px;
 }
 #view-mode span:hover[data-value="allmessages"]:before,
 #view-mode span.active[data-value="allmessages"]:before {
-	background-position: -78px -56px;
+	background-position: -79px -54px;
 }
 #view-mode span[data-value="maps"]:before {
 	background-position: -110px 0;
