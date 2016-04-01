@@ -930,7 +930,7 @@ table.toggle-button {
 
 /* The currently selected text */
 .menu-button .value {
-	text-shadow: 0 1px rgba(0, 0, 0, 0.7);
+	text-shadow: 0 1px #AFF;
 	vertical-align: top;
 	height: 14px;
 	line-height: 14px;
@@ -1551,9 +1551,9 @@ span.title {
 
 .button {
 	display: inline-block;
-	background: #7C8E9D;
+	background: #DEF;
 	border-radius: 3px;
-	border: 1px solid #778895;
+	border: 1px solid #AEF;
 	outline: none;
 	cursor: default;
 	border-collapse: separate;
@@ -1562,8 +1562,8 @@ span.title {
 }
 
 .button:hover {
-	border-color: #2E3841;
-	background-color: #56697B;
+	border-color: #8CD;
+	background-color: #BCD;
 }
 
 .button.light {
