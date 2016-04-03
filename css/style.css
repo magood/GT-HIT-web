@@ -100,6 +100,10 @@ b, strong {
 	background-color: #4D5D68;
 	color: #E0EAF0;
 }
+#view-map {
+	overflow: hidden;
+}
+
 .gender-color  { color : #AAA }
 .gender-bg     { background-color : #CCC }
 .gender-border { color : #AAA }
