@@ -45,11 +45,11 @@ XDate, setTimeout, getDataSet*/
     }
 
     function retrieveTableData(somedatatable, sometabledata) {
-        console.log('sometabledata ' + sometabledata.length);
-        console.log(sometabledata);
+        // console.log('sometabledata ' + sometabledata.length);
+        // console.log(sometabledata);
         var somedataset = JSON.parse(sometabledata);
-        console.log('somedataset ' + somedataset.length);
-        console.log(somedataset);
+        // console.log('somedataset ' + somedataset.length);
+        // console.log(somedataset);
         for (var ind = 0; ind < somedataset.length; ind++) {
             somedatatable.row.add(somedataset[ind]);
         }
