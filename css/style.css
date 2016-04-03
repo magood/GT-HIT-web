@@ -96,6 +96,10 @@ b, strong {
 	font-weight: bold;
 }
 
+.dataTable th {
+	background-color: #4D5D68;
+	color: #E0EAF0;
+}
 .gender-color  { color : #AAA }
 .gender-bg     { background-color : #CCC }
 .gender-border { color : #AAA }
