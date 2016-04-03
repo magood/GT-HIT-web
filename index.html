@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>Growth Charts Application</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,500,700,300,100italic,300italic,400italic,500italic,700italic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css/reset.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="stylesheet" type="text/css" href="css/gc-pview.css" />
@@ -278,28 +279,28 @@
 
             <div id="time-ranges">
                 <div class="row">
-                    <div class="cell angle-right">
+                    <div class="cell">
                         <label>
-                            <input type="radio" name="time-range" value="0:13">
-                            0 – 13 <span data-translatecontent="STR_19"></span>
+                            <input name="time-range" value="0:13" type="radio">
+                            0 – 13 <span data-translatecontent="STR_19">Weeks</span>
                         </label>
                     </div>
-                    <div class="cell angle-left angle-right">
-                        <label>
-                            <input type="radio" name="time-range" value="0:26.08928571428572" checked>
-                            0 – 6 <span data-translatecontent="STR_17"></span>
-                        </label>
-                    </div>
-                    <div class="cell angle-left">
-                        <label>
-                            <input type="radio" name="time-range" value="0:104.3571428571429">
-                            0 – 2 <span data-translatecontent="STR_15"></span>
+                    <div class="cell">
+                        <label class="">
+                            <input name="time-range" value="0:26.08928571428572" checked="" type="radio">
+                            0 – 6 <span data-translatecontent="STR_17">Months</span>
                         </label>
                     </div>
                     <div class="cell">
                         <label>
-                            <input type="radio" name="time-range" value="0:1043.571428571429">
-                            0 – 20 <span data-translatecontent="STR_15"></span>
+                            <input name="time-range" value="0:104.3571428571429" type="radio">
+                            0 – 2 <span data-translatecontent="STR_15">Years</span>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label class="active">
+                            <input name="time-range" value="0:1043.571428571429" type="radio">
+                            0 – 20 <span data-translatecontent="STR_15">Years</span>
                         </label>
                     </div>
                     <div class="cell" style="width:9px">

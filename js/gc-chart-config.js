@@ -2,30 +2,30 @@ window.GC = window.GC || {};
 
 (function ($, GC) {
    "use strict";
-    
+
     // Preferences: app + any patient +     user
     // Scratchpad : app +     patient + any user
-    
+
     // =========================================================================
     // Scratchpad
     // =========================================================================
     var scratchpadData = {
         fileRevision : 4,
-        
+
         medService : [],
-        
+
         patientData : []
     };
-    
-    
+
+
     // =========================================================================
-    // These settings are always loaded from here (doesn't matter if they has 
-    // been stored on the server too) 
+    // These settings are always loaded from here (doesn't matter if they has
+    // been stored on the server too)
     // =========================================================================
     var readOnlySettings = {
-        
+
         fileRevision : 202,
-        
+
         // See the toString method for the rendering template
         version : {
             major    : 0,
@@ -33,33 +33,33 @@ window.GC = window.GC || {};
             build    : 0,
             revision : 0,
             state    : "DEV", // dev|alpha|beta|rc|r
-            
+
             asString : function() {
-                return  this.major    + "." + 
-                        this.minor    + "." + 
-                        //this.build    + "." + 
+                return  this.major    + "." +
+                        this.minor    + "." +
+                        //this.build    + "." +
                         //this.revision + "-" +
                         this.build    + "-" +
                         this.state;
             }
         },
-        
+
         appEnvironment : "PRODUCTION", // DEVELOPMENT | PRODUCTION
-        
+
         // Used to log the execution time of some important methods
         timeLogsEnabled : false,
-        
+
         // Display coordinates on the paper
         mouseTrackingEnabled : false,
-        
+
         // set to true to enable the editing of the parents in the header
         patientFamilyHistoryEditable : false,
         patientDataEditable : false,
         role : (GC.Util.urlParam("role") ? GC.Util.urlParam("role") : 'coordinator')
     };
-    
+
     // =========================================================================
-    // These settings are just default (initial) values. They can be overriden 
+    // These settings are just default (initial) values. They can be overriden
     // by whatever is stored on the server as preferences
     // =========================================================================
     var settings = {
@@ -68,34 +68,34 @@ window.GC = window.GC || {};
         defaultChart : "CDC", // 2+ years
         defaultBabyChart : "WHO", // 0 - 2 years
         defaultPrematureChart : "FENTON", // premature
-        
+
         widthType  : "auto",// or "fixed"
         paperWidth : 1200,
         maxWidth   : 1400, // For the charts paper
         minWidth   : 1095, // For the entire page
-        
+
         // The aspectRatio for the entire chart area "height / width".
-        // Use "0" to disable ( make it stretch to the available height, if 
+        // Use "0" to disable ( make it stretch to the available height, if
         // that height is enough for the charts to draw themselves)
         aspectRatio : 0,
-        
+
         fontSize : 14,
-        fontFamily: "'Helvetica Neue', Arial, Helvetica, sans-serif",
-        
+        fontFamily: "'Roboto', 'Helvetica Neue', Arial, Helvetica, sans-serif",
+
         initialView : (readOnlySettings.role == "coordinator" ? "allmessages" : "graphs"),
         // patient/parent {graphs | table | parent | questions | maps | psmessages} |
         // coordinator {graphs | table | parent | patients | maps | questions | allmessages | psmessages}
-        
+
         // ref: http://arshaw.com/xdate/#Formatting
         dateFormat : "ddMMMyyyy",
         timeFormat : "h:mm TT",
         timeInterval : {
-            "Years"   : "y", 
-            "Year"    : "y", 
-            "Months"  : "m", 
-            "Month"   : "m", 
-            "Weeks"   : "w", 
-            "Week"    : "w", 
+            "Years"   : "y",
+            "Year"    : "y",
+            "Months"  : "m",
+            "Month"   : "m",
+            "Weeks"   : "w",
+            "Week"    : "w",
             "Days"    : "d",
             "Day"     : "d",
             "Hours"   : false,
@@ -111,63 +111,63 @@ window.GC = window.GC || {};
             zeroFill  : false,
             limit     : 2
         },
-        
+
         // At what point chronologically does one start forecasting adult height?
         heightEstimatesMinAge : 12, // months
-        
+
         percentiles : [0.05, 0.15, 0.5, 0.85, 0.95], // or [0.03, 0.15, 0.5, 0.85, 0.97]
-        
+
         // Minimal time range to observe in millisecconds
         minTimeInterval : GC.Constants.TIME.WEEK * 6,
-        
+
         pctz      : "pct", // "pct" or "z"
         metrics   : "metric", // "metric" or "eng"
         metricsPV : "eng", // Same as above, but for the parental view
-        
-        gestCorrectionTreshold : 30, // weeks 
+
+        gestCorrectionTreshold : 30, // weeks
         gestCorrectionType : "none",
-        
-        // Timeline Settings 
+
+        // Timeline Settings
         // =====================================================================
         timeline : {
-            
+
             snapDistance : 2, // % of the current column width
-            
+
             // highlight on hover and select on click...
             interactive : false,
-        
+
             // Show any of the following labels if the current time interval
             // fits into the corresponding values (in weeks)
             showLabelsInterval : {
-                
+
                 // days - zero to 13 weeks
-                days : { 
-                    min : 0, 
-                    max : GC.Constants.TIME.MONTH * 3 
-                }, 
-                
+                days : {
+                    min : 0,
+                    max : GC.Constants.TIME.MONTH * 3
+                },
+
                 // weeks - two weeks to 6 months
-                weeks: { 
-                    min : GC.Constants.TIME.WEEK * 2, 
+                weeks: {
+                    min : GC.Constants.TIME.WEEK * 2,
                     max : GC.Constants.TIME.YEAR * 2
                 },
-                
+
                 // months - one month to 2 years
-                months: { 
-                    min : GC.Constants.TIME.MONTH * 3, 
+                months: {
+                    min : GC.Constants.TIME.MONTH * 3,
                     max : GC.Constants.TIME.YEAR  * 3
                 },
-                
+
                 // years - two years and up
-                years: { 
-                    min : GC.Constants.TIME.YEAR * 2, 
+                years: {
+                    min : GC.Constants.TIME.YEAR * 2,
                     max : GC.Constants.TIME.YEAR * 150
                 }
             }
         },
-        
+
         nicu : false,
-        
+
         roundPrecision : {
             length     : { std : 1, nicu : 1 },
             weight     : { std : 1, nicu : 3 },
@@ -177,67 +177,67 @@ window.GC = window.GC || {};
             zscore     : { std : 2, nicu : 2 },
             velocity   : { std : "year", nicu : "day" }
         },
-        
+
         // margins to be left around the main grid (for labels etc)
-        leftgutter  : 48, 
+        leftgutter  : 48,
         rightgutter : 48,
         bottomgutter: 20,
         topgutter   : 25,
         chartSpaceY : 40,
-        
+
         // Column resizing
         columnResizing : {
             "enabled"  : false,
             "minWidth" : 0.25, // 25%
             "maxWidth" : 0.75  // 75%
         },
-    
-        gridLineX: { 
-            "stroke"           : "#000", 
-            "stroke-width"     : 1, 
-            "stroke-dasharray" : "- ", 
-            "stroke-opacity"   : 0.6 
+
+        gridLineX: {
+            "stroke"           : "#000",
+            "stroke-width"     : 1,
+            "stroke-dasharray" : "- ",
+            "stroke-opacity"   : 0.6
         },
-        
-        gridLineY: { 
+
+        gridLineY: {
             "stroke"        : "#EEE",
             "stroke-width"  : 1,
             "stroke-opacity": 1
         },
-        
+
         selectionLine : {
             "stroke-width"   : 1,
             "stroke-opacity" : 1,
             "stroke"         : "#575757"
         },
-        
+
         hoverSelectionLine : {
             "stroke-width"   : 1,
             "stroke-opacity" : 0.3,
             "stroke"         : "#858585"
         },
-        
+
         todayLine : {
             "stroke-width" : 1,
             "stroke"       : "#AAA"
         },
-        
-        todayDot : { 
-            "fill"   : "#AAA", 
-            "stroke" : "none" 
+
+        todayDot : {
+            "fill"   : "#AAA",
+            "stroke" : "none"
         },
-        
-        todayText : { 
-            "fill"        : "#AAA", 
+
+        todayText : {
+            "fill"        : "#AAA",
             "stroke"      : "none",
             "text-anchor" : "start",
-            "font-weight" : "bold" 
+            "font-weight" : "bold"
         },
-        
+
         // Styling definitions for the graph and labels
         txtLabel: {font: '10px Helvetica, Arial', fill: "#000"},  // Axis labels styling
         txtTitle: {font: '16px Helvetica, Arial', fill: "#000"},  // Title label styling
-        
+
         chartLabels : {
             attr : {
                 "font-family" : "sans-serif, Verdana, Arial",
@@ -247,12 +247,12 @@ window.GC = window.GC || {};
                 "stroke"      : "none"
             }
         },
-        
+
         higlightTimelineRanges : false,
         pointDoubleClickEdit : false,
         primarySelectionEnabled: true,
         secondarySelectionEnabled: true,
-        
+
         colorPrresets : {
             "Default" : {
                 "Length": "#5CB6D2",
@@ -303,11 +303,11 @@ window.GC = window.GC || {};
                 "Secondary selection" : "#888"
             }
         },
-        
+
         currentColorPreset : "Default", // One of the listed above
         saturation : 0, // -0.5 to +0.5 correction
         brightness : 0, // -0.5 to +0.5 correction
-        
+
         // Charts
         // =====================================================================
         drawChartBackground : false,
@@ -317,30 +317,30 @@ window.GC = window.GC || {};
             ticks     : 30,
             drawTicks : false
         },
-        
+
         chartBackground : {
             "fill"        : "#EEC",
             "fill-opacity": 0.5,
             "stroke"      : "none"
         },
-        
+
         weightChart : {
             abbr : "W",
             shortName : "WEIGHT",
             shortNameId : "STR_6",
             color : "", // general use clear color
             lines : {
-                stroke           : "", 
-                "stroke-width"   : 1, 
+                stroke           : "",
+                "stroke-width"   : 1,
                 "stroke-linejoin": "round"
             },
             axis : {
-                stroke           : "", 
+                stroke           : "",
                 "stroke-width"   : 1,
                 "shape-rendering": "crispedges"
             },
             axisLabels : {
-                "fill"      : "", 
+                "fill"      : "",
                 "font-size" : 12
             },
             pointsColor : "",
@@ -356,20 +356,20 @@ window.GC = window.GC || {};
                 stroke      : "none"
             }
         },
-        
+
         lengthChart : {
             abbr : "L",
             shortName : "LENGTH",
             shortNameId : "STR_2",
             color : "", // general use clear color
             lines : {
-                stroke           : "", 
-                "stroke-width"   : 1, 
+                stroke           : "",
+                "stroke-width"   : 1,
                 "stroke-linejoin": "round",
-                "stroke-opacity" : 0.8 
+                "stroke-opacity" : 0.8
             },
             axis : {
-                stroke           : "", 
+                stroke           : "",
                 "stroke-width"   : 1,
                 "shape-rendering": "crispedges"
             },
@@ -390,24 +390,24 @@ window.GC = window.GC || {};
                 stroke      : "none"
             }
         },
-        
+
         headChart : {
             abbr : "HC",
             shortName : "HEAD C",
             shortNameId : "STR_13",
             color : "", // general use clear color
             lines : {
-                stroke           : "", 
-                "stroke-width"   : 1, 
+                stroke           : "",
+                "stroke-width"   : 1,
                 "stroke-linejoin": "round"
             },
             axis : {
-                stroke           : "", 
+                stroke           : "",
                 "stroke-width"   : 1,
                 "shape-rendering": "crispedges"
             },
             axisLabels : {
-                "fill"      : "", 
+                "fill"      : "",
                 "font-size" : 12
             },
             pointsColor : "",
@@ -423,24 +423,24 @@ window.GC = window.GC || {};
                 stroke      : "none"
             }
         },
-        
+
         bodyMassChart : {
             abbr : "BMI",
             shortName : "BMI",
             shortNameId : "STR_14",
             color : "", // general use clear color
             lines : {
-                stroke           : "", 
-                "stroke-width"   : 1, 
+                stroke           : "",
+                "stroke-width"   : 1,
                 "stroke-linejoin": "round"
             },
             axis : {
-                stroke           : "", 
+                stroke           : "",
                 "stroke-width"   : 1,
                 "shape-rendering": "crispedges"
             },
             axisLabels : {
-                "fill"      : "", 
+                "fill"      : "",
                 "font-size" : 12
             },
             pointsColor : "",
@@ -456,29 +456,29 @@ window.GC = window.GC || {};
                 stroke      : "none"
             }
         },
-        
+
         patientData : {
             points : {
                 even : {
-                    stroke          : "#FFF", 
+                    stroke          : "#FFF",
                     "stroke-width"  : 4,
                     "stroke-opacity": 0.9,
                     "fill-opacity"  : 1
                 },
                 odd : {
-                    stroke          : "#FFF", 
+                    stroke          : "#FFF",
                     "stroke-width"  : 4,
                     "stroke-opacity": 0.9,
                     "fill-opacity"  : 1
                 },
                 firstMonth : {
-                    stroke          : "#FFF", 
+                    stroke          : "#FFF",
                     "stroke-width"  : 8,
                     "stroke-opacity": 0.8,
                     "fill-opacity"  : 1
                 },
                 current : {
-                    stroke: "rgb(0,0,0)", 
+                    stroke: "rgb(0,0,0)",
                     "stroke-width": 2
                 }
             },
@@ -486,7 +486,7 @@ window.GC = window.GC || {};
                 "stroke-width": 1.5
             }
         },
-        
+
         // The pail grey rectangle on the inner side of the right axis
         rightAxisInnerShadow : {
             width : 20,
@@ -496,7 +496,7 @@ window.GC = window.GC || {};
                 "fill-opacity" : 1
             }
         },
-        
+
         // selectionRect
         selectionRect : {
             "fill"             : "#039",
@@ -507,7 +507,7 @@ window.GC = window.GC || {};
             "stroke-dasharray" : "- "
         }
     };
-    
+
     // Populate the chart color defaults from the default color presets
     function setChartSettingsColors (chartName, baseColor) {
         settings[chartName].color = baseColor;
@@ -525,9 +525,9 @@ window.GC = window.GC || {};
 
     GC.chartSettings  = $.extend(true, {}, settings, readOnlySettings);
     GC.scratchpadData = $.extend(true, {}, scratchpadData);
-    
+
     GC.__INITIAL__chartSettings = $.extend(true, {}, GC.chartSettings);
-    
+
     if (localStorage.preferences) { // not the neatest, yet the various layers of indirection make this
                                     // the most direct approach
         var pref = JSON.parse(localStorage.getItem("preferences"));
@@ -547,7 +547,7 @@ window.GC = window.GC || {};
     // GC.Preferences
     // =========================================================================
     GC.Preferences = new GC.Model(
-        GC.chartSettings, 
+        GC.chartSettings,
         readOnlySettings
     );
 
@@ -557,5 +557,5 @@ window.GC = window.GC || {};
         GC.scratchpadData
     );
     GC.Scratchpad.autoCommit = true;
-    
+
 }(jQuery, GC));
