@@ -10,7 +10,7 @@
     <script type="text/javascript">
         $(function () {
             var smart = FHIR.client({
-                serviceUrl: 'http://mihin.shib.al/fhir/baseDstu2',
+                serviceUrl: 'http://52.72.172.54:8080/fhir/baseDstu2',
                 //patientId: '9995679'
                 patientId: 'Patient-14464'
             });
@@ -28,7 +28,7 @@
             var initialCall = true;
             q.done(function(patientResult) { mergeHTML(patientResult, true);}); */
             $.ajax({
-                url: 'http://mihin.shib.al/fhir/baseDstu2/Patient' +
+                url: 'http://52.72.172.54:8080/fhir/baseDstu2/Patient' +
                     '?birthdate=%3E%3D' + minorDateStr +
                     '&birthdate=%3C%3D' + todayDateStr + '&_count=50',
                 dataType: 'json',
