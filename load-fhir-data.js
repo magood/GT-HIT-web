@@ -12,9 +12,13 @@ GC.get_data = function() {
     });
   };
   var smart = FHIR.client({
-    serviceUrl: 'https://fhir-open-api-dstu2.smarthealthit.org',
 //    patientId: '1137192',
+    serviceUrl: 'https://fhir-open-api-dstu2.smarthealthit.org',
     patientId:'7777704',
+    // TODO: This changes the server to MiHIN, but it lacks data so
+    // we have it disabled for now.
+    // serviceUrl: 'http://52.72.172.54:8080/fhir/baseDstu2',
+    // patientId:'Patient-19454',
     auth: {
       type: 'none'
     }
@@ -25,8 +29,8 @@ GC.get_data = function() {
 
   function onReady(smart){
 
-//    var hidePatientHeader = (smart.tokenResponse.need_patient_banner === false);
-//    GC.Preferences.prop("hidePatientHeader", hidePatientHeader);
+   // var hidePatientHeader = (smart.tokenResponse.need_patient_banner === false);
+   // GC.Preferences.prop("hidePatientHeader", hidePatientHeader);
 
     var ptFetch = smart.patient.read();
     console.log('ptFetch');
@@ -91,9 +95,9 @@ GC.get_data = function() {
         gestAge = vitalsByCode['11884-4'];
       }
       if (gestAge && gestAge.length > 0) {
-        var weeks = 0, qty = gestAge[0].valueString ? 
+        var weeks = 0, qty = gestAge[0].valueString ?
           gestAge[0].valueString.value || '40W 0D' :
-          gestAge[0].valueQuantity ? 
+          gestAge[0].valueQuantity ?
             gestAge[0].valueQuantity.value || 40 :
             40;
 
