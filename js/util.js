@@ -2010,7 +2010,7 @@ if ( !Array.prototype.indexOf ) {
             
             // button
             $wrapper.append(
-                $('<div class="btn-wrap"><div class="btn"/></div>').addClass(c2)
+                $('<div class="btn-wrap"><div class="btn bb"/></div>').addClass(c2)
             );
             
             $wrapper.on("click", function(e) {
