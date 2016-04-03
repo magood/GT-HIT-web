@@ -85,7 +85,8 @@ XDate, setTimeout, getDataSet*/
 
         $("#allmessages-table tbody").on('click', 'tr', function () {
             window.sessionStorage.setItem('message_id', thedatatable.row(this).data()[0]);
-            GC.App.setViewType("message");
+            //GC.App.setViewType("message");
+            GC.App.messageDetail();
         });
 
         var thedataset = [];
