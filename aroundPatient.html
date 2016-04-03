@@ -13,14 +13,14 @@
         <!-- Bootstrap -->
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
+
         <!-- Standard JS Libraries -->
         <script src="js/polyfills.js"></script>
         <script src="../../js/fhir-client.js"></script>
@@ -41,7 +41,7 @@
         <script type="text/javascript" src="js/gc-charts-data.js"></script>
         <script type="text/javascript" src="js/gc-statistics.js"></script>
         <script type="text/javascript" src="js/gc-chart.js"></script>
-        <script type="text/javascript" src="js/gc-parental-view.js"></script> 
+        <script type="text/javascript" src="js/gc-parental-view.js"></script>
         <script type="text/javascript" src="js/gc-app.js"></script>
         <script type="text/javascript" src="js/chart-pane.js"></script>
         <script type="text/javascript" src="js/charts/chart.js"></script>
@@ -69,22 +69,22 @@
                                 <span class="patient-name title">Kimberly Revis</span>
                             </th>
                             <td><span class="vertical-divider"></span></td>
-                            <td colspan="7"> 
-                                <span data-translatecontent="STR_3053">sex</span> 
-                                <span data-translatecontent="STR_SMART_GENDER_female" class="patient-gender title">female</span> 
-                                <span data-translatecontent="STR_3054">dob</span> 
-                                <span class="patient-birth title">16Aug2003</span> 
-                                <span data-translatecontent="STR_3055">age</span> 
+                            <td colspan="7">
+                                <span data-translatecontent="STR_3053">sex</span>
+                                <span data-translatecontent="STR_SMART_GENDER_female" class="patient-gender title">female</span>
+                                <span data-translatecontent="STR_3054">dob</span>
+                                <span class="patient-birth title">16Aug2003</span>
+                                <span data-translatecontent="STR_3055">age</span>
                                 <span class="patient-age title">12y 6m</span>
-                                <span class="weeker" style="display:none;"> 
-                                { 
-                                    <span class="value title" style="margin-right: 0"></span> 
+                                <span class="weeker" style="display:none;">
+                                {
+                                    <span class="value title" style="margin-right: 0"></span>
                                     <span data-translatecontent="STR_3006">Weeker</span>
-                                }&nbsp;&nbsp; 
+                                }&nbsp;&nbsp;
                                 </span>
-                                <span style="display: none;"> 
-                                    <span data-translatecontent="STR_3056">corrected age</span> 
-                                    <span id="corrected-age" class="title"></span> 
+                                <span style="display: none;">
+                                    <span data-translatecontent="STR_3056">corrected age</span>
+                                    <span id="corrected-age" class="title"></span>
                                 </span>
                             </td>
                             <td colspan="3" align="right"></td>
@@ -100,7 +100,7 @@
                             <td><input style="width:6em" readonly="" class="result" name="GA" value="N/A" type="text"></td>
                             <td>
                                 <span class="weeker" style="display:none;color:#FFF;white-space:nowrap;">
-                                (<span class="value"></span> 
+                                (<span class="value"></span>
                                 <span data-translatecontent="STR_3006">Weeker</span>)
                                 </span>
                             </td>
@@ -146,7 +146,7 @@
                                 <input value="About This App" data-translateattr="value=STR_3016" onclick="GC.App.aboutAppDialog()" type="button">
                                 <!--label>
                                     <input type="checkbox" id="edit-enabled" checked="checked" />
-                                    Enable patient editing 
+                                    Enable patient editing
                                 </label-->
                             </td>
                             <td></td>
@@ -175,15 +175,6 @@
                                 <option value="week" data-translatecontent="STR_3022">Week</option>
                                 <option value="day" data-translatecontent="STR_3023">Day</option>
                                 <option value="auto" data-translatecontent="STR_3057">Auto</option>
-                            </select></td>
-                            <td style="white-space: nowrap;" data-translatecontent="STR_3019" align="right">NICU Velocity</td>
-                            <td>
-                            <select name="roundPrecision.velocity.nicu" style="width:7em">
-                                <option value="year" data-translatecontent="STR_3024">Year</option>
-                                <option value="month" data-translatecontent="STR_3025">Month</option>
-                                <option value="week" data-translatecontent="STR_3026">Week</option>
-                                <option value="day" data-translatecontent="STR_3027">Day</option>
-                                <option value="auto" data-translatecontent="STR_3058">Auto</option>
                             </select></td>
                             <td>&nbsp;</td>
                             <td></td>
@@ -247,10 +238,10 @@
                         </tr>
                     </tbody></table>
                 </div>
-                
+
                 <div title="Toggle Settings" class="toolbar-btn settings-toggle" data-translateattr="title=STR_2999"></div>
                 <a title="Print View" class="toolbar-btn print" href="javascript:GC.App.print();" data-translateattr="title=STR_179"></a>
-                
+
                 <!-- View Mode -->
                 <div id="view-mode">
                     <!-- hide the parent tab -->
@@ -322,10 +313,6 @@
 
                 <span class="last-recording"> <span style="color: #AAA" data-translatecontent="STR_3052">Last recording</span> <b><span class="date">01Dec2012</span>&nbsp;&nbsp;<span class="age">9y 3m</span></b> </span>
                 <span style="float:right;">
-                    <span>
-                        <span class="checkbox-button off"><input name="nicu" class="" data-label="NICU" type="checkbox"><span>NICU</span><div data-content="Off" class="btn-wrap"><div></div></div></span>
-                        <span class="vertical-divider"></span>
-                    </span>
                     <span class="hide-on-parental hide-on-table">
                         <span class="toggle-button-wrap"><input class="" name="pctz" value="pct" data-value1="pct" data-value2="z" data-label1="%" data-label2="Z" type="hidden"><table class="toggle-button"><tbody><tr><td><label class="active" data-value="pct">%</label></td><td class="action"><div><label class="active" data-value="pct"></label><label data-value="z"></label></div></td><td><label data-value="z">Z</label></td></tr></tbody></table></span>
                         <span class="vertical-divider"></span>
@@ -453,7 +440,7 @@
                         }
                     }
                     console.log("retrieved " + results.length + " results from OSM Overpass");
-                    
+
                     for (var i = 0; i < results.length; i++) {
                         var r = results[i];
                         if (addedResources.indexOf(r.id) == -1) {
