@@ -59,7 +59,7 @@ XDate, setTimeout, getDataSet*/
     function renderPSMessagesView( container ) {
         $(container).empty();
 
-        var thetable = $("<table></table>").addClass("display");
+        var thetable = $("<table></table>").addClass("stripe hover");
         thetable.prop("id", "psmessages-table").prop("width", "100%");
         $(container).append(thetable);
 

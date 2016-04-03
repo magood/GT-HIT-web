@@ -59,7 +59,7 @@ XDate, setTimeout, getDataSet*/
     function renderPatientsView( container ) {
         $(container).empty();
 
-        var thetable = $("<table></table>").addClass("display");
+        var thetable = $("<table></table>").addClass("stripe hover");
         thetable.prop("id", "patient-table").prop("width", "100%");
         $(container).append(thetable);
 
@@ -75,7 +75,8 @@ XDate, setTimeout, getDataSet*/
             ]
         } );
 
-        $("<button>Reload Patient List From Server</button>")
+        $("<div>Reload Patient List From Server</div>")
+            .addClass("btn btn-info")
             .prop("style", "margin-left:100px")
             .click(function() {
                 window.sessionStorage.removeItem('patientstable');

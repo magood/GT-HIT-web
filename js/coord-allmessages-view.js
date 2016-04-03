@@ -59,7 +59,7 @@ XDate, setTimeout, getDataSet*/
     function renderAllMessagesView( container ) {
         $(container).empty();
 
-        var thetable = $("<table></table>").addClass("display");
+        var thetable = $("<table></table>").addClass("stripe hover");
         thetable.prop("id", "allmessages-table").prop("width", "100%");
         $(container).append(thetable);
 
@@ -74,7 +74,8 @@ XDate, setTimeout, getDataSet*/
             ]
         } );
 
-        $("<button>Reload Message List From Server</button>")
+        $("<div>Reload Message List From Server</div>")
+            .addClass("btn btn-info")
             .prop("style", "margin-left:100px")
             .click(function() {
                 window.sessionStorage.removeItem('allmessagestable');
