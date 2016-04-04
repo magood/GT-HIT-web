@@ -92,6 +92,16 @@ i {
 	line-height: normal;
 }
 
+.table-loading-spinner {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    background: url(../img/spinner.gif) no-repeat;
+}
+
 b, strong {
 	font-weight: bold;
 }
