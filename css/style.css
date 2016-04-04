@@ -699,13 +699,17 @@ select.styled {
 	background-color: #445360;
 }
 
+#view-map, .google-map-container {
+	overflow: hidden;
+}
+
 .google-map-container {
     height: 100%;
 }
 
 #google-map-canvas {
     position: absolute;
-    left: 278px;
+    left: 270px;
     right:0;
     top: 0px;
     overflow: hidden;
@@ -714,8 +718,19 @@ select.styled {
 }
 
 .map-address-list {
-    width:250px;
+	max-height: 100%;
+	overflow-y: scroll !important;
+    width:270px;
     padding:1em;
+}
+.map-address-list .row {
+	padding-left: 8px;
+	padding-right: 4px;
+}
+
+
+.map-address-list .row h3 {
+	margin-top: 3px;
 }
 
 /* ---------------------------- toggle-button ------------------------------- */
