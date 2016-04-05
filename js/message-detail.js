@@ -25,7 +25,7 @@
             success: mergeHTML
         });
         function mergeHTML(messageResult) {
-            console.log("mergeHTML");
+            console.log("mergeHTML from message-detail.js");
             console.log(messageResult);
             if (!messageResult) return;
             if (messageResult.data) {
@@ -59,53 +59,50 @@
                             moment(messageResult.sent).format('ll') : "";
             var rec_time = (messageResult.received) ?
                             moment(messageResult.received).format('ll') : "";
-            var content = (messageResult.payload) ? messageResult.payload.content : "";
+            var content = (messageResult.payload && messageResult.payload.length && messageResult.payload[0].contentString) ? messageResult.payload[0].contentString : "";
             var request_detail = (messageResult.requestDetail) ?
                                 ((messageResult.requestDetail.reference) ?
                                     messageResult.requestDetail.reference + " " : "") +
                                 ((messageResult.requestDetail.display) ?
                                     messageResult.requestDetail.display : "") : "";
-            // TODO presentation, style, etcetera
-            themessage.append($("<div></div>")
-                                .addClass("message-id")
-                                .attr("id", "message-id")
-                                .html("ID: " + id));
-            themessage.append($("<div></div>")
-                                .addClass("message-sender")
-                                .attr("id", "message-sender")
-                                .html("Sender: " + sender));
-            themessage.append($("<div></div>")
-                                .addClass("message-recipient")
-                                .attr("id", "message-recipient")
-                                .html("Recipient: " + recipient));
-            themessage.append($("<div></div>")
-                                .addClass("message-subject")
-                                .attr("id", "message-subject")
-                                .html("Subject: " + subject));
-            themessage.append($("<div></div>")
-                                .addClass("message-category")
-                                .attr("id", "message-category")
-                                .html("Category: " + category));
-            themessage.append($("<div></div>")
-                                .addClass("message-encounter")
-                                .attr("id", "message-encounter")
-                                .html("Encounter: " + encounter));
-            themessage.append($("<div></div>")
-                                .addClass("message-sent-time")
-                                .attr("id", "message-sent-time")
-                                .html("Sent: " + sent_time));
-            themessage.append($("<div></div>")
-                                .addClass("message-rec-time")
-                                .attr("id", "message-rec-time")
-                                .html("Received: " + rec_time));
-            themessage.append($("<div></div>")
-                                .addClass("message-content")
-                                .attr("id", "message-content")
-                                .html("Content: " + content));
-            themessage.append($("<div></div>")
-                                .addClass("message-request-detail")
-                                .attr("id", "message-request-detail")
-                                .html("Request: " + request_detail));
+            //build a template the easy way first:
+            var template = $("\
+<div class='message-wrap'>\
+<div class='message-id'><span class='msg-detail-heading'>ID: </span><span class='message-id-value'></span></div>\
+<div class='message-sender'><span class='msg-detail-heading'>From: </span><span class='message-sender-value'></span></div>\
+<div class='message-recipient'><span class='msg-detail-heading'>To: </span><span class='message-recipient-value'></span></div>\
+<div class='message-category'><span class='msg-detail-heading'>Category: </span><span class='message-category-value'></span></div>\
+<div class='message-subject'><span class='msg-detail-heading'>Subject: </span><span class='message-subject-value'></span></div>\
+<div class='message-content well'><span class='message-content-value'></span></div>\
+<div class='message-sent-time'><span class='msg-detail-heading'>Sent: </span><span class='message-sent-time-value'></span></div>\
+<div class='message-rec-time'><span class='msg-detail-heading'>Received: </span><span class='message-rec-time-value'></span></div>\
+<div class='message-encounter'><span class='msg-detail-heading'>Encounter: </span><span class='message-encounter-value'></span></div>\
+</div>\
+");
+            //tack on the values. Styles in message-style.css.
+            $(".message-id", template).hide();
+            $(".message-sender-value", template).text(sender);
+            $(".message-recipient-value", template).text(recipient);
+            $(".message-category-value", template).text(category);
+            $(".message-subject-value", template).text(subject ? subject : "(no subject)");
+
+            
+            $(".message-sent-time-value", template).text(sent_time);
+
+            if (content && content != "")
+                $(".message-content-value", template).text(content);
+            else
+                $(".message-content", template).hide();
+            if (rec_time && rec_time != "")
+                $(".message-rec-time-value", template).text(rec_time);
+            else
+                $(".message-rec-time", template).hide();
+            if (encounter && encounter != "")
+                $(".message-encounter-value", template).text(encounter);
+            else
+                $(".message-encounter", template).hide();
+
+            themessage.append(template);
         }
     }
 

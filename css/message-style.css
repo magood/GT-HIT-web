@@ -1,0 +1,16 @@
+﻿.message-content {
+    max-width:700px;
+}
+.msg-detail-heading {
+    font-weight:bold;
+}
+.message-wrap .well {
+    margin:.5em 0 1em 0;
+}
+.message-sent-time, .message-rec-time, .message-encounter {
+    font-size:.6em;
+    color:#999;
+}
+#allmessages-table_wrapper tbody tr {
+    cursor:pointer;
+}
