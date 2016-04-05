@@ -39,7 +39,7 @@ XDate, setTimeout, getDataSet*/
             "Day"     : "d",
             separator : " "
         };
-    
+
     function isMapViewVisible() {
         return GC.App.getViewType() == "maps";
     }
@@ -69,6 +69,15 @@ XDate, setTimeout, getDataSet*/
                                         .addClass("label label-default")
                                         .append("Quality Score"))
                                     .append(" 7/10")))));
+
+        // FIXME (sangwhan): DELETE ME LATER.
+        // Debug code (mock data to simulate a long list of community resources)
+
+        for (var i = 0; i < 20; i++) {
+            document.querySelector('.map-address-list').innerHTML +=
+                document.querySelectorAll('.map-address-list .well')[1].outerHTML;
+        }
+
         //address1 = $("<div></div>").addClass("well");
         //$(container).append(addresslist);
         $(container).append($("<div></div>")
@@ -107,7 +116,7 @@ XDate, setTimeout, getDataSet*/
         //google.maps.event.addListener(map, "bounds_changed", updateDebounce);
 
         function getFromFHIR(zip, city, state) {
-            
+
             //$.ajax({
             //    url: 'http://52.72.172.54:8080/fhir/baseDstu2/Organization' +
             //        '?address-postalcode=' + zip + '&_count=50',

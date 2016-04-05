@@ -483,7 +483,9 @@
     NS.App.messageDetail = function() {
         GC.App.dialog("message-detail.html", null, {
             "modal" : false,
-            "title" : NS.str("STR_3167"),
+            "title" : NS.str("STR_3167").substring(0,1) +
+                    NS.str("STR_3167").substring(1).toLowerCase() + " " +
+                    window.sessionStorage.getItem('message_id'),
             "height" : "auto",
             "width" : "auto"
         });

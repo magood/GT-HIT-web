@@ -59,6 +59,9 @@ XDate, setTimeout, getDataSet*/
     function renderPatientsView( container ) {
         $(container).empty();
 
+        var loadingdiv = $("<div></div>").addClass("table-loading-spinner").hide();
+        $(container).append(loadingdiv);
+
         var thetable = $("<table></table>").addClass("stripe hover");
         thetable.prop("id", "patient-table").prop("width", "100%");
         $(container).append(thetable);
@@ -101,6 +104,7 @@ XDate, setTimeout, getDataSet*/
         var minorBirthdate = moment().subtract(18, 'years').startOf("day");
         var minorDateStr = minorBirthdate.format("YYYY-MM-DD");
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
+        loadingdiv.show();
         $.ajax({
             url: 'http://52.72.172.54:8080/fhir/baseDstu2/Patient' +
                 '?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' +
@@ -163,6 +167,7 @@ XDate, setTimeout, getDataSet*/
         }
         function getMultiResults(patientResult) {
             var nResults = patientResult.total;
+            var lookingForMore = false;
             for (var ind = 0; ind < (patientResult.link ?
                                     patientResult.link.length : 0); ind++) {
                 if (patientResult.link[ind].relation == "next") {
@@ -178,6 +183,7 @@ XDate, setTimeout, getDataSet*/
                             var nRequests = 0;
                             for (var offsetResults = parseInt(item[1]);
                                 offsetResults < nResults; offsetResults += 50) {
+                                lookingForMore = true;
                                 var newURL = theURL.replace(/(_getpagesoffset=)(\d+)/, '$1' +
                                                             offsetResults.toString());
                                 console.log("rewritten to " + newURL);
@@ -196,6 +202,11 @@ XDate, setTimeout, getDataSet*/
                     }
                     break;
                 }
+            }
+            if (lookingForMore) {
+                $(document).ajaxStop(function() {loadingdiv.hide();});
+            } else {
+                loadingdiv.hide();
             }
         }
     }
