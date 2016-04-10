@@ -82,10 +82,11 @@ XDate, setTimeout, getDataSet*/
                 if (llgroup.group) {
                     llgroup = llgroup.group[0];
                     continue;
-                } else if (llgroup.question[0].group) {
+                }/* else if 
+(llgroup.question[0].group) {
                     llgroup = llgroup.question[0].group;
                     continue;
-                }
+                }*/
                 break;
             } // temporary for initial code; TODO replace with loop / more advanced logic
             // TODO presentation, style, etcetera
