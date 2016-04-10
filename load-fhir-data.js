@@ -1,5 +1,15 @@
 window.GC = window.GC || {};
 
+var param = function(i) {
+  var r = new RegExp("[?&]" + i.replace(/[\[\]]/g, "\\$&") + "(=([^&#]*)|&|#|$)", "i");
+  var e = r.exec(window.location.href);
+
+  if (!e || !e[2])
+    return null;
+
+  return decodeURIComponent(e[2].replace(/\+/g, " "));
+}
+
 GC.get_data = function() {
   var dfd = $.Deferred();
 
@@ -12,13 +22,11 @@ GC.get_data = function() {
     });
   };
   var smart = FHIR.client({
-//    patientId: '1137192',
-    serviceUrl: 'https://fhir-open-api-dstu2.smarthealthit.org',
-    patientId:'7777704',
-    // TODO: This changes the server to MiHIN, but it lacks data so
-    // we have it disabled for now.
-    // serviceUrl: 'http://52.72.172.54:8080/fhir/baseDstu2',
-    // patientId:'Patient-19454',
+    // patientId: '1137192',
+    // serviceUrl: 'https://fhir-open-api-dstu2.smarthealthit.org',
+    serviceUrl: 'http://52.72.172.54:8080/fhir/baseDstu2',
+    // FIXME: Patient-19454 isn't a ideal fallback patient, but was what I had for the time being.
+    patientId: param('patient') != null ? param('patient') : patientID = 'Patient-19454',
     auth: {
       type: 'none'
     }
