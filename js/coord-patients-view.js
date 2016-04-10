@@ -91,6 +91,7 @@ XDate, setTimeout, getDataSet*/
             console.log(thedatatable.row(this).data());
             if (thedatatable.row(this).data()[1] == "") return;
             window.sessionStorage.setItem('patient_id', thedatatable.row(this).data()[1]);
+            GC.App.setViewType("psmessages");
             location.href = '/?patient=' + thedatatable.row(this).data()[1];
         });
 
