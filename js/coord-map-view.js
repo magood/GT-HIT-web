@@ -47,36 +47,15 @@ XDate, setTimeout, getDataSet*/
     function renderMapView( container ) {
         $(container).empty();
         $(container).append($("<div></div>")
-                        .addClass("map-address-list bb")
-                        .append($("<div></div>")
-                            .addClass("well")
-                            .append($("<div></div>")
-                                .addClass("row")
-                                .append($("<h3></h3>")
-                                    .html("Patient's House"))
-                                .append("255 Ted Turner Dr SW, Atlanta, GA 30303")))
-                        .append($("<div></div>")
-                            .addClass("well")
-                            .append($("<div></div>")
-                                .addClass("row")
-                                .append($("<h3></h3>")
-                                    .append("Woodruff Park Playground"))
-                                .append("Peachtree St NE, Atlanta, GA 30303"))
-                            .append($("<div></div>")
-                                .addClass("row")
-                                .append($("<h5></h5>")
-                                    .append($("<span></span>")
-                                        .addClass("label label-default")
-                                        .append("Quality Score"))
-                                    .append(" 7/10")))));
+                        .addClass("map-address-list bb"));
 
-        // FIXME (sangwhan): DELETE ME LATER.
-        // Debug code (mock data to simulate a long list of community resources)
+        // // FIXME (sangwhan): DELETE ME LATER.
+        // // Debug code (mock data to simulate a long list of community resources)
 
-        for (var i = 0; i < 20; i++) {
-            document.querySelector('.map-address-list').innerHTML +=
-                document.querySelectorAll('.map-address-list .well')[1].outerHTML;
-        }
+        // for (var i = 0; i < 20; i++) {
+        //     document.querySelector('.map-address-list').innerHTML +=
+        //         document.querySelectorAll('.map-address-list .well')[1].outerHTML;
+        // }
 
         //address1 = $("<div></div>").addClass("well");
         //$(container).append(addresslist);
@@ -98,7 +77,7 @@ XDate, setTimeout, getDataSet*/
         function attachWindowListener(marker, loc) {
             google.maps.event.addListener(marker, 'click', function () {
                 var o = marker.locationObj;
-                var iw = new google.maps.InfoWindow({ content: '<strong>' + o.name + '</strong>' });
+                var iw = new google.maps.InfoWindow({ content: '<strong>' + o.name + "(" + o.type + ")"+ '</strong>' });
                 iw.open(map, marker);
             });
         }
@@ -139,7 +118,7 @@ XDate, setTimeout, getDataSet*/
                             var item = cityResults.entry[i].resource;
                             if (item.address.length > 0 && item.type) {
                                 var type = item.type.text;
-                                var name = item.name + "(" + type + ")";
+                                var name = item.name;
                                 var id = item.id;
                                 var addr = "";
                                 var addrObj = item.address[0];
@@ -154,7 +133,8 @@ XDate, setTimeout, getDataSet*/
                                     id: id,
                                     lat: null,
                                     lng: null,
-                                    name: name
+                                    name: name,
+                                    type: type
                                 };
 
                                 (function (r) {
@@ -195,6 +175,25 @@ XDate, setTimeout, getDataSet*/
         function addResource(r) {
             if (addedResources.indexOf(r.id) == -1) {
                 console.log("adding resource: " + r.name);
+                console.log(r);
+
+                $('.map-address-list').append($("<div></div>")
+                            .addClass("well")
+                            .append($("<div></div>")
+                                .addClass("row")
+                                .append($("<h3>"+ r.name +"</h3>")))
+                            .append($("<div></div>")
+                                .addClass("row")
+                                .append($("<h5>"+ r.type +"</h>")))
+                            .append($("<div></div>")
+                                .addClass("row")
+                                .append($("<h5></h5>")
+                                    .append($("<span></span>")
+                                        .addClass("label label-default")
+                                        .append("Quality Score"))
+                                    .append(" 7/10"))));
+                
+
                 addedResources.push(r.id);
                 var m2 = new google.maps.Marker({
                     map: map,
