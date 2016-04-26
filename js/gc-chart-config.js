@@ -61,6 +61,10 @@ window.GC = window.GC || {};
                                 "https://fhir-open-api-dstu2.smarthealthit.org" ),
         defaultPatient : (GC.Util.urlParam("server") == "MiHIN" ? "Patient-15479" : "1137192" )
         // TODO better MiHIN demo patient than 19454, 15479
+
+        // TODO SMART/MiHIN adaptations
+        // defaultQuestionnaire
+        // defaultMessage
     };
 
     // =========================================================================
