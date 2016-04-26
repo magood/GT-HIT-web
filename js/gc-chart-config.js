@@ -55,7 +55,12 @@ window.GC = window.GC || {};
         // set to true to enable the editing of the parents in the header
         patientFamilyHistoryEditable : false,
         patientDataEditable : false,
-        role : (GC.Util.urlParam("role") ? GC.Util.urlParam("role") : 'coordinator')
+        role : (GC.Util.urlParam("role") ? GC.Util.urlParam("role") : 'coordinator'),
+        serverBase : (GC.Util.urlParam("server") == "MiHIN" ?
+                                "http://52.72.172.54:8080/fhir/baseDstu2" :
+                                "https://fhir-open-api-dstu2.smarthealthit.org" ),
+        defaultPatient : (GC.Util.urlParam("server") == "MiHIN" ? "Patient-15479" : "1137192" )
+        // TODO better MiHIN demo patient than 19454, 15479
     };
 
     // =========================================================================

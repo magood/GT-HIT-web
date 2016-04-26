@@ -22,12 +22,12 @@ GC.get_data = function() {
     });
   };
   patientID = sessionStorage.getItem('patient_id');
-  patientID = (patientID) ? patientID : 'Patient-19454';
+  patientID = (patientID) ? patientID : GC.chartSettings.defaultPatient;
   var smart = FHIR.client({
     // patientId: '1137192',
     // serviceUrl: 'https://fhir-open-api-dstu2.smarthealthit.org',
-    serviceUrl: 'http://52.72.172.54:8080/fhir/baseDstu2',
-    // TODO better demo patient than 19454
+    // serviceUrl: 'http://52.72.172.54:8080/fhir/baseDstu2',
+    serviceUrl: GC.chartSettings.serverBase,
     patientId: patientID,
     auth: {
       type: 'none'

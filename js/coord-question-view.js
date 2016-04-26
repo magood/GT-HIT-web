@@ -51,10 +51,11 @@ XDate, setTimeout, getDataSet*/
         thequestions.attr("id", "thequestions-div").attr("width", "100%");
         $(container).append(thequestions);
         var questions_id = (window.sessionStorage.getItem('questions_id')) ?
-                            window.sessionStorage.getItem('questions_id') : "18791835";
+                            window.sessionStorage.getItem('questions_id') : "18791835"; // TODO SMART/MiHIN adaptations
         
         $.ajax({
-            url: 'http://52.72.172.54:8080/fhir/baseDstu2/Questionnaire/' + questions_id,
+            // url: 'http://52.72.172.54:8080/fhir/baseDstu2/Questionnaire/' + questions_id,
+            url: GC.chartSettings.serverBase + "/Questionnaire/" + questions_id,
             dataType: 'json',
             success: mergeHTML
         });

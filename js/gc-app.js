@@ -276,6 +276,12 @@ function gc_app_js (NS, $) {
         switch (type || GC.App.getViewType()) {
             case "graphs":
                 if (!leftPane) {
+                    console.log("GC");
+                    console.log(GC);
+                    console.log("GC.App");
+                    console.log(GC.App);
+                    console.log("GC.App.Charts");
+                    console.log(GC.App.Charts);
                     leftPane = new ChartPane(Raphael($("#stage .stage-1")[0]));
                     leftPane.addChart(new GC.App.Charts["Length/Stature Chart"](), 0);
                     leftPane.addChart(new GC.App.Charts["Weight Chart"](), 0);

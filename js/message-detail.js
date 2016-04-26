@@ -17,10 +17,11 @@
         themessage.attr("id", "themessage-div").attr("width", "100%");
         $(container).append(themessage);
         var message_id = (window.sessionStorage.getItem('message_id')) ?
-                            window.sessionStorage.getItem('message_id') : "Communication-5679";
+                            window.sessionStorage.getItem('message_id') : "Communication-5679"; // TODO SMART/MiHIN adaptations
 
         $.ajax({
-            url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication/' + message_id,
+            // url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication/' + message_id,
+            url: GC.chartSettings.serverBase + "/Communication/" + message_id,
             dataType: 'json',
             success: mergeHTML
         });

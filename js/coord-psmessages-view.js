@@ -97,9 +97,10 @@ XDate, setTimeout, getDataSet*/
 
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
         $.ajax({
-            url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication?subject=Patient%2F' +
+            // url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication?subject=Patient%2F' +
+            url: GC.chartSettings.serverBase + "/Communication?subject=Patient%2F" +
                     (window.sessionStorage.getItem("patient_id") ?
-                        window.sessionStorage.getItem("patient_id") : 'Patient-15479') +
+                        window.sessionStorage.getItem("patient_id") : GC.chartSettings.defaultPatient) +
                     '&_count=50',
             dataType: 'json',
             success: function(psMessagesResult) { mergeHTML(psMessagesResult, true);}
