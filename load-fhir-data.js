@@ -21,12 +21,14 @@ GC.get_data = function() {
       responseText: "Loading error. See console for details."
     });
   };
+  patientID = sessionStorage.getItem('patient_id');
+  patientID = (patientID) ? patientID : 'Patient-19454';
   var smart = FHIR.client({
     // patientId: '1137192',
     // serviceUrl: 'https://fhir-open-api-dstu2.smarthealthit.org',
     serviceUrl: 'http://52.72.172.54:8080/fhir/baseDstu2',
-    // FIXME: Patient-19454 isn't a ideal fallback patient, but was what I had for the time being.
-    patientId: param('patient') != null ? param('patient') : patientID = 'Patient-19454',
+    // TODO better demo patient than 19454
+    patientId: patientID,
     auth: {
       type: 'none'
     }
