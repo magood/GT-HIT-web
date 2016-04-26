@@ -94,6 +94,7 @@ XDate, setTimeout, getDataSet*/
             GC.App.setViewType("psmessages");
             GC.get_data();
             gc_app_js(GC,jQuery);
+            // TODO refresh chart data etcetera
         });
 
         var thedataset = [];
