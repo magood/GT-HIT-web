@@ -3,7 +3,7 @@
 /*jslint eqeq: true, nomen: true, plusplus: true, newcap: true */
 
 
-(function(NS, $) {
+function gc_app_js (NS, $) {
 
     //"use strict";
 
@@ -1556,4 +1556,6 @@
 
     return NS;
 
-}(GC, jQuery));
+}
+
+gc_app_js(GC, jQuery);
