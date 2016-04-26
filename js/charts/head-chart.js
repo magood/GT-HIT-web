@@ -1,6 +1,6 @@
 /*global Chart, GC, PointSet, Raphael*/
 /*jslint eqeq: true, nomen: true, plusplus: true */
-(function(NS, $) {
+function charts__head_chart_js (NS, $) {
     
     "use strict";
     
@@ -43,4 +43,6 @@
     
     NS.App.Charts[NAME] = HeadChart;
     
-}(GC, jQuery));
+}
+
+charts__head_chart_js(GC, jQuery);

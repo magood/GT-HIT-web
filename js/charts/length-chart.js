@@ -1,6 +1,6 @@
 /*global Chart, GC, PointSet, Raphael*/
 /*jslint eqeq: true, nomen: true, plusplus: true, devel: true */
-(function(NS, $) {
+function charts__length_chart_js (NS, $) {
     
     "use strict";
     
@@ -357,5 +357,7 @@
     
     NS.App.Charts[NAME] = LengthChart;
     
-}(GC, jQuery));
+}
+
+charts__length_chart_js(GC, jQuery);
 

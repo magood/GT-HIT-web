@@ -7,7 +7,7 @@
  * @file gc-model.js
  * @author Vladimir Ignatov <vlad.ignatov@gmail.com>
  */
-(function($) {
+function gc_model_js($) {
     
     "use strict";
     
@@ -518,4 +518,6 @@
     GC.LocalStorageProxy    = LocalStorageProxy;
     GC.DummyProxy           = DummyProxy;
     
-}(jQuery));
+}
+
+gc_model_js(jQuery);

@@ -1,6 +1,6 @@
 /*global Chart, GC, PointSet, Raphael*/
 /*jslint eqeq: true, nomen: true, plusplus: true */
-(function(NS, $) {
+function charts__body_mass_index_chart_js (NS, $) {
     
     "use strict";
     
@@ -53,5 +53,7 @@
     });
 
     NS.App.Charts[NAME] = BodyMassIndexChart;
-}(GC, jQuery));
+}
+
+charts__body_mass_index_chart_js(GC, jQuery);
 

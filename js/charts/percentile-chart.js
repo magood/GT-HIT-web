@@ -3,7 +3,7 @@
 /**
  * Percentile Chart module extending the GC.App.Charts collection.
  */
-(function(NS, $) {
+function charts__percentile_chart_js (NS, $) {
     
     "use strict";
     
@@ -783,4 +783,6 @@
     
     NS.App.Charts[NAME] = PercentileChart;
     
-}(GC, jQuery));
+}
+
+charts__percentile_chart_js (GC, jQuery);

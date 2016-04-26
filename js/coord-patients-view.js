@@ -93,8 +93,7 @@ XDate, setTimeout, getDataSet*/
             window.sessionStorage.setItem('patient_id', thedatatable.row(this).data()[1]);
             GC.App.setViewType("psmessages");
             GC.get_data();
-            gc_app_js(GC,jQuery);
-            // TODO refresh chart data etcetera
+            call_load_functions_js();
         });
 
         var thedataset = [];

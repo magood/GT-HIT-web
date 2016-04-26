@@ -7,7 +7,7 @@ function gc_app_js (NS, $) {
 
     //"use strict";
 
-    NS.App = {};
+    NS.App = (NS.App ? NS.App : {});
 
     var DEBUG_MODE = NS.chartSettings.appEnvironment === "DEVELOPMENT",
         leftPane = null,
@@ -350,7 +350,16 @@ function gc_app_js (NS, $) {
     }
 
     NS.App.DEBUG_MODE = DEBUG_MODE;
-    NS.App.Charts = [];
+/*    console.log("GC.App.Charts");
+    console.log(NS.App.Charts); */
+    NS.App.Charts = (NS.App.Charts ? NS.App.Charts : []);
+    // TODO possible risk of overloading charts array with multiple type charts
+    // for instance length, length/stature, stature it seems should not all be
+    // in the array together
+    // see charts/length-chart.js:70 getTitle()
+
+/*    console.log("GC.App.Charts");
+    console.log(NS.App.Charts); */
     NS.App.getPatient = function getPatient() {
         return PATIENT;
     };

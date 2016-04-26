@@ -883,7 +883,6 @@ ChartPane.prototype = {
             }
             
             rowHeight = (hAvail - s.chartSpaceY * (rowsLen - 1)) / rowsLen;
-            
             if (chart instanceof GC.App.Charts["Percentile Chart"]) {
                 rowHeight *= 0.64;
             } else if (chartAbove && chartAbove instanceof GC.App.Charts["Percentile Chart"]) {

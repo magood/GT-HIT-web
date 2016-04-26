@@ -111,38 +111,40 @@ XDate, setTimeout, getDataSet*/
                 allMessagesResult = allMessagesResult.data;
             }
             console.log(allMessagesResult.entry);
-            for (var i = 0; i < allMessagesResult.entry.length; i++) {
-                var p = allMessagesResult.entry[i];
-                if (Date.parse(p.resource.sent) > moment()) { continue;}
-                var rdata = [
-                        (p.resource.id) ? p.resource.id : "",
-                        ((p.resource.sender) ?
-                            ((p.resource.sender.display) ? p.resource.sender.display :
-                                ((p.resource.sender.reference) ? p.resource.sender.reference : "")) : ""),
-                        ((p.resource.recipient) ?
-                            ((p.resource.recipient[0].display) ?
-                                p.resource.recipient[0].display :
-                                ((p.resource.recipient[0].reference) ?
-                                    p.resource.recipient[0].reference : "")) : ""),
-                        ((p.resource.subject) ?
-                            ((p.resource.subject.display) ? p.resource.subject.display :
-                                ((p.resource.subject.reference) ? p.resource.subject.reference : "")) : ""),
-                        ((p.resource.category) ?
-                            ((p.resource.category.text) ? p.resource.category.text :
-                                ((p.resource.category.coding) ?
-                                    ((p.resource.category.coding.system) ?
-                                        p.resource.category.coding.system + " - " : "") +
-                                    ((p.resource.category.coding.code) ?
-                                        p.resource.category.coding.code : "") : "")) : ""),
-                                            // TODO add default of encounter reference
-                        ((p.resource.sent) ?
-                            moment(p.resource.sent).format('ll') :
-                                ((p.resource.received) ?
-                                    moment(p.resource.received).format('ll') : ""))
-                    ];
-                thedatatable.row.add(rdata);
-                thedataset.push(rdata);
-//              if (p.resource.deceased) {alert(p.resource.deceased + " " + heading.text());}
+            if (allMessagesResult.total > 0) {
+                for (var i = 0; i < allMessagesResult.entry.length; i++) {
+                    var p = allMessagesResult.entry[i];
+                    if (Date.parse(p.resource.sent) > moment()) { continue;}
+                    var rdata = [
+                            (p.resource.id) ? p.resource.id : "",
+                            ((p.resource.sender) ?
+                                ((p.resource.sender.display) ? p.resource.sender.display :
+                                    ((p.resource.sender.reference) ? p.resource.sender.reference : "")) : ""),
+                            ((p.resource.recipient) ?
+                                ((p.resource.recipient[0].display) ?
+                                    p.resource.recipient[0].display :
+                                    ((p.resource.recipient[0].reference) ?
+                                        p.resource.recipient[0].reference : "")) : ""),
+                            ((p.resource.subject) ?
+                                ((p.resource.subject.display) ? p.resource.subject.display :
+                                    ((p.resource.subject.reference) ? p.resource.subject.reference : "")) : ""),
+                            ((p.resource.category) ?
+                                ((p.resource.category.text) ? p.resource.category.text :
+                                    ((p.resource.category.coding) ?
+                                        ((p.resource.category.coding.system) ?
+                                            p.resource.category.coding.system + " - " : "") +
+                                        ((p.resource.category.coding.code) ?
+                                            p.resource.category.coding.code : "") : "")) : ""),
+                                                // TODO add default of encounter reference
+                            ((p.resource.sent) ?
+                                moment(p.resource.sent).format('ll') :
+                                    ((p.resource.received) ?
+                                        moment(p.resource.received).format('ll') : ""))
+                        ];
+                    thedatatable.row.add(rdata);
+                    thedataset.push(rdata);
+    //              if (p.resource.deceased) {alert(p.resource.deceased + " " + heading.text());}
+                }
             }
             thedatatable.draw(false);
             window.sessionStorage.setItem('allmessagestable', JSON.stringify(thedataset));

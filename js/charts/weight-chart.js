@@ -1,5 +1,5 @@
 
-(function(NS, $) {
+function charts__weight_chart_js (NS, $) {
     "use strict";
     var NAME = "Weight Chart";
     
@@ -40,5 +40,7 @@
     
     NS.App.Charts[NAME] = WeightChart;
     
-}(GC, jQuery));
+}
+
+charts__weight_chart_js(GC, jQuery);
 

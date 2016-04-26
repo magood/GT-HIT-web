@@ -1,6 +1,6 @@
 window.GC = window.GC || {};
 
-(function ($, GC) {
+function gc_chart_config_js($, GC) {
    "use strict";
 
     // Preferences: app + any patient +     user
@@ -567,4 +567,6 @@ window.GC = window.GC || {};
     );
     GC.Scratchpad.autoCommit = true;
 
-}(jQuery, GC));
+}
+
+gc_chart_config_js(jQuery, GC);
