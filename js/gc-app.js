@@ -275,7 +275,10 @@ function gc_app_js (NS, $) {
 
         switch (type || GC.App.getViewType()) {
             case "graphs":
-                if (!leftPane) {
+                if (!leftPane && !NS.App.Pane) { // TODO should really clear the old
+                                                 // NS.App.Pane from the DOM, then replace
+                                                 // for the case when there is an NS.App.Pane without a leftPane
+                                                 // currently chart scales/limits may be inappropriate
                     console.log("GC");
                     console.log(GC);
                     console.log("GC.App");
@@ -923,7 +926,7 @@ function gc_app_js (NS, $) {
                 $("#patientlist-tab") [GC.chartSettings.role == "coordinator" ? "show" : "hide"]();
 
                 var hidepatientspecific = (type == "patients" || type == "allmessages");
-                var coord_patientspecific = (type == "maps" || type == "message" || type == "questions");
+                var coord_patientspecific = (type == "maps" || type == "message" || type == "questions" || type == "psmessages");
 
                 $("html")
                 .toggleClass("has-patient-header", !GC.Preferences.prop("hidePatientHeader") || true)

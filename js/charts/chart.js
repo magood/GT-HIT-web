@@ -10,6 +10,8 @@
 function Chart( pane ) 
 {
     this.id        = Raphael.createUUID();
+/*    console.log("Chart()");
+    console.log(this.id); */
     this.pane      = null;
     this._nodes    = [];
     this.settings  = GC.chartSettings;
