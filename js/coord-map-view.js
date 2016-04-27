@@ -127,14 +127,19 @@ XDate, setTimeout, getDataSet*/
                                     addr += line + ' ';
                                 }
                                 addr += ', ' + addrObj.city;
-                                addr += ', ' + addrObj.state + ' ' + addrObj.postalCode;
+                                addr += ', ' + addrObj.state;
+
+                                //Avoid Undefined seen in many zip codes
+                                var dispAddr = addr;
+                                addr += ' ' + addrObj.postalCode;
 
                                 var resultObject = {
                                     id: id,
                                     lat: null,
                                     lng: null,
                                     name: name,
-                                    type: type
+                                    type: type,
+                                    dispAddr: dispAddr
                                 };
 
                                 (function (r) {
@@ -184,14 +189,11 @@ XDate, setTimeout, getDataSet*/
                                 .append($("<h3>"+ r.name +"</h3>")))
                             .append($("<div></div>")
                                 .addClass("row")
-                                .append($("<h5>"+ r.type +"</h>")))
+                                .append($("<h5>"+ r.type +"</h5>")))
                             .append($("<div></div>")
                                 .addClass("row")
-                                .append($("<h5></h5>")
-                                    .append($("<span></span>")
-                                        .addClass("label label-default")
-                                        .append("Quality Score"))
-                                    .append(" 7/10"))));
+                                .append($("<h5>"+ r.dispAddr +"</h5>")))
+                          );
                 
 
                 addedResources.push(r.id);
