@@ -97,7 +97,7 @@ XDate, setTimeout, getDataSet*/
         function getFromFHIR(zip, city, state) {
 
             //$.ajax({
-            //    url: 'http://52.72.172.54:8080/fhir/baseDstu2/Organization' +
+            //    url: GC.chartSettings.serverBase + "/Organization" +
             //        '?address-postalcode=' + zip + '&_count=50',
             //    dataType: 'json',
             //    success: function (zipResults) {
@@ -106,7 +106,6 @@ XDate, setTimeout, getDataSet*/
             //    }
             //});
             $.ajax({
-                // url: 'http://52.72.172.54:8080/fhir/baseDstu2/Organization' +
                 url: GC.chartSettings.serverBase + "/Organization" +
                     '?address-city=' + city + '&address-state=' + state + '&_count=50',
                 dataType: 'json',

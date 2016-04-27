@@ -99,7 +99,6 @@ XDate, setTimeout, getDataSet*/
 
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
         $.ajax({
-            // url: 'http://52.72.172.54:8080/fhir/baseDstu2/Communication' +
             url: GC.chartSettings.serverBase + "/Communication" +
                 '?sent=%3C%3D' + todayDateStr + '&_count=50',
             dataType: 'json',

@@ -108,7 +108,6 @@ XDate, setTimeout, getDataSet*/
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
         loadingdiv.show();
         $.ajax({
-            // url: 'http://52.72.172.54:8080/fhir/baseDstu2/Patient' +
             url: GC.chartSettings.serverBase + "/Patient" +
                 '?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' +
                 todayDateStr + '&_count=50',
