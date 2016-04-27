@@ -107,10 +107,17 @@
                 $(".message-encounter-value", template).text(encounter);
             else
                 $(".message-encounter", template).hide();
-            $("#accept-referral", template)
-                .click(function() {
-                    alert("click accept referral");
-                });
+            if (!content || content.indexOf("referralRequest for Patient/") != 0) {
+                $("#accept-referral", template).hide();
+            } else {
+                $("#accept-referral", template)
+                    .click(function() {
+                        var p_id = content.substring(28).match(/[A-Za-z0-9\-\.]{1,64}/);
+                        var recipient_details = messageResult.sender;
+                        var req_id = messageResult.payload[1].contentReference.reference.match(/ReferralRequest\/([A-Za-z0-9\-\.]{1,64})/)[1];
+                        acceptReferral(p_id, recipient_details, id, req_id);
+                    });
+            }
             $("#send-questions", template)
                 .click(function() {
                     alert("click send questions");
@@ -120,6 +127,69 @@
                     alert("click send referral notification");
                 });
             themessage.append(template);
+        }
+
+        function acceptReferral(patient_id, recipient_details, message_id, request_id) {
+            console.log('acceptReferral');
+            var thecomm = {
+                resourceType: "Communication",
+ /*       "meta":{
+            "versionId":"1",
+            "lastUpdated":"2016-04-27T06:57:58.593-04:00"
+        },*/
+                text:{
+                    status: "generated",
+                    div: "<div>the childhood obesity patient coordinator has accepted your referralRequest</div>"
+                },
+                category: {
+                    coding: [
+                        {
+                            system: "http://acme.org/messagetypes",
+                            code: "notification"
+                        }
+                    ],
+                    text: "notification"
+                },
+                sender: {
+                    display: "Childhood Obesity Coordinator"
+                },
+                recipient: [
+                        recipient_details
+                ],
+                payload: [
+                    {
+                        contentString: "Your referralRequest for Patient/" + patient_id + " status is now 'accepted'\n" +
+                                        "following your message id Communication/" + message_id
+                    },
+                    {
+                        contentReference: {
+                            reference: "ReferralRequest/" + request_id
+                        }
+                    }
+                ],
+                status: "pending",
+                sent: moment().format(),
+                subject: {
+                    reference: "Patient/" + patient_id
+                }
+            };
+            console.log(thecomm);
+            console.log(JSON.stringify(thecomm));
+            $.ajax({
+                url: GC.chartSettings.serverBase + "/Communication",
+                type: "POST",
+                async: false,
+                global: false,
+                data: JSON.stringify(thecomm),
+                dataType: 'json',
+                success: function(data) {
+                    alert('referral acceptance message sent!');
+                    console.log(data);
+                    $("#accept-referral").hide();
+                },
+                contentType: 'application/json'
+            });
+        // TODO retrieve ReferralRequest/request_id, update status, POST to server
         }
     }
 
