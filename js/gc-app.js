@@ -275,10 +275,7 @@ function gc_app_js (NS, $) {
 
         switch (type || GC.App.getViewType()) {
             case "graphs":
-                if (!leftPane && !NS.App.Pane) { // TODO should really clear the old
-                                                 // NS.App.Pane from the DOM, then replace
-                                                 // for the case when there is an NS.App.Pane without a leftPane
-                                                 // currently chart scales/limits may be inappropriate
+                if (!leftPane && !NS.App.Pane) {
                     console.log("GC");
                     console.log(GC);
                     console.log("GC.App");
@@ -293,8 +290,8 @@ function gc_app_js (NS, $) {
                     NS.App.Pane = leftPane;
                     NS.App.ChartsView = leftPane;
                 }
-
-                leftPane.draw();
+                
+                NS.App.Pane.draw();
                 $("#print-button").html("Print Graphs");
                 break;
 
