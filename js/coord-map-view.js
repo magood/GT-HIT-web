@@ -126,12 +126,6 @@ XDate, setTimeout, getDataSet*/
                                     var line = addrObj.line[ai];
                                     addr += line + ' ';
                                 }
-                                addr += ', ' + addrObj.city;
-                                addr += ', ' + addrObj.state;
-
-                                //Avoid Undefined seen in many zip codes
-                                var dispAddr = addr;
-                                addr += ' ' + addrObj.postalCode;
 
                                 var resultObject = {
                                     id: id,
@@ -139,14 +133,18 @@ XDate, setTimeout, getDataSet*/
                                     lng: null,
                                     name: name,
                                     type: type,
-                                    dispAddr: dispAddr
+                                    dispAddr: addr,
+                                    city: addrObj.city,
+                                    state: addrObj.state,
+                                    zip: addrObj.postalCode
+
                                 };
 
                                 (function (r) {
                                     $.get({
                                         url: "https://maps.googleapis.com/maps/api/geocode/json",
                                         data: {
-                                            address: addr,
+                                            address: r.dispAddr + ', ' + r.city + ', ' + r.state + ' ' + r.zip,
                                             key: "AIzaSyC2lIWgJTOezqi3-VVnD65eiNhGGHyHZTk" //Health Informatics Project Maps Key
                                         },
                                         success: function (data) {
@@ -182,6 +180,12 @@ XDate, setTimeout, getDataSet*/
                 console.log("adding resource: " + r.name);
                 console.log(r);
 
+                var addressString = r.city + ", " + r.state;
+
+                //Some zip codes are not defined, This section can be removed if we want consistency (not display zip altogether)
+                if(r.zip)
+                    addressString += " - " + r.zip;
+
                 $('.map-address-list').append($("<div></div>")
                             .addClass("well")
                             .append($("<div></div>")
@@ -193,6 +197,21 @@ XDate, setTimeout, getDataSet*/
                             .append($("<div></div>")
                                 .addClass("row")
                                 .append($("<h5>"+ r.dispAddr +"</h5>")))
+                            .append($("<div></div>")
+                                .addClass("row")
+                                .append($("<h5>"+ addressString+ "</h5>")))
+                            
+                            // Quality score is not available in this response
+                            // If fetched uncomment this and replace <quality_score> with variable containing value
+                            // .append($("<div></div>")
+                            //     .addClass("row")
+                            //     .append($("<h5></h5>")
+                            //         .append($("<span></span>")
+                            //             .addClass("label label-default")
+                            //             .append("Quality Score"))
+                            // If fetched needs to be added here
+                            //         .append(<quality_score>)))
+
                           );
                 
 
