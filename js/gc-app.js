@@ -276,12 +276,6 @@ function gc_app_js (NS, $) {
         switch (type || GC.App.getViewType()) {
             case "graphs":
                 if (!leftPane && !NS.App.Pane) {
-                    console.log("GC");
-                    console.log(GC);
-                    console.log("GC.App");
-                    console.log(GC.App);
-                    console.log("GC.App.Charts");
-                    console.log(GC.App.Charts);
                     leftPane = new ChartPane(Raphael($("#stage .stage-1")[0]));
                     leftPane.addChart(new GC.App.Charts["Length/Stature Chart"](), 0);
                     leftPane.addChart(new GC.App.Charts["Weight Chart"](), 0);
@@ -350,16 +344,14 @@ function gc_app_js (NS, $) {
     }
 
     NS.App.DEBUG_MODE = DEBUG_MODE;
-/*    console.log("GC.App.Charts");
-    console.log(NS.App.Charts); */
+
     NS.App.Charts = (NS.App.Charts ? NS.App.Charts : []);
     // TODO possible risk of overloading charts array with multiple type charts
     // for instance length, length/stature, stature it seems should not all be
-    // in the array together
+    // in the array together maybe
     // see charts/length-chart.js:70 getTitle()
 
-/*    console.log("GC.App.Charts");
-    console.log(NS.App.Charts); */
+
     NS.App.getPatient = function getPatient() {
         return PATIENT;
     };
