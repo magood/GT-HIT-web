@@ -78,6 +78,11 @@
 <div class='message-sent-time'><span class='msg-detail-heading'>Sent: </span><span class='message-sent-time-value'></span></div>\
 <div class='message-rec-time'><span class='msg-detail-heading'>Received: </span><span class='message-rec-time-value'></span></div>\
 <div class='message-encounter'><span class='msg-detail-heading'>Encounter: </span><span class='message-encounter-value'></span></div>\
+<div class='message-buttons'>\
+    <div class='btn btn-info btn-accept-referral'>Accept Referral</div>\
+    <div class='btn btn-info btn-send-questions'>Send Questionnaire</div>\
+    <div class='btn btn-info btn-send-referral-notification'>Send Resource Referral Notification</div>\
+</div>\
 </div>\
 ");
             //tack on the values. Styles in message-style.css.
