@@ -498,6 +498,19 @@ function gc_app_js (NS, $) {
         });
     };
 
+    NS.App.sendCommunityReferrals = function(data) {
+        var content = "Dear " + data.patient_name + "\n\n"
+                    "This is a message from your Community Healthy Weight " + 
+                    "Care Coordinator\n\n" +
+                    "We are writing to suggest that you may care to attend " +
+                    "the following local resources\n\n";
+        data.resources.forEach(function(element) {
+            content += element.resourcename + "\n" +
+                        element.resourcetiming + "\n" +
+                        element.resourceaddress;
+        });
+    };
+
     NS.App.viewAnnotations = function() {
         if (ANNOTATIONS_WINDOW === null || ANNOTATIONS_WINDOW.closed) {
             ANNOTATIONS_WINDOW = window.open("annotations.html", "annotationsWindow", "resizable=yes,scrollbars=yes,centerscreen=yes,status=yes,width=800,height=600,dependent=yes,dialog=yes");
