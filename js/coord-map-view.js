@@ -66,12 +66,18 @@ XDate, setTimeout, getDataSet*/
                             .html("TODO Map goes here")));
         var map; //gmaps obj.
         function init_map() {
-            var myOptions = { zoom: 12, center: new google.maps.LatLng(42.3314, -83.0458), mapTypeId: google.maps.MapTypeId.HYBRID };
+            var myOptions = { zoom: 12, mapTypeId: google.maps.MapTypeId.HYBRID };
+            var mapElement = document.getElementById('google-map-canvas');
             map = new google.maps.Map(document.getElementById('google-map-canvas'), myOptions);
-            var marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(42.3314, -83.0458) });
-            var infowindow = new google.maps.InfoWindow({ content: '<strong>Patients House</strong><br>Atlanta<br>' });
+        }
+
+        function setPatientMarker(glatlng) {
+            var marker = new google.maps.Marker({ map: map, position: glatlng });
+            var infowindow = new google.maps.InfoWindow({ content: '<strong>Patient\'s House</strong>' });
             google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
             infowindow.open(map, marker);
+            google.maps.event.trigger(map, 'resize');
+            map.setCenter(glatlng);
         }
 
         function attachWindowListener(marker, loc) {
@@ -82,7 +88,44 @@ XDate, setTimeout, getDataSet*/
             });
         }
         init_map();
-        getFromFHIR('48823', 'Detroit', 'MI');
+        var pId = (window.sessionStorage.getItem("patient_id") ? window.sessionStorage.getItem("patient_id") : GC.chartSettings.defaultPatient);
+        $.ajax({
+            url: GC.chartSettings.serverBase + "/Patient?_id=" + pId,
+            dataType: 'json',
+            success: function (patientResults) {
+                try {
+                    var addr = patientResults.entry[0].resource.address[0];
+                    getFromFHIR(addr.postalCode, addr.city, addr.state);
+
+                    
+                    var addrText = "";
+                    if (addr.line.length > 0)
+                        addrText = addr.line[0] + ", ";
+                    addrText += addr.city + ", " + addr.state + " " + addr.postalCode;
+                    console.log("patient address: " + addrText);
+
+                    $.get({
+                        url: "https://maps.googleapis.com/maps/api/geocode/json",
+                        data: {
+                            address: addrText,
+                            key: "AIzaSyC2lIWgJTOezqi3-VVnD65eiNhGGHyHZTk" //Health Informatics Project Maps Key
+                        },
+                        success: function (data) {
+                            if (data.results.length > 0) {
+                                var loc = data.results[0].geometry.location;
+                                setPatientMarker(loc);
+                            }
+                            else if (data.error_message) {
+                                console.log(data.error_message);
+                            }
+                        }
+                    });
+                }
+                catch (e) {
+                    alert("Patient does not have an address recorded.  Map cannot be displayed.");
+                }
+            }
+        });
 
         var addedResources = [];
 
@@ -95,23 +138,13 @@ XDate, setTimeout, getDataSet*/
         //google.maps.event.addListener(map, "bounds_changed", updateDebounce);
 
         function getFromFHIR(zip, city, state) {
-
-            //$.ajax({
-            //    url: GC.chartSettings.serverBase + "/Organization" +
-            //        '?address-postalcode=' + zip + '&_count=50',
-            //    dataType: 'json',
-            //    success: function (zipResults) {
-            //        //todo
-            //        console.log("got " + zipResults.total + " zip code results");
-            //    }
-            //});
             $.ajax({
                 url: GC.chartSettings.serverBase + "/Organization" +
                     '?address-city=' + city + '&address-state=' + state + '&_count=50',
                 dataType: 'json',
                 success: function (cityResults) {
                     //todo
-                    console.log("got " + cityResults.total + " city results");
+                    console.log("got " + cityResults.total + " " + city + " results");
                     if (cityResults.total > 0) {
                         var results = [];
                         for (var i = 0; i < cityResults.entry.length; i++) {
