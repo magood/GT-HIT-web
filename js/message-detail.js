@@ -159,7 +159,11 @@
                     reference: "Organization/" + GC.chartSettings.defaultSelf
                 },
                 recipient: [
-                        recipient_details
+                        recipient_details,
+                        {
+                            reference: 'Patient/' + patient_id,
+                            display: patient_name
+                        }
                 ],
                 payload: [
                     {
