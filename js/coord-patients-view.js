@@ -89,11 +89,14 @@ XDate, setTimeout, getDataSet*/
 
         $("#patient-table tbody").on('click', 'tr', function () {
             console.log(thedatatable.row(this).data());
-            if (thedatatable.row(this).data()[1] == "") return;
-            window.sessionStorage.setItem('patient_id', thedatatable.row(this).data()[1]);
-            call_load_functions_js();
-            GC.get_data();
-            window.sessionStorage.removeItem('psmessagestable');
+            var new_patient_id = thedatatable.row(this).data()[1];
+            if (!new_patient_id || (new_patient_id == "")) return;
+            if (new_patient_id != window.sessionStorage.getItem('patient_id')) {
+                window.sessionStorage.setItem('patient_id', new_patient_id);
+                window.sessionStorage.removeItem('psmessagestable');
+                call_load_functions_js();
+                GC.get_data();
+            }
             GC.App.setViewType("psmessages");
         });
 

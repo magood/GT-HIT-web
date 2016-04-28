@@ -499,11 +499,17 @@ function gc_app_js (NS, $) {
     };
 
     NS.App.sendCommunityReferrals = function(data) {
-        var thecontent = "Dear " + data.patient_name + "\n\n"
+        var thecontent = "Dear " + data.patient_name + "\n\n" +
                     "This is a message from your Community Healthy Weight " +
                     "Care Coordinator\n\n" +
                     "We are writing to suggest that you may care to attend " +
                     "the following local resources\n\n\n";
+        data.resources = (data.resources ? data.resources :
+            [{
+                resourcename: "the park",
+                resourcetiming: "dawn to dusk every day",
+                resourceaddress: "up the road"
+            }]);
         data.resources.forEach(function(element) {
             thecontent += "\t" + element.resourcename + "\n" +
                         "\t" + element.resourcetiming + "\n" +
@@ -512,9 +518,10 @@ function gc_app_js (NS, $) {
         thecontent += "\nWe hope these resources allow you to manage your " +
                         "weight successfully\n\n" +
                         "In case you need more information, please contact us\n\n" +
-                        "telephone (703)555-1234\n"
-                        "Email CDCHealthyWeightAtlanta@gatech.edu\n"
-                        "555 Some Street, Atlanta, GA 30331"
+                        "telephone (703)555-1234\n" +
+                        "Email CDCHealthyWeightAtlanta@gatech.edu\n" +
+                        "555 Some Street, Atlanta, GA 30331";
+        var request_id = GC.chartSettings.defaultReferralRequest; //TODO retrieve the ReferralRequest
         var thecomm = {
             resourceType: "Communication",
             text:{
@@ -546,7 +553,7 @@ function gc_app_js (NS, $) {
                 },
                 {
                     contentReference: {
-                        reference: "ReferralRequest/" + data.request_id
+                        reference: "ReferralRequest/" + request_id
                     }
                 }
             ],
@@ -559,7 +566,7 @@ function gc_app_js (NS, $) {
         };
         $.ajax({
             url: GC.chartSettings.serverBase + "/Communication",
-            type: "POST",
+            type: "PUT",
             async: false,
             global: false,
             data: JSON.stringify(thecomm),

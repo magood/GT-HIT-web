@@ -26,7 +26,7 @@
             success: mergeHTML
         });
 
-        var referralreferences = []
+        var referralreferences = [];
         function mergeHTML(messageResult) {
             console.log("mergeHTML from message-detail.js");
             console.log(messageResult);
@@ -98,14 +98,16 @@
                 if (!subject) return;
                 var patient_id_match = subject.match(/Patient\/(.*)/);
                 if (!patient_id_match) return;
-                window.sessionStorage.setItem('patient_id', patient_id_match[1]);
-                call_load_functions_js();
-                GC.get_data();
-                window.sessionStorage.removeItem('psmessagestable');
+                var new_patient_id = patient_id_match[1];
+                if (new_patient_id && (new_patient_id != window.sessionStorage.getItem('patient_id'))) {
+                    window.sessionStorage.setItem('patient_id', new_patient_id);
+                    call_load_functions_js();
+                    GC.get_data();
+                    window.sessionStorage.removeItem('psmessagestable');
+                }
                 GC.App.setViewType("psmessages");
             });
 
-            
             $(".message-sent-time-value", template).text(sent_time);
 
             if (content && content != "")
@@ -123,6 +125,11 @@
             $(".message-moredetail", template).hide();
 
             themessage.append(template);
+
+            var p_id = ((messageResult.subject && messageResult.subject.reference) ? messageResult.subject.reference : "");
+            p_id = p_id.match(/Patient\/([A-Za-z0-9\-\.]{1,64})/);
+            p_id = p_id ? p_id[1] : "";
+            var p_name = ((messageResult.subject && messageResult.subject.display) ? messageResult.subject.display : "");
 
             if (!content || content.indexOf("referralRequest for Patient/") != 0) {
                 $("#accept-referral").hide();
@@ -161,11 +168,9 @@
                 }
                 $("#accept-referral")
                     .click(function() {
-                        var p_id = content.substring(28).match(/[A-Za-z0-9\-\.]{1,64}/);
-                        var p_display = ((messageResult.subject && messageResult.subject.display) ? messageResult.subject.display : "");
                         var recipient_details = messageResult.sender;
                         var req_id = messageResult.payload[1].contentReference.reference.match(/ReferralRequest\/([A-Za-z0-9\-\.]{1,64})/)[1];
-                        acceptReferral(p_id, p_display, recipient_details, id, req_id);
+                        acceptReferral(p_id, p_name, recipient_details, id, req_id);
                     });
             }
             $("#send-questions")
@@ -174,7 +179,13 @@
                 });
             $("#send-referral-notification")
                 .click(function() {
-                    alert("click send referral notification");
+                    //alert("click send referral notification");
+                    var thedata = {
+                        patient_id: p_id,
+                        patient_name: p_name,
+                        resources: sessionStorage.getItem("resource_list")
+                    };
+                    GC.App.sendCommunityReferrals(thedata);
                 });
         }
 
