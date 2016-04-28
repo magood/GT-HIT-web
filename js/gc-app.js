@@ -499,15 +499,77 @@ function gc_app_js (NS, $) {
     };
 
     NS.App.sendCommunityReferrals = function(data) {
-        var content = "Dear " + data.patient_name + "\n\n"
-                    "This is a message from your Community Healthy Weight " + 
+        var thecontent = "Dear " + data.patient_name + "\n\n"
+                    "This is a message from your Community Healthy Weight " +
                     "Care Coordinator\n\n" +
                     "We are writing to suggest that you may care to attend " +
-                    "the following local resources\n\n";
+                    "the following local resources\n\n\n";
         data.resources.forEach(function(element) {
-            content += element.resourcename + "\n" +
-                        element.resourcetiming + "\n" +
-                        element.resourceaddress;
+            thecontent += "\t" + element.resourcename + "\n" +
+                        "\t" + element.resourcetiming + "\n" +
+                        "\t" + element.resourceaddress + "\n\n";
+        });
+        thecontent += "\nWe hope these resources allow you to manage your " +
+                        "weight successfully\n\n" +
+                        "In case you need more information, please contact us\n\n" +
+                        "telephone (703)555-1234\n"
+                        "Email CDCHealthyWeightAtlanta@gatech.edu\n"
+                        "555 Some Street, Atlanta, GA 30331"
+        var thecomm = {
+            resourceType: "Communication",
+            text:{
+                status: "generated",
+                div: "<div>the childhood healthy weight patient coordinator is referring you to some community resources</div>"
+            },
+            category: {
+                coding: [
+                    {
+                        system: "http://acme.org/messagetypes",
+                        code: "notification"
+                    }
+                ],
+                text: "notification"
+            },
+            sender: {
+                display: "Childhood Healthy Weight Coordinator",
+                reference: "Organization/" + GC.chartSettings.defaultSelf
+            },
+            recipient: [
+                    {
+                        reference: 'Patient/' + data.patient_id,
+                        display: data.patient_name
+                    }
+            ],
+            payload: [
+                {
+                    contentString: thecontent
+                },
+                {
+                    contentReference: {
+                        reference: "ReferralRequest/" + data.request_id
+                    }
+                }
+            ],
+            status: "pending",
+            sent: moment().format(),
+            subject: {
+                reference: "Patient/" + data.patient_id,
+                display: data.patient_name
+            }
+        };
+        $.ajax({
+            url: GC.chartSettings.serverBase + "/Communication",
+            type: "POST",
+            async: false,
+            global: false,
+            data: JSON.stringify(thecomm),
+            dataType: 'json',
+            success: function(ret_data) {
+                alert('patient referral to community resources sent!');
+                //TODO change ReferralRequest status to 'completed'
+                console.log(ret_data);
+            },
+            contentType: 'application/json'
         });
     };
 

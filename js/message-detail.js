@@ -184,7 +184,7 @@
                 resourceType: "Communication",
                 text:{
                     status: "generated",
-                    div: "<div>the childhood obesity patient coordinator has accepted your referralRequest</div>"
+                    div: "<div>the childhood healthy weight patient coordinator has accepted your referralRequest</div>"
                 },
                 category: {
                     coding: [
