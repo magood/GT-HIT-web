@@ -2732,6 +2732,8 @@ svg {
 	border: none;
 	padding: 0;
         max-width: 70%;
+        max-height: 90%;
+        overflow-y: auto;
 	z-index: 100000000 !important;
 }
 .ui-widget-header {

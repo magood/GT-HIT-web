@@ -111,7 +111,7 @@
             $(".message-sent-time-value", template).text(sent_time);
 
             if (content && content != "")
-                $(".message-content-value", template).text(content);
+                $(".message-content-value", template).html(content.replace(/\n/g,"<br />"));
             else
                 $(".message-content", template).hide();
             if (rec_time && rec_time != "")
