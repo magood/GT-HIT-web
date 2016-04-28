@@ -66,10 +66,18 @@ XDate, setTimeout, getDataSet*/
                             .html("TODO Map goes here")));
         var map; //gmaps obj.
         function init_map() {
-            var myOptions = { zoom: 12, center: new google.maps.LatLng(42.3314, -83.0458), mapTypeId: google.maps.MapTypeId.HYBRID };
+            var myOptions = { zoom: 12, mapTypeId: google.maps.MapTypeId.HYBRID };
+            var mapElement = document.getElementById('google-map-canvas');
             map = new google.maps.Map(document.getElementById('google-map-canvas'), myOptions);
-            
-            
+        }
+
+        function setPatientMarker(glatlng) {
+            var marker = new google.maps.Marker({ map: map, position: glatlng });
+            var infowindow = new google.maps.InfoWindow({ content: '<strong>Patient\'s House</strong>' });
+            google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
+            infowindow.open(map, marker);
+            google.maps.event.trigger(map, 'resize');
+            map.setCenter(glatlng);
         }
 
         function attachWindowListener(marker, loc) {
@@ -105,19 +113,13 @@ XDate, setTimeout, getDataSet*/
                         success: function (data) {
                             if (data.results.length > 0) {
                                 var loc = data.results[0].geometry.location;
-                                var marker = new google.maps.Marker({ map: map, position: loc });
-                                var infowindow = new google.maps.InfoWindow({ content: '<strong>Patients House</strong>' });
-                                google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
-                                infowindow.open(map, marker);
-                                map.setCenter(loc);
+                                setPatientMarker(loc);
                             }
                             else if (data.error_message) {
                                 console.log(data.error_message);
                             }
                         }
                     });
-
-                    
                 }
                 catch (e) {
                     alert("Patient does not have an address recorded.  Map cannot be displayed.");
