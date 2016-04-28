@@ -564,9 +564,10 @@ function gc_app_js (NS, $) {
                 display: data.patient_name
             }
         };
+        //console.log(JSON.stringify(thecomm));
         $.ajax({
-            url: GC.chartSettings.serverBase + "/Communication",
-            type: "PUT",
+            url: GC.chartSettings.serverBase + "/Communication/",
+            type: "POST",
             async: false,
             global: false,
             data: JSON.stringify(thecomm),
