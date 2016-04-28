@@ -107,29 +107,33 @@
                 $(".message-encounter-value", template).text(encounter);
             else
                 $(".message-encounter", template).hide();
+
+            themessage.append(template);
+
             if (!content || content.indexOf("referralRequest for Patient/") != 0) {
-                $("#accept-referral", template).hide();
+                $("#accept-referral").hide();
             } else {
-                $("#accept-referral", template)
+                // TODO retrieve ReferrralRequest, check whether its status is 'requested'
+                $("#accept-referral")
                     .click(function() {
                         var p_id = content.substring(28).match(/[A-Za-z0-9\-\.]{1,64}/);
+                        var p_display = ((messageResult.subject && messageResult.subject.display) ? messageResult.subject.display : "");
                         var recipient_details = messageResult.sender;
                         var req_id = messageResult.payload[1].contentReference.reference.match(/ReferralRequest\/([A-Za-z0-9\-\.]{1,64})/)[1];
-                        acceptReferral(p_id, recipient_details, id, req_id);
+                        acceptReferral(p_id, p_display, recipient_details, id, req_id);
                     });
             }
-            $("#send-questions", template)
+            $("#send-questions")
                 .click(function() {
                     alert("click send questions");
                 });
-            $("#send-referral-notification", template)
+            $("#send-referral-notification")
                 .click(function() {
                     alert("click send referral notification");
                 });
-            themessage.append(template);
         }
 
-        function acceptReferral(patient_id, recipient_details, message_id, request_id) {
+        function acceptReferral(patient_id, patient_name, recipient_details, message_id, request_id) {
             console.log('acceptReferral');
             var thecomm = {
                 resourceType: "Communication",
@@ -151,7 +155,8 @@
                     text: "notification"
                 },
                 sender: {
-                    display: "Childhood Obesity Coordinator"
+                    display: "Childhood Healthy Weight Coordinator",
+                    reference: "Organization/" + GC.chartSettings.defaultSelf
                 },
                 recipient: [
                         recipient_details
@@ -170,7 +175,8 @@
                 status: "pending",
                 sent: moment().format(),
                 subject: {
-                    reference: "Patient/" + patient_id
+                    reference: "Patient/" + patient_id,
+                    display: patient_name
                 }
             };
             console.log(thecomm);

@@ -62,7 +62,8 @@ function gc_chart_config_js($, GC) {
         defaultPatient : (GC.Util.urlParam("server") == "MiHIN" ? "18791941" : "1137192" ),
         defaultMessage : (GC.Util.urlParam("server") == "MiHIN" ? "19179016" : "" ),
         defaultQuestionnaire : (GC.Util.urlParam("server") == "MiHIN" ? "18791835" : ""),
-        defaultReferralRequest : (GC.Util.urlParam("server") == "MiHIN" ? "19179006" : "")
+        defaultReferralRequest : (GC.Util.urlParam("server") == "MiHIN" ? "19179006" : ""),
+        defaultSelf : (GC.Util.urlParam("server") == "MiHIN" ? "19178873" : "")
         // TODO SMART/MiHIN adaptations; especially SMART resource numbers when ready
     };
 
