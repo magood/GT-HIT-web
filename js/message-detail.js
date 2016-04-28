@@ -75,7 +75,7 @@
 <div class='message-sender'><span class='msg-detail-heading'>From: </span><span class='message-sender-value'></span></div>\
 <div class='message-recipient'><span class='msg-detail-heading'>To: </span><span class='message-recipient-value'></span></div>\
 <div class='message-category'><span class='msg-detail-heading'>Category: </span><span class='message-category-value'></span></div>\
-<div class='message-subject'><span class='msg-detail-heading'>Subject: </span><span class='message-subject-value'></span></div>\
+<div class='btn btn-lg btn-link message-subject'><span class='msg-detail-heading'>Subject: </span><span class='message-subject-value'></span></div>\
 <div class='message-content well'><span class='message-content-value'></span></div>\
 <div class='message-sent-time'><span class='msg-detail-heading'>Sent: </span><span class='message-sent-time-value'></span></div>\
 <div class='message-rec-time'><span class='msg-detail-heading'>Received: </span><span class='message-rec-time-value'></span></div>\
@@ -96,7 +96,9 @@
             $(".message-subject-value", template).text(subject ? subject : "(no subject)");
             $(".message-subject-value", template).click(function() {
                 if (!subject) return;
-                window.sessionStorage.setItem('patient_id', subject);
+                var patient_id_match = subject.match(/Patient\/(.*)/);
+                if (!patient_id_match) return;
+                window.sessionStorage.setItem('patient_id', patient_id_match[1]);
                 call_load_functions_js();
                 GC.get_data();
                 GC.App.setViewType("psmessages");
