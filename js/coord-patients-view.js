@@ -93,6 +93,7 @@ XDate, setTimeout, getDataSet*/
             window.sessionStorage.setItem('patient_id', thedatatable.row(this).data()[1]);
             call_load_functions_js();
             GC.get_data();
+            window.sessionStorage.removeItem('psmessagestable');
             GC.App.setViewType("psmessages");
         });
 

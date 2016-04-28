@@ -101,6 +101,7 @@
                 window.sessionStorage.setItem('patient_id', patient_id_match[1]);
                 call_load_functions_js();
                 GC.get_data();
+                window.sessionStorage.removeItem('psmessagestable');
                 GC.App.setViewType("psmessages");
             });
 
