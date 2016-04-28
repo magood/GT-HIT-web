@@ -131,7 +131,6 @@
                         global: false,
                         dataType: 'json',
                         success: function(data) {
-                            alert('referral request retrieved');
                             console.log(data);
                             $("#referral-detail")
                                 .html("<i>Referral Request for</i> <b>" +
@@ -173,10 +172,6 @@
             console.log('acceptReferral');
             var thecomm = {
                 resourceType: "Communication",
- /*       "meta":{
-            "versionId":"1",
-            "lastUpdated":"2016-04-27T06:57:58.593-04:00"
-        },*/
                 text:{
                     status: "generated",
                     div: "<div>the childhood obesity patient coordinator has accepted your referralRequest</div>"
@@ -246,7 +241,6 @@
                 data: JSON.stringify(referralreferences[1]),
                 dataType: 'json',
                 success: function(data) {
-                    alert('referral update sucess!');
                     console.log(data);
                 },
                 contentType: 'application/json'
