@@ -94,6 +94,13 @@
             $(".message-recipient-value", template).text(recipient);
             $(".message-category-value", template).text(category);
             $(".message-subject-value", template).text(subject ? subject : "(no subject)");
+            $(".message-subject-value", template).click(function() {
+                if (!subject) return;
+                window.sessionStorage.setItem('patient_id', subject);
+                call_load_functions_js();
+                GC.get_data();
+                GC.App.setViewType("psmessages");
+            });
 
             
             $(".message-sent-time-value", template).text(sent_time);
