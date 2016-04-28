@@ -25,6 +25,8 @@
             dataType: 'json',
             success: mergeHTML
         });
+
+        var referralreferences = []
         function mergeHTML(messageResult) {
             console.log("mergeHTML from message-detail.js");
             console.log(messageResult);
@@ -121,6 +123,7 @@
                                     messageResult.payload[1].contentReference.reference) ?
                                         messageResult.payload[1].contentReference.reference : "");
                 if (therefreq != "") {
+                    referralreferences[0] = therefreq;
                     $.ajax({
                         url: GC.chartSettings.serverBase + "/" + therefreq,
                         type: "GET",
@@ -130,16 +133,19 @@
                         success: function(data) {
                             alert('referral request retrieved');
                             console.log(data);
-                            if (data.status != "requested") return;
                             $("#referral-detail")
                                 .html("<i>Referral Request for</i> <b>" +
                                         ((data.patient && data.patient.display) ?
                                             data.patient.display :
-                                            "<i>unknown</i>") +
-                                        "</b><br />" +
-                                            data.description).show();
-                            $("#accept-referral").show();
+                                            "<i>UNKNOWN</i>") +
+                                        "</b> STATUS: <b>" +
+                                        data.status.toUpperCase() +
+                                        "</b><br />" + data.description).show();
                             $(".message-moredetail", template).show();
+                            if (data.status == "requested") {
+                                $("#accept-referral").show();
+                                referralreferences[1] = data;
+                            }
                         },
                         contentType: 'application/json'
                     });
@@ -229,7 +235,22 @@
                 },
                 contentType: 'application/json'
             });
-        // TODO retrieve ReferralRequest/request_id, update status, POST to server
+            referralreferences[1].status = "accepted";
+            delete referralreferences[1].meta;
+            console.log(referralreferences);
+            $.ajax({
+                url: GC.chartSettings.serverBase + "/" + referralreferences[0],
+                type: "PUT",
+                async: false,
+                global: false,
+                data: JSON.stringify(referralreferences[1]),
+                dataType: 'json',
+                success: function(data) {
+                    alert('referral update sucess!');
+                    console.log(data);
+                },
+                contentType: 'application/json'
+            });
         }
     }
 
