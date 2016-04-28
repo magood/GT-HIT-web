@@ -137,7 +137,7 @@
                                         ((data.patient && data.patient.display) ?
                                             data.patient.display :
                                             "<i>UNKNOWN</i>") +
-                                        "</b> STATUS: <b>" +
+                                        "</b> STATUS: <b id='status-content-location'>" +
                                         data.status.toUpperCase() +
                                         "</b><br />" + data.description).show();
                             $(".message-moredetail", template).show();
@@ -242,6 +242,7 @@
                 dataType: 'json',
                 success: function(data) {
                     console.log(data);
+                    $("#status-content-location").text("ACCEPTED");
                 },
                 contentType: 'application/json'
             });
