@@ -98,7 +98,8 @@ XDate, setTimeout, getDataSet*/
 
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
         $.ajax({
-            url: GC.chartSettings.serverBase + "/Communication?subject=Patient%2F" +
+            url: GC.chartSettings.serverBase + "/Communication?subject=" +
+                    (GC.chartSettings.serverSMART ? "" : "Patient%2F") +
                     (window.sessionStorage.getItem("patient_id") ?
                         window.sessionStorage.getItem("patient_id") :
                         GC.chartSettings.defaultPatient

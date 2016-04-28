@@ -1,0 +1,42 @@
+{
+  "resourceType": "Communication",
+  "text": {
+    "status": "generated",
+    "div": "<div>Healthy Weight message</div>"
+  },
+  "category": {
+    "coding": [
+      {
+        "system": "http://acme.org/messagetypes",
+        "code": "general"
+      }
+    ],
+    "text": "general"
+  },
+  "sender": {
+    "reference": "Organization/572201fc0cf20e9addb273c1",
+    "display": "Your Care Coordinator"
+  },
+  "recipient": [
+    {
+      "reference": "Patient/5722014c0cf20e9addb273be",
+      "display": "Clark's parent or guardian"
+    }
+  ],
+  "subject": {
+      "reference": "Patient/5722014c0cf20e9addb273be",
+      "display": "Clark Kent"  
+  },
+  "payload": [
+    {
+      "contentString": "The park near your house holds activity sessions every Wednesday from 2pm to 4pm"
+    }
+  ],
+  "status": "completed",
+  "sent": "2016-03-29T01:17:04-0700",
+  "reason": [
+    {
+      "text": "Resource referral"
+    }
+  ]
+}
