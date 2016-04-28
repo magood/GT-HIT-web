@@ -1,0 +1,71 @@
+
+{
+    "resourceType":"ReferralRequest",
+    "text":{
+        "status":"generated",
+        "div":"<div xmlns=\"http://www.w3.org/1999/xhtml\">referralRequest to Care Coordinator Team for Patient N for childhood obesity support</div>"
+    },
+    "status":"requested",
+    "type":{
+        "coding":[
+            {
+                "system":"http://snomed.info/sct",
+                "code":"700274009",
+                "display":"Referral for procedure"
+            }
+        ]
+    },
+    "specialty":{
+        "coding":[
+            {
+                "system":"http://snomed.info/sct",
+                "code":"710915002",
+                "display":"Referral to community service"
+            }
+        ]
+    },
+    "priority":{
+        "coding":[
+            {
+                "system":"http://snomed.info/sct",
+                "code":"394848005",
+                "display":"Normal priority"
+            }
+        ]
+    },
+    "patient":{
+        "display":"Clark Kent",
+        "reference":"5722014c0cf20e9addb273be"
+    },
+    "requester":{
+        "display":"Some One"
+    },
+    "recipient":[
+        {
+            "display":"Care Coordinator Team",
+            "reference":"572201fc0cf20e9addb273c1"
+        }
+    ],
+    "dateSent":"2014-02-14",
+    "reason":{
+        "coding":[
+            {
+                "system":"http://snomed.info/sct",
+                "code":"10001005",
+                "display":"Childhood obesity"
+            }
+        ]
+    },
+    "description":"Clark is suffering childhood obesity with a BMI > 31.0. Clark is being refered to the Care Coordinator Team for help accessing community based resources that will help him in reaching a healthy BMI. 5-2-1-0 is an evidence-based prevention message centered on recommendations for Childhood Obesity Assessment, Prevention and Treatment sponsored by the Centers for Disease Control and Prevention (CDC). 5-2-1-0 recommends 5 or More Fruits & Vegetables a day, 2 Hours or Less of Screen Time a day, 1 Hour or More of Active Play a day, and 0 Sugary Drinks a day. The patient was administered the Healthy Eating Questionnaire and an analysis of the results indicates the 5-2-1-0 order of priority for this patient is as follows: 1) underconsumption of fruits and vegitables, 2) too much screen time 3) lack of active play time 4) overconsumption of sugary drinks",
+    "serviceRequested":[
+        {
+            "coding":[
+                {
+                    "system":"http://snomed.info/sct",
+                    "code":"347421000000106",
+                    "display":"community care for childhood obesity"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "resourceType":"Organization",
+    "active":true,
+    "type":{
+        "text":"Care Coordinator"
+    },
+    "name":"Childhood Healthy Weight Coordinator"
+}

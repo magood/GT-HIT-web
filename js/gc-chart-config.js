@@ -59,11 +59,11 @@ function gc_chart_config_js($, GC) {
         serverBase : (GC.Util.urlParam("server") == "MiHIN" ?
                                 "http://52.72.172.54:8080/fhir/baseDstu2" :
                                 "https://fhir-open-api-dstu2.smarthealthit.org" ),
-        defaultPatient : (GC.Util.urlParam("server") == "MiHIN" ? "18791941" : "1137192" ),
-        defaultMessage : (GC.Util.urlParam("server") == "MiHIN" ? "19179016" : "" ),
+        defaultPatient : (GC.Util.urlParam("server") == "MiHIN" ? "18791941" : "1137192" ), // 5722014c0cf20e9addb273be SMART
+        defaultMessage : (GC.Util.urlParam("server") == "MiHIN" ? "19179016" : "572205110cf20e9addb273c4" ),
         defaultQuestionnaire : (GC.Util.urlParam("server") == "MiHIN" ? "18791835" : ""),
-        defaultReferralRequest : (GC.Util.urlParam("server") == "MiHIN" ? "19179006" : ""),
-        defaultSelf : (GC.Util.urlParam("server") == "MiHIN" ? "19178873" : "")
+        defaultReferralRequest : (GC.Util.urlParam("server") == "MiHIN" ? "19179006" : "5721fc4d0cf20e9addb273b9"),
+        defaultSelf : (GC.Util.urlParam("server") == "MiHIN" ? "19178873" : "572201fc0cf20e9addb273c1")
         // TODO SMART/MiHIN adaptations; especially SMART resource numbers when ready
     };
 
