@@ -532,6 +532,7 @@ function gc_app_js (NS, $) {
                         "Email CDCHealthyWeightAtlanta@gatech.edu\n" +
                         "555 Some Street, Atlanta, GA 30331";
         var request_id = GC.chartSettings.defaultReferralRequest; //TODO retrieve the ReferralRequest
+        console.log(thecontent);
         var thecomm = {
             resourceType: "Communication",
             text:{
@@ -567,7 +568,7 @@ function gc_app_js (NS, $) {
                     }
                 }
             ],
-            status: "pending",
+            status: "in-progress",
             sent: moment().format(),
             subject: {
                 reference: "Patient/" + data.patient_id,

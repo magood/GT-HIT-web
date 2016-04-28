@@ -228,7 +228,7 @@
                         }
                     }
                 ],
-                status: "pending",
+                status: "in-progress",
                 sent: moment().format(),
                 subject: {
                     reference: "Patient/" + patient_id,
