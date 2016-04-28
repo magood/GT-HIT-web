@@ -78,6 +78,7 @@
 <div class='message-sent-time'><span class='msg-detail-heading'>Sent: </span><span class='message-sent-time-value'></span></div>\
 <div class='message-rec-time'><span class='msg-detail-heading'>Received: </span><span class='message-rec-time-value'></span></div>\
 <div class='message-encounter'><span class='msg-detail-heading'>Encounter: </span><span class='message-encounter-value'></span></div>\
+<div class='message-moredetail well'><span id='referral-detail'></span></div>\
 <div class='message-buttons'>\
     <div class='btn btn-info' id='accept-referral'>Accept Referral</div>\
     <div class='btn btn-info' id='send-questions'>Send Questionnaire</div>\
@@ -107,13 +108,42 @@
                 $(".message-encounter-value", template).text(encounter);
             else
                 $(".message-encounter", template).hide();
+            $(".message-moredetail", template).hide();
 
             themessage.append(template);
 
             if (!content || content.indexOf("referralRequest for Patient/") != 0) {
                 $("#accept-referral").hide();
             } else {
-                // TODO retrieve ReferrralRequest, check whether its status is 'requested'
+                $("#accept-referral").hide();
+                var therefreq = ((messageResult.payload && messageResult.payload[1] &&
+                                    messageResult.payload[1].contentReference &&
+                                    messageResult.payload[1].contentReference.reference) ?
+                                        messageResult.payload[1].contentReference.reference : "");
+                if (therefreq != "") {
+                    $.ajax({
+                        url: GC.chartSettings.serverBase + "/" + therefreq,
+                        type: "GET",
+                        async: false,
+                        global: false,
+                        dataType: 'json',
+                        success: function(data) {
+                            alert('referral request retrieved');
+                            console.log(data);
+                            if (data.status != "requested") return;
+                            $("#referral-detail")
+                                .html("<i>Referral Request for</i> <b>" +
+                                        ((data.patient && data.patient.display) ?
+                                            data.patient.display :
+                                            "<i>unknown</i>") +
+                                        "</b><br />" +
+                                            data.description).show();
+                            $("#accept-referral").show();
+                            $(".message-moredetail", template).show();
+                        },
+                        contentType: 'application/json'
+                    });
+                }
                 $("#accept-referral")
                     .click(function() {
                         var p_id = content.substring(28).match(/[A-Za-z0-9\-\.]{1,64}/);
