@@ -498,6 +498,16 @@ function gc_app_js (NS, $) {
         });
     };
 
+    /** 
+     @param data data.resources should be an array of objects
+     every resource object should contain
+        resourcename,
+        resourcetiming,
+        resourceaddress
+    data needs to contain additionally
+        data.patient_name,
+        data.patient_id
+    */
     NS.App.sendCommunityReferrals = function(data) {
         var thecontent = "Dear " + data.patient_name + "\n\n" +
                     "This is a message from your Community Healthy Weight " +
