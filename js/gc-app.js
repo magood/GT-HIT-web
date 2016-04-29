@@ -531,7 +531,32 @@ function gc_app_js (NS, $) {
                         "telephone (703)555-1234\n" +
                         "Email CDCHealthyWeightAtlanta@gatech.edu\n" +
                         "555 Some Street, Atlanta, GA 30331";
-        var request_id = GC.chartSettings.defaultReferralRequest; //TODO retrieve the ReferralRequest
+//        http://52.72.172.54:8080/fhir/baseDstu2/ReferralRequest?patient._id=18791941&recipient._id=Organization%2F19178873&status=accepted
+        var request_id = GC.chartSettings.defaultReferralRequest;
+        var refreq = null;
+        $.ajax({
+            url: GC.chartSettings.serverBase + "/ReferralRequest?patient._id=" +
+                    data.patient_id + "&recipient._id=" +
+                    (GC.chartSettings.serverSMART ? "" : "Organization%2F") +
+                    GC.chartSettings.defaultSelf + "&status=accepted",
+            type: "GET",
+            async: false,
+            global: false,
+            dataType: 'json',
+            success: function(ret_data) {
+                console.log(ret_data);
+                if (ret_data.total < 1) {
+                    return;
+                }
+                refreq = ret_data.entry[0].resource; // TODO possibly handle sorting multiple results
+                request_id = refreq.id;
+            },
+            contentType: 'application/json'
+        });
+        if (!refreq) {
+            alert("Please accept a referral from a referral message first");
+            return;
+        }
         console.log(thecontent);
         var thecomm = {
             resourceType: "Communication",
@@ -585,7 +610,22 @@ function gc_app_js (NS, $) {
             dataType: 'json',
             success: function(ret_data) {
                 alert('patient referral to community resources sent!');
-                //TODO change ReferralRequest status to 'completed'
+                if (refreq) {
+                    delete refreq.meta;
+                    refreq.status = "completed";
+                    $.ajax({
+                        url: GC.chartSettings.serverBase + "/ReferralRequest/" + request_id,
+                        type: "PUT",
+                        async: false,
+                        global: false,
+                        data: JSON.stringify(refreq),
+                        dataType: 'json',
+                        success: function(refreq_ret_data) {
+                            console.log(refreq_ret_data);
+                        },
+                        contentType: 'application/json'
+                    });
+                }
                 console.log(ret_data);
             },
             contentType: 'application/json'
