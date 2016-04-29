@@ -99,12 +99,7 @@
                 var patient_id_match = subject.match(/Patient\/(.*)/);
                 if (!patient_id_match) return;
                 var new_patient_id = patient_id_match[1];
-                if (new_patient_id && (new_patient_id != window.sessionStorage.getItem('patient_id'))) {
-                    window.sessionStorage.setItem('patient_id', new_patient_id);
-                    call_load_functions_js();
-                    GC.get_data();
-                    window.sessionStorage.removeItem('psmessagestable');
-                }
+                GC.App.setPatientId(new_patient_id);
                 GC.App.setViewType("psmessages");
             });
 

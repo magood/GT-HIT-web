@@ -91,12 +91,7 @@ XDate, setTimeout, getDataSet*/
             console.log(thedatatable.row(this).data());
             var new_patient_id = thedatatable.row(this).data()[1];
             if (!new_patient_id || (new_patient_id == "")) return;
-            if (new_patient_id != window.sessionStorage.getItem('patient_id')) {
-                window.sessionStorage.setItem('patient_id', new_patient_id);
-                window.sessionStorage.removeItem('psmessagestable');
-                call_load_functions_js();
-                GC.get_data();
-            }
+            GC.App.setPatientId(new_patient_id)
             GC.App.setViewType("psmessages");
         });
 
