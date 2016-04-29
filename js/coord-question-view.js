@@ -127,34 +127,42 @@ XDate, setTimeout, getDataSet*/
                 break;
             } // temporary for initial code; TODO replace with loop / more advanced logic
             // TODO presentation, style, etcetera
+
+            var title = questionsResult.text.div.match(/<p> <b>title<\/b>: (.*?)<\/p>/)[1];
+            var questionType = questionsResult.text.div.match(/<p> <b>id<\/b>: (.*?)<\/p>/)[1];
+            var statusType = questionsResult.text.div.match(/<p> <b>status<\/b>: (.*?)<\/p>/)[1];
             thequestions.append($("<div></div>")
-                .addClass("questions-id")
-                .attr("id", "questions-id")
-                .html("ID: " + id));
+                        .attr("id", "questions-title")
+                        .html("<h3>Title: " + title + "</h3>"));
             thequestions.append($("<div></div>")
-                .addClass("questions-version")
-                .attr("id", "questions-version")
-                .html("Version: " + version));
+                        .addClass("questions-id")
+                        .attr("id", "questions-id")
+                        .html("<h4>ID: " + id + "</h4>"));
             thequestions.append($("<div></div>")
-                .addClass("questions-status")
-                .attr("id", "questions-status")
-                .html("Status: " + status));
+                        .attr("id", "questions-type")
+                        .html("<h4>Type: " + questionType + "</h4>"));
             thequestions.append($("<div></div>")
-                .addClass("questions-qdate")
-                .attr("id", "questions-qdate")
-                .html("Date: " + qdate));
-            thequestions.append($("<div></div>")
-                .addClass("questions-publisher")
-                .attr("id", "questions-publisher")
-                .html("Publisher: " + publisher));
-            thequestions.append($("<div></div>")
-                .addClass("questions-contact")
-                .attr("id", "questions-contact")
-                .html("Contact: " + contact));
-            thequestions.append($("<div></div>")
-                .addClass("questions-narrative")
-                .attr("id", "questions-narrative")
-                .html("<h2>" + narrative + "</h2>"));
+                        .addClass("questions-status")
+                        .attr("id", "questions-status")
+                        .html("<h4>Status: " + statusType + "</h4>"));
+
+            // Not populating and don't need to display
+            // thequestions.append($("<div></div>")
+            //     .addClass("questions-qdate")
+            //     .attr("id", "questions-qdate")
+            //     .html("Date: " + qdate));
+            // thequestions.append($("<div></div>")
+            //     .addClass("questions-publisher")
+            //     .attr("id", "questions-publisher")
+            //     .html("Publisher: " + publisher));
+            // thequestions.append($("<div></div>")
+            //     .addClass("questions-contact")
+            //     .attr("id", "questions-contact")
+            //     .html("Contact: " + contact));
+            // thequestions.append($("<div></div>")
+            //     .addClass("questions-narrative")
+            //     .attr("id", "questions-narrative")
+            //     .html("<h2>" + narrative + "</h2>"));
             var questiondom = $("<div></div>")
                 .addClass("container")
             for (var qind = 0; qind < llgroup.question.length; qind++) {
