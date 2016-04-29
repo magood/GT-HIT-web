@@ -94,14 +94,7 @@ XDate, setTimeout, getDataSet*/
             }
         });
 
-        function mergeHTML(questionsResult, questionnaireAnswerSet) {
-            console.log("mergeHTML");
-            console.log(questionsResult);
-            if (!questionsResult) return;
-            if (questionsResult.data) {
-                questionsResult = questionsResult.data;
-            }
-            console.log(questionsResult);
+        function generateQuestionContainer(questionsResult, questionnaireAnswerSet) {
             var id = (questionsResult.id) ? questionsResult.id : "";
             var narrative = (questionsResult.text) ? questionsResult.text.div : "";
             var version = (questionsResult.version) ? questionsResult.version : "";
@@ -131,40 +124,32 @@ XDate, setTimeout, getDataSet*/
             var title = questionsResult.text.div.match(/<p> <b>title<\/b>: (.*?)<\/p>/)[1];
             var questionType = questionsResult.text.div.match(/<p> <b>id<\/b>: (.*?)<\/p>/)[1];
             var statusType = questionsResult.text.div.match(/<p> <b>status<\/b>: (.*?)<\/p>/)[1];
-            thequestions.append($("<div></div>")
-                        .attr("id", "questions-title")
-                        .html("<h3>Title: " + title + "</h3>"));
-            thequestions.append($("<div></div>")
-                        .addClass("questions-id")
-                        .attr("id", "questions-id")
-                        .html("<h4>ID: " + id + "</h4>"));
-            thequestions.append($("<div></div>")
-                        .attr("id", "questions-type")
-                        .html("<h4>Type: " + questionType + "</h4>"));
-            thequestions.append($("<div></div>")
-                        .addClass("questions-status")
-                        .attr("id", "questions-status")
-                        .html("<h4>Status: " + statusType + "</h4>"));
 
-            // Not populating and don't need to display
-            // thequestions.append($("<div></div>")
-            //     .addClass("questions-qdate")
-            //     .attr("id", "questions-qdate")
-            //     .html("Date: " + qdate));
-            // thequestions.append($("<div></div>")
-            //     .addClass("questions-publisher")
-            //     .attr("id", "questions-publisher")
-            //     .html("Publisher: " + publisher));
-            // thequestions.append($("<div></div>")
-            //     .addClass("questions-contact")
-            //     .attr("id", "questions-contact")
-            //     .html("Contact: " + contact));
-            // thequestions.append($("<div></div>")
-            //     .addClass("questions-narrative")
-            //     .attr("id", "questions-narrative")
-            //     .html("<h2>" + narrative + "</h2>"));
-            var questiondom = $("<div></div>")
+            var questionContainer = $("<div></div>")
                 .addClass("container")
+                .addClass("panel-body");
+
+            //build the title
+            questionContainer.append($("<div></div>")
+                .attr("id", "questions-title")
+                .html("<h3>Title: " + title + "</h3>"))
+            questionContainer.append($("<div></div>")
+                .addClass("questions-id")
+                .attr("id", "questions-id")
+                .html("<h4>ID: " + id + "</h4>"))
+            questionContainer.append($("<div></div>")
+                .attr("id", "questions-type")
+                .html("<h4>Type: " + questionType + "</h4>"))
+            questionContainer.append($("<div></div>")
+                .addClass("questions-status")
+                .attr("id", "questions-status")
+                .html("<h4>Status: " + statusType + "</h4>"))
+
+            //build the questions
+
+            var questiondom = $("<div></div>")
+                .addClass("container");
+
             for (var qind = 0; qind < llgroup.question.length; qind++) {
                 var questiondata = llgroup.question[qind];
                 var thequestion = questiondata.text ? questiondata.text : "";
@@ -211,7 +196,101 @@ XDate, setTimeout, getDataSet*/
                         .addClass("col-sm-9 bb")
                         .append(optdom)));
             }
-            thequestions.append(questiondom);
+
+            questionContainer.append(questiondom);
+
+            return questionContainer;
+        }
+
+        function buildPanels(questionsResult, questionnaireAnswerSet) {
+            var panel = $("<div></div>");
+
+            var panelContainer = panel.addClass("container")
+            .append($("<div></div>")
+            .addClass("panel-group"));
+
+            if(typeof questionnaireAnswerSet != 'undefined') {
+                panelContainer.append($("<div></div>")
+                .addClass("panel")
+                    .append($("<div></div>")
+                    .addClass("panel-heading")
+                        .append($("<div></div>")
+                        .addClass("panel-title")
+                            .append($("<a></a>")
+                            .attr("data-toggle", "collapse")
+                            .attr("href","#collapse" + questionsResult.id)
+                            .text("Questionnaire - " + questionsResult.id))
+                        )
+                    )
+                    .append($("<div></div>")
+                    .addClass("panel-collapse collapse")
+                    .attr("id", "collapse" + questionsResult.id)
+
+                        //questions go here
+                        .append(generateQuestionContainer(questionsResult, questionnaireAnswerSet))
+                    )
+                );
+            }
+
+            //always build the default panel
+            panelContainer.append($("<div></div>")
+            .addClass("panel panel-default")
+                .append($("<div></div>")
+                .addClass("panel-heading")
+                    .append($("<div></div>")
+                    .addClass("panel-title")
+                        .append($("<a></a>")
+                        .attr("data-toggle", "collapse")
+                        .attr("href","#collapse-default")
+                        .text("New Questionnaire"))
+                    )
+                )
+                .append($("<div></div>")
+                .addClass("panel-collapse")
+                .attr("id", "collapse-default")
+                    .append($("<div></div>")
+                    .addClass("panel-body")
+
+                    //default goes here
+                    //questions go here
+                        .append(generateQuestionContainer(questionsResult, undefined))
+                    )
+                )
+            );
+
+            return panel;
+        }
+
+        function mergeHTML(questionsResult, questionnaireAnswerSet) {
+            console.log("mergeHTML");
+            console.log(questionsResult);
+            if (!questionsResult) return;
+            if (questionsResult.data) {
+                questionsResult = questionsResult.data;
+            }
+            console.log(questionsResult);
+
+            // Not populating and don't need to display
+            // thequestions.append($("<div></div>")
+            //     .addClass("questions-qdate")
+            //     .attr("id", "questions-qdate")
+            //     .html("Date: " + qdate));
+            // thequestions.append($("<div></div>")
+            //     .addClass("questions-publisher")
+            //     .attr("id", "questions-publisher")
+            //     .html("Publisher: " + publisher));
+            // thequestions.append($("<div></div>")
+            //     .addClass("questions-contact")
+            //     .attr("id", "questions-contact")
+            //     .html("Contact: " + contact));
+            // thequestions.append($("<div></div>")
+            //     .addClass("questions-narrative")
+            //     .attr("id", "questions-narrative")
+            //     .html("<h2>" + narrative + "</h2>"));
+
+            //build the titles
+            var panel = buildPanels(questionsResult, questionnaireAnswerSet);
+            thequestions.append(panel);
         }
     }
 
