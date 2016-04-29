@@ -129,6 +129,14 @@ XDate, setTimeout, getDataSet*/
 
         var addedResources = [];
 
+        var referrals;
+        referrals = sessionStorage.getItem("pending_referrals");
+        if (referrals) {
+            referrals = JSON.parse(referrals);
+        } else {
+            referrals = [];
+        }
+
         var debounceTimeout;
         function updateDebounce() {
             window.clearTimeout(debounceTimeout);
@@ -220,6 +228,13 @@ XDate, setTimeout, getDataSet*/
                 if(r.zip)
                     addressString += " - " + r.zip;
 
+                var ispendingreferral = false;
+                referrals.forEach(function(referral) {
+                    if (referral.resourcename == r.name) {
+                        ispendingreferral = true;
+                    }
+                });
+
                 $('.map-address-list').append($("<div></div>")
                             .addClass("well")
                             .append($("<div></div>")
@@ -252,15 +267,8 @@ XDate, setTimeout, getDataSet*/
                                     .append($("<input>")
                                     .attr("type", "checkbox")
                                     .prop("value", "")
-                                    .prop("checked", false) // TODO parse pending referrals for item
+                                    .prop("checked", ispendingreferral)
                                     .click(function(event){
-                                        var referrals;
-                                        referrals = sessionStorage.getItem("pending_referrals");
-                                        if (referrals) {
-                                            referrals = JSON.parse(referrals);
-                                        } else {
-                                            referrals = [];
-                                        }
                                         if ($(event.target).is("checked")) {
                                             var dup = false;
                                             referrals.forEach(function (referral) {
