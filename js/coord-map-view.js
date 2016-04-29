@@ -137,6 +137,27 @@ XDate, setTimeout, getDataSet*/
 
         //google.maps.event.addListener(map, "bounds_changed", updateDebounce);
 
+        function getGoogleMapsResults(r) {
+            $.get({
+                url: "https://maps.googleapis.com/maps/api/geocode/json",
+                data: {
+                    address: r.dispAddr + ', ' + r.city + ', ' + r.state + ' ' + r.zip,
+                    key: "AIzaSyC2lIWgJTOezqi3-VVnD65eiNhGGHyHZTk" //Health Informatics Project Maps Key
+                },
+                success: function (data) {
+                    if (data.results.length > 0) {
+                        var loc = data.results[0].geometry.location;
+                        r.lat = loc.lat;
+                        r.lng = loc.lng;
+                        addResource(r);
+                    }
+                    else if (data.error_message) {
+                        console.log(data.error_message);
+                    }
+                }
+            });
+        }
+
         function getFromFHIR(zip, city, state) {
             $.ajax({
                 url: GC.chartSettings.serverBase + "/Organization" +
@@ -155,9 +176,10 @@ XDate, setTimeout, getDataSet*/
                                 var id = item.id;
                                 var addr = "";
                                 var addrObj = item.address[0];
-                                for (var ai = 0; ai < addrObj.line.length; ai++) {
-                                    var line = addrObj.line[ai];
-                                    addr += line + ' ';
+                                if (addrObj.line) {
+                                    for (var ai = 0; ai < addrObj.line.length; ai++) {
+                                        addr += addrObj.line[ai] + ' ';
+                                    }
                                 }
 
                                 var resultObject = {
@@ -172,28 +194,7 @@ XDate, setTimeout, getDataSet*/
                                     zip: addrObj.postalCode
 
                                 };
-
-                                (function (r) {
-                                    $.get({
-                                        url: "https://maps.googleapis.com/maps/api/geocode/json",
-                                        data: {
-                                            address: r.dispAddr + ', ' + r.city + ', ' + r.state + ' ' + r.zip,
-                                            key: "AIzaSyC2lIWgJTOezqi3-VVnD65eiNhGGHyHZTk" //Health Informatics Project Maps Key
-                                        },
-                                        success: function (data) {
-                                            if (data.results.length > 0) {
-                                                var loc = data.results[0].geometry.location;
-                                                var myResult = r;
-                                                r.lat = loc.lat;
-                                                r.lng = loc.lng;
-                                                addResource(r);
-                                            }
-                                            else if (data.error_message) {
-                                                console.log(data.error_message);
-                                            }
-                                        }
-                                    });
-                                })(resultObject);
+                                getGoogleMapsResults(resultObject);
                             }
                         }
 
@@ -245,6 +246,42 @@ XDate, setTimeout, getDataSet*/
                             // If fetched needs to be added here
                             //         .append(<quality_score>)))
 
+                            .append($("<div></div>")
+                                .addClass('checkbox')
+                                .append($("<label></label>")
+                                    .append($("<input>")
+                                    .attr("type", "checkbox")
+                                    .prop("value", "")
+                                    .prop("checked", false) // TODO parse pending referrals for item
+                                    .click(function(event){
+                                        var referrals;
+                                        referrals = sessionStorage.getItem("pending_referrals");
+                                        if (referrals) {
+                                            referrals = JSON.parse(referrals);
+                                        } else {
+                                            referrals = [];
+                                        }
+                                        if ($(event.target).is("checked")) {
+                                            var dup = false;
+                                            referrals.forEach(function (referral) {
+                                                if (referral.resourcename == r.name) dup = true;
+                                            });
+                                            if (dup) return;
+                                            referrals.push({
+                                                resourcename: r.name,
+                                                resourcetiming: r.type, //TODO timing != type
+                                                resourceaddress: r.dispAddr
+                                            });
+                                        } else {
+                                            for (var ri = 0; ri < referrals.length; ri++) {
+                                                if (referrals[ri].resourcename == r.name) {
+                                                    referrals.splice(ri,1);
+                                                }
+                                            }
+                                        }
+                                        sessionStorage.setItem("pending_referrals", JSON.stringify(referrals));
+                                    }))
+                                    .append("refer")))
                           );
                 
 
