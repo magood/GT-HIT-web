@@ -45,9 +45,10 @@ XDate, setTimeout, getDataSet*/
     }
 
     function renderQuestionView(container) {
-        //query the patient here
+        var thepatient_id = window.sessionStorage.getItem("patient_id");
+        thepatient_id = (thepatient_id ? thepatient_id : GC.chartSettings.defaultPatient);
         $.ajax({
-            url: GC.chartSettings.serverBase + "/QuestionnaireResponse/?patient=" + window.sessionStorage.getItem("patient_id"),
+            url: GC.chartSettings.serverBase + "/QuestionnaireResponse/?patient=" + thepatient_id,
             dataType: 'json',
             success: processQuestions
         });
