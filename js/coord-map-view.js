@@ -89,15 +89,40 @@ XDate, setTimeout, getDataSet*/
         }
         init_map();
         var pId = (window.sessionStorage.getItem("patient_id") ? window.sessionStorage.getItem("patient_id") : GC.chartSettings.defaultPatient);
+
+        var referrals;
+        referrals = sessionStorage.getItem("pending_referrals");
+        if (referrals) {
+            referrals = JSON.parse(referrals);
+        } else {
+            referrals = [];
+        }
+
         $.ajax({
-            url: GC.chartSettings.serverBase + "/Patient?_id=" + pId,
+            url: GC.chartSettings.serverBase + "/Patient/" + pId,
             dataType: 'json',
             success: function (patientResults) {
                 try {
-                    var addr = patientResults.entry[0].resource.address[0];
+                    var addr = patientResults.address[0];
                     getFromFHIR(addr.postalCode, addr.city, addr.state);
 
-                    
+                    $('.map-address-list').append($("<div></div>")
+                                .addClass("btn btn-info")
+                                .html("Send Community<br />Resource Referrals")
+                                .click(function() {
+                                    var patientname = ""
+                                    patientResults.name[0].given.forEach(function(firstname) {
+                                        patientname += firstname + ' ';
+                                    });
+                                    patientResults.name[0].family.forEach(function(familyname) {
+                                        patientname += familyname + " ";
+                                    });
+                                    GC.App.sendCommunityReferrals({
+                                        patient_name: patientname,
+                                        patient_id: pId,
+                                        resources: referrals
+                                    });
+                                }));
                     var addrText = "";
                     if (addr.line.length > 0)
                         addrText = addr.line[0] + ", ";
@@ -128,14 +153,6 @@ XDate, setTimeout, getDataSet*/
         });
 
         var addedResources = [];
-
-        var referrals;
-        referrals = sessionStorage.getItem("pending_referrals");
-        if (referrals) {
-            referrals = JSON.parse(referrals);
-        } else {
-            referrals = [];
-        }
 
         var debounceTimeout;
         function updateDebounce() {
@@ -205,7 +222,6 @@ XDate, setTimeout, getDataSet*/
                                 getGoogleMapsResults(resultObject);
                             }
                         }
-
                     }
                 }
             });
