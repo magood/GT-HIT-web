@@ -285,7 +285,7 @@ XDate, setTimeout, getDataSet*/
                                     .prop("value", "")
                                     .prop("checked", ispendingreferral)
                                     .click(function(event){
-                                        if ($(event.target).is("checked")) {
+                                        if (event.target.checked) {
                                             var dup = false;
                                             referrals.forEach(function (referral) {
                                                 if (referral.resourcename == r.name) dup = true;
@@ -305,7 +305,7 @@ XDate, setTimeout, getDataSet*/
                                         }
                                         sessionStorage.setItem("pending_referrals", JSON.stringify(referrals));
                                     }))
-                                    .append("refer")))
+                                    .append("&nbsp; refer")))
                           );
                 
 

@@ -178,7 +178,7 @@
                     var thedata = {
                         patient_id: p_id,
                         patient_name: p_name,
-                        resources: sessionStorage.getItem("resource_list")
+                        resources: JSON.parse(sessionStorage.getItem("pending_referrals"))
                     };
                     GC.App.sendCommunityReferrals(thedata);
                 });

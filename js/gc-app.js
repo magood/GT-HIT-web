@@ -610,6 +610,7 @@ function gc_app_js (NS, $) {
             dataType: 'json',
             success: function(ret_data) {
                 alert('patient referral to community resources sent!');
+                sessionStorage.removeItem("pending_referrals");
                 if (refreq) {
                     delete refreq.meta;
                     refreq.status = "completed";
