@@ -128,7 +128,7 @@ XDate, setTimeout, getDataSet*/
                     $('.map-address-list')
                         .append($("<div></div>")
                                 .addClass("btn btn-info")
-                                .html("Send Community<br />Resource Referrals")
+                                .html("Send Referrals")
                                 .click(function () {
                                     var patientname = ""
                                     patientResults.name[0].given.forEach(function (firstname) {
@@ -256,9 +256,6 @@ XDate, setTimeout, getDataSet*/
         }
         function addResource(r) {
             if (addedResources.indexOf(r.id) == -1) {
-                console.log("adding resource: " + r.name);
-                console.log(r);
-
                 var addressString = r.city + ", " + r.state;
 
                 //Some zip codes are not defined, This section can be removed if we want consistency (not display zip altogether)
@@ -284,7 +281,7 @@ XDate, setTimeout, getDataSet*/
                         var $li = $(this);
                         $li.toggleClass("resourceSelected");
                         if ($li.hasClass("resourceSelected")) {
-                            console.log("selecting resournce");
+                            //console.log("selecting resournce");
                             var dup = false;
                             referrals.forEach(function (referral) {
                                 if (referral.resourcename == r.name) dup = true;
@@ -296,7 +293,7 @@ XDate, setTimeout, getDataSet*/
                                 resourceaddress: r.dispAddr
                             });
                         } else {
-                            console.log("removing resournce");
+                            //console.log("removing resournce");
                             for (var ri = 0; ri < referrals.length; ri++) {
                                 if (referrals[ri].resourcename == r.name) {
                                     referrals.splice(ri, 1);
