@@ -163,6 +163,9 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 #hidden-time-ranges {
 	display: none !important;
 }
+.timeline .gest .labels div {
+	color: #fff !important;
+}
 .rollback-btn {
 	font-size: auto !important;
 	color: #fff !important;
