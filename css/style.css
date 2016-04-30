@@ -104,9 +104,9 @@ tr.odd {
 .patientmode {
 	background-color: #ee6e73 !important;
 }
-nav a {
-	text-decoration: none;
-	color: #fff;
+nav a, nav a:active, nav a:hover, nav a:visited {
+	text-decoration: none !important;
+	color: #fff !important;
 }
 #patient-info {
 
