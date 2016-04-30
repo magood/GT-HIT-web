@@ -195,6 +195,83 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 .thequestions .btn {
 	background-color: #fc9a9f !important;
 }
+#loading-metainfo {
+	margin-top: 3em;
+}
+#loading-metainfo p {
+	font-weight: bold;
+}
+#loading-indicator {
+	position: fixed;
+	z-index: 10000000;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	background: #333;
+}
+
+#loading-window {
+	position: absolute;
+	z-index: 2;
+	top: 30%;
+	left: 30%;
+	width  : 100%;
+	margin : -35px auto auto -110px;
+	line-height : 30px;
+	padding: 10px 10px 10px 60px;
+	color: #777;
+}
+#loading-window .card {
+	min-height: 200px !important;
+}
+.spinner {
+  position: absolute;
+  top: calc(22% - 25px);
+  left: calc(83% - 25px);
+}
+
+.spinner, .spinner:before, .spinner:after {
+  position: absolute;
+  border: 3px solid transparent;
+  border-top: 3px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  animation: rotate linear infinite;
+  content: '';
+}
+
+.spinner {
+  height: 100px;
+  width: 100px;
+  animation-duration: 1.05s;
+}
+
+.spinner:before {
+  height: 75px;
+  width: 75px;
+  top: 10px;
+  left: 10px;
+  animation-duration: 10s;
+}
+
+.spinner:after {
+  height: 50px;
+  width: 50px;
+  top: 22px;
+  left: 22px;
+  animation-duration: 4s;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateZ(360deg);
+  }
+  to {
+    transform: rotateZ(0deg);
+  }
+}
 /* END_NEWSTYLE */
 
 .prod .hide-on-prod { display: none !important; }
@@ -252,58 +329,6 @@ a:hover {
 
 i {
 	font-style: italic;
-}
-#loading-indicator {
-	position: fixed;
-	z-index: 10000000;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 100%;
-	width: 100%;
-	background: #333;
-}
-
-#loading-window {
-	position: absolute;
-	z-index: 2;
-	top: 30%;
-	left: 30%;
-	width  : 100%;
-	margin : -35px auto auto -110px;
-	line-height : 30px;
-	padding: 10px 10px 10px 60px;
-	color: #777;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  background-color: #FFF;
-
-  margin: 100px auto;
-  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
-  animation: sk-rotateplane 1.2s infinite ease-in-out;
-}
-
-@-webkit-keyframes sk-rotateplane {
-  0% { -webkit-transform: perspective(120px) }
-  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
-  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
-}
-
-@keyframes sk-rotateplane {
-  0% {
-    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
-  } 50% {
-    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
-  } 100% {
-    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-  }
 }
 
 .table-loading-spinner {
