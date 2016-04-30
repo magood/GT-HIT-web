@@ -893,7 +893,7 @@ function gc_app_js (NS, $) {
             // FIXME: Naive algorithm alert. This won't i18nize well.
             (PATIENT.gender.toLowerCase().indexOf('f') != -1) ?
                 $('#patient-gender-icon').attr('src', 'img/avatar_f.png') :
-                $('#patient-gender-icon').attr('src', 'img/avatar_f.png');
+                $('#patient-gender-icon').attr('src', 'img/avatar_m.png');
 
             $('.patient-gender').text(GC.str("STR_SMART_GENDER_" + PATIENT.gender));
             $('.patient-gender').attr("data-translatecontent", "STR_SMART_GENDER_" + PATIENT.gender);
