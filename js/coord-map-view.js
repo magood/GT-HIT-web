@@ -275,6 +275,7 @@ XDate, setTimeout, getDataSet*/
                     .append($("<h5>").text(rTypeName))
                     .append($("<p>").text(r.dispAddr))
                     .append($("<p>").text(r.addressString))
+                    .addClass((ispendingreferral) ? "resourceSelected" : "")
                     .click(function (e) {
                         //console.log("this: " + this);
                         //console.log("e.target: " + e.target);
