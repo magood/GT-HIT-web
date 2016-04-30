@@ -32,6 +32,10 @@
 	background-color: #ee6e73 !important;
 	color: #fff !important;
 }
+#psmessages-table_paginate .paginate_button.active {
+	background-color: #ee6e73 !important;
+	color: #fff !important;
+}
 #psmessages-table tr.odd {
 	background-color: #fff4fc !important;
 }
