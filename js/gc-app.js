@@ -881,7 +881,7 @@ function gc_app_js (NS, $) {
             });
 
             $('#switch-pct').prop('checked', NS.App.getPCTZ() == 'z')
-            $('#switch-metric').prop('checked', NS.App.getMetrics() != 'eng')
+            $('#switch-metric').prop('checked', NS.App.getMetrics() == 'eng')
         }
 
         function renderPatient() {
