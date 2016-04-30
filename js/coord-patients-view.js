@@ -111,10 +111,7 @@ XDate, setTimeout, getDataSet*/
                 '?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' +
                 todayDateStr + '&_count=50',
             dataType: 'json',
-            success: function(patientResult) { mergeHTML(patientResult, true);},
-            complete: function() {
-                loadingdiv.hide();
-            }
+            success: function(patientResult) { mergeHTML(patientResult, true);}
         });
         function mergeHTML(patientResult, initialCall) {
             if (!patientResult) return;
