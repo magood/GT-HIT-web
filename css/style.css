@@ -52,6 +52,9 @@
 	border-radius: 0;
 	background-color: #26a69a !important;
 }
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+	background-color: #fafafa;
+}
 /* This belongs in the patient view, so a different color is used. */
 #psmessages-table thead tr th {
 	background-color: #ee6e73 !important;
