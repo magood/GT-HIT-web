@@ -712,11 +712,36 @@ select.styled {
     width:270px;
     padding:1em;
 }
-.map-address-list .row {
-	padding-left: 8px;
-	padding-right: 4px;
+
+.map-address-list li h3 {
+	margin-top: 3px;
+    margin-bottom: 3px;
+    font-size:1.5em;
+}
+.map-address-list li h5 {
+	margin-top: 3px;
+    margin-bottom: 3px;
+    font-size:1em;
+    color:#666;
+}
+.map-address-list li {
+    cursor:pointer;
 }
 
+h5.infoWindowHeader {
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:1.25em;
+}
+p.infoWindowParagraph {
+    margin-bottom:0px;
+}
+
+/*Maps tab resource selected styles*/
+li.resourceSelected {
+    background-color:#337ab7;
+    color:#fff;
+}
 
 .map-address-list .row h3 {
 	margin-top: 3px;
