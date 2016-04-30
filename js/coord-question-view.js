@@ -53,7 +53,23 @@ XDate, setTimeout, getDataSet*/
             success: processQuestions
         });
 
+        function buildPanelContainer() {
+            return $("<div></div>")
+            .addClass("container");
+        }
+
+        function buildPanelGroup() {
+            return $("<div></div>")
+            .addClass("panel-group");
+        }
+
         function processQuestions(questionsResult) {
+            $(container).empty();
+
+            var thequestions = $("<div></div>").addClass("thequestions");
+            thequestions.attr("id", "thequestions-div").attr("width", "100%");
+            $(container).append(thequestions);
+
             var questionnaireLink;
             var questionnaireAnswerSet;
 
@@ -63,34 +79,41 @@ XDate, setTimeout, getDataSet*/
                 questionsResult = questionsResult.data;
             }
 
+            //setup the panel containers
+            var panelContainer = buildPanelContainer();
+            var panelGroup = buildPanelGroup();
+
+            thequestions.append(panelContainer);
+            panelContainer.append(panelGroup);
+
+            //build the panelGroups
             if(questionsResult.total < 1) {
+                //no questionarie for this account
+                //-- use the default
                 questionnaireLink = "/Questionnaire/" + GC.chartSettings.defaultQuestionnaire
             } else {
-                questionnaireLink = "/" + questionsResult.entry[0].resource.questionnaire.reference;
+                for(var i = 0; i < questionsResult.total; i++) {
+                    //we have questionnaires
+                    questionnaireLink = "/" + questionsResult.entry[i].resource.questionnaire.reference;
 
-                questionnaireAnswerSet = questionsResult.entry[0].resource.group.question;
+                    questionnaireAnswerSet = questionsResult.entry[i].resource.group.question;
+
+                    renderQuestions(questionsResult.entry[i].resource.id, panelGroup, questionnaireLink, questionnaireAnswerSet);
+                }
             }
-
-            renderQuestions(container, questionnaireLink, questionnaireAnswerSet);
+            //always render the default panel
+            renderQuestions(undefined, panelGroup, questionnaireLink, undefined);
         }
     }
 
-    function renderQuestions(container, questionnaireLink, questionnaireAnswerSet) {
-        //var questions_id = (window.sessionStorage.getItem('questions_id')) ?
-        //                        window.sessionStorage.getItem('questions_id')
-        //                        GC.chartSettings.defaultQuestionnaire;
-
-        $(container).empty();
-
-        var thequestions = $("<div></div>").addClass("thequestions");
-        thequestions.attr("id", "thequestions-div").attr("width", "100%");
-        $(container).append(thequestions);
+    function renderQuestions(panelNumber, panelGroup, questionnaireLink, questionnaireAnswerSet) {
 
         $.ajax({
             url: GC.chartSettings.serverBase + questionnaireLink,
             dataType: 'json',
+            async: false,
             success: function(questionsResult) {
-                mergeHTML(questionsResult, questionnaireAnswerSet);
+                buildDom(panelNumber, panelGroup, questionsResult, questionnaireAnswerSet);
             }
         });
 
@@ -108,7 +131,7 @@ XDate, setTimeout, getDataSet*/
                     questionsResult.telecom[0].value : "") : "");
             var llgroup = questionsResult.group;
             while (true) {
-                if (llgroup.group) {
+                if (typeof llgroup != 'undefined' && llgroup.group) {
                     llgroup = llgroup.group[0];
                     continue;
                 }
@@ -202,38 +225,39 @@ XDate, setTimeout, getDataSet*/
             return questionContainer;
         }
 
-        function buildPanels(questionsResult, questionnaireAnswerSet) {
-            var panel = $("<div></div>");
-
-            var panelContainer = panel.addClass("container")
-            .append($("<div></div>")
-            .addClass("panel-group"));
-
+        function buildPanel(panelNumber, questionsResult, questionnaireAnswerSet) {
             if(typeof questionnaireAnswerSet != 'undefined') {
-                panelContainer.append($("<div></div>")
-                .addClass("panel")
-                    .append($("<div></div>")
-                    .addClass("panel-heading")
-                        .append($("<div></div>")
-                        .addClass("panel-title")
-                            .append($("<a></a>")
-                            .attr("data-toggle", "collapse")
-                            .attr("href","#collapse" + questionsResult.id)
-                            .text("Questionnaire - " + questionsResult.id))
-                        )
-                    )
-                    .append($("<div></div>")
-                    .addClass("panel-collapse collapse")
-                    .attr("id", "collapse" + questionsResult.id)
-
-                        //questions go here
-                        .append(generateQuestionContainer(questionsResult, questionnaireAnswerSet))
-                    )
-                );
+                return buildQuestionPanel(panelNumber, questionsResult, questionnaireAnswerSet);
+            } else {
+                //always build the default panel
+                return buildDefaultPanel(questionsResult);
             }
+        }
 
-            //always build the default panel
-            panelContainer.append($("<div></div>")
+        function buildQuestionPanel(panelNumber, questionsResult, questionnaireAnswerSet) {
+            return $("<div></div>")
+            .addClass("panel")
+                .append($("<div></div>")
+                .addClass("panel-heading")
+                    .append($("<div></div>")
+                    .addClass("panel-title")
+                        .append($("<a></a>")
+                        .attr("data-toggle", "collapse")
+                        .attr("href","#collapse" + panelNumber)
+                        .text("Questionnaire - " + panelNumber))
+                    )
+                )
+                .append($("<div></div>")
+                .addClass("panel-collapse collapse")
+                .attr("id", "collapse" + panelNumber)
+
+                    //questions go here
+                    .append(generateQuestionContainer(questionsResult, questionnaireAnswerSet))
+                );;
+        }
+
+        function buildDefaultPanel(questionsResult) {
+            return $("<div></div>")
             .addClass("panel panel-default")
                 .append($("<div></div>")
                 .addClass("panel-heading")
@@ -246,7 +270,7 @@ XDate, setTimeout, getDataSet*/
                     )
                 )
                 .append($("<div></div>")
-                .addClass("panel-collapse")
+                .addClass("panel-collapse collapse")
                 .attr("id", "collapse-default")
                     .append($("<div></div>")
                     .addClass("panel-body")
@@ -255,42 +279,18 @@ XDate, setTimeout, getDataSet*/
                     //questions go here
                         .append(generateQuestionContainer(questionsResult, undefined))
                     )
-                )
-            );
-
-            return panel;
+                );
         }
 
-        function mergeHTML(questionsResult, questionnaireAnswerSet) {
-            console.log("mergeHTML");
-            console.log(questionsResult);
+        function buildDom(panelNumber, panelGroup, questionsResult, questionnaireAnswerSet) {
             if (!questionsResult) return;
             if (questionsResult.data) {
                 questionsResult = questionsResult.data;
             }
             console.log(questionsResult);
 
-            // Not populating and don't need to display
-            // thequestions.append($("<div></div>")
-            //     .addClass("questions-qdate")
-            //     .attr("id", "questions-qdate")
-            //     .html("Date: " + qdate));
-            // thequestions.append($("<div></div>")
-            //     .addClass("questions-publisher")
-            //     .attr("id", "questions-publisher")
-            //     .html("Publisher: " + publisher));
-            // thequestions.append($("<div></div>")
-            //     .addClass("questions-contact")
-            //     .attr("id", "questions-contact")
-            //     .html("Contact: " + contact));
-            // thequestions.append($("<div></div>")
-            //     .addClass("questions-narrative")
-            //     .attr("id", "questions-narrative")
-            //     .html("<h2>" + narrative + "</h2>"));
-
-            //build the titles
-            var panel = buildPanels(questionsResult, questionnaireAnswerSet);
-            thequestions.append(panel);
+            //build the question panels
+            panelGroup.append(buildPanel(panelNumber, questionsResult, questionnaireAnswerSet));
         }
     }
 
