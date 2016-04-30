@@ -4,7 +4,7 @@ jQuery, debugLog,
 XDate, setTimeout, getDataSet*/
 
 /*jslint undef: true, eqeq: true, nomen: true, plusplus: true, forin: true*/
-(function(NS, $) {
+(function (NS, $) {
 
     "use strict";
 
@@ -20,24 +20,24 @@ XDate, setTimeout, getDataSet*/
         EMPTY_MARK = PRINT_MODE ? "" : "&#8212;",
 
         MILISECOND = 1,
-        SECOND     = MILISECOND * 1000,
-        MINUTE     = SECOND * 60,
-        HOUR       = MINUTE * 60,
-        DAY        = HOUR * 24,
-        WEEK       = DAY * 7,
-        MONTH      = WEEK * 4.348214285714286,
-        YEAR       = MONTH * 12,
+        SECOND = MILISECOND * 1000,
+        MINUTE = SECOND * 60,
+        HOUR = MINUTE * 60,
+        DAY = HOUR * 24,
+        WEEK = DAY * 7,
+        MONTH = WEEK * 4.348214285714286,
+        YEAR = MONTH * 12,
 
         shortDateFormat = {
-            "Years"   : "y",
-            "Year"    : "y",
-            "Months"  : "m",
-            "Month"   : "m",
-            "Weeks"   : "w",
-            "Week"    : "w",
-            "Days"    : "d",
-            "Day"     : "d",
-            separator : " "
+            "Years": "y",
+            "Year": "y",
+            "Months": "m",
+            "Month": "m",
+            "Weeks": "w",
+            "Week": "w",
+            "Days": "d",
+            "Day": "d",
+            separator: " "
         };
 
     var resourceTypes = {
@@ -57,7 +57,7 @@ XDate, setTimeout, getDataSet*/
         return GC.App.getViewType() == "maps";
     }
 
-    function renderMapView( container ) {
+    function renderMapView(container) {
         $(container).empty();
         $(container).append($("<div></div>")
                         .addClass("map-address-list bb"));
@@ -128,13 +128,13 @@ XDate, setTimeout, getDataSet*/
                     $('.map-address-list')
                         .append($("<div></div>")
                                 .addClass("btn btn-info")
-                                .html("Send Community<br />Resource Referrals")
-                                .click(function() {
+                                .html("Send Referrals")
+                                .click(function () {
                                     var patientname = ""
-                                    patientResults.name[0].given.forEach(function(firstname) {
+                                    patientResults.name[0].given.forEach(function (firstname) {
                                         patientname += firstname + ' ';
                                     });
-                                    patientResults.name[0].family.forEach(function(familyname) {
+                                    patientResults.name[0].family.forEach(function (familyname) {
                                         patientname += familyname + " ";
                                     });
                                     GC.App.sendCommunityReferrals({
@@ -256,17 +256,14 @@ XDate, setTimeout, getDataSet*/
         }
         function addResource(r) {
             if (addedResources.indexOf(r.id) == -1) {
-                console.log("adding resource: " + r.name);
-                console.log(r);
-
                 var addressString = r.city + ", " + r.state;
 
                 //Some zip codes are not defined, This section can be removed if we want consistency (not display zip altogether)
-                if(r.zip)
+                if (r.zip)
                     addressString += " - " + r.zip;
 
                 var ispendingreferral = false;
-                referrals.forEach(function(referral) {
+                referrals.forEach(function (referral) {
                     if (referral.resourcename == r.name) {
                         ispendingreferral = true;
                     }
@@ -284,7 +281,7 @@ XDate, setTimeout, getDataSet*/
                         var $li = $(this);
                         $li.toggleClass("resourceSelected");
                         if ($li.hasClass("resourceSelected")) {
-                            console.log("selecting resournce");
+                            //console.log("selecting resournce");
                             var dup = false;
                             referrals.forEach(function (referral) {
                                 if (referral.resourcename == r.name) dup = true;
@@ -296,10 +293,10 @@ XDate, setTimeout, getDataSet*/
                                 resourceaddress: r.dispAddr
                             });
                         } else {
-                            console.log("removing resournce");
+                            //console.log("removing resournce");
                             for (var ri = 0; ri < referrals.length; ri++) {
                                 if (referrals[ri].resourcename == r.name) {
-                                    referrals.splice(ri,1);
+                                    referrals.splice(ri, 1);
                                 }
                             }
                         }
@@ -321,7 +318,7 @@ XDate, setTimeout, getDataSet*/
                 //            .append($("<div></div>")
                 //                .addClass("row")
                 //                .append($("<h5>"+ addressString+ "</h5>")))
-                            
+
                 //            // Quality score is not available in this response
                 //            // If fetched uncomment this and replace <quality_score> with variable containing value
                 //            // .append($("<div></div>")
@@ -363,7 +360,7 @@ XDate, setTimeout, getDataSet*/
                 //                    }))
                 //                    .append("&nbsp; refer")))
                 //          );
-                
+
 
                 addedResources.push(r.id);
                 var m2 = new google.maps.Marker({
@@ -435,47 +432,47 @@ XDate, setTimeout, getDataSet*/
 
 
     NS.MapView = {
-        render : function() {
-//            if (PRINT_MODE) {
-//                renderTableViewForPrint("#view-table");
-//            } else {
-                renderMapView("#view-map");
-//            }
+        render: function () {
+            //            if (PRINT_MODE) {
+            //                renderTableViewForPrint("#view-table");
+            //            } else {
+            renderMapView("#view-map");
+            //            }
         }//,
-//        selectByAge : PRINT_MODE ? $.noop : selectByAge
+        //        selectByAge : PRINT_MODE ? $.noop : selectByAge
     };
 
-    $(function() {
+    $(function () {
         if (!PRINT_MODE) {
-//            $("#stage").bind("scroll resize", updateDataTableLayout);
-//            $(window).bind("resize", updateDataTableLayout);
+            //            $("#stage").bind("scroll resize", updateDataTableLayout);
+            //            $(window).bind("resize", updateDataTableLayout);
 
-//            updateDataTableLayout();
-//            initAnnotationPopups();
+            //            updateDataTableLayout();
+            //            initAnnotationPopups();
 
-/*            $("#stage").on("click", ".datatable td, .datatable th", function() {
-                //debugger;
-                var i = 0, tmp = this;
-                while ( tmp.previousSibling ) {
-                    tmp = tmp.previousSibling;
-                    i++;
-                }
-                GC.App.setSelectedRecord(GC.App.getPatient().getModel()[i], "selected");
-            });
-*/
-            $("html").bind("set:viewType set:language", function(e) {
+            /*            $("#stage").on("click", ".datatable td, .datatable th", function() {
+                            //debugger;
+                            var i = 0, tmp = this;
+                            while ( tmp.previousSibling ) {
+                                tmp = tmp.previousSibling;
+                                i++;
+                            }
+                            GC.App.setSelectedRecord(GC.App.getPatient().getModel()[i], "selected");
+                        });
+            */
+            $("html").bind("set:viewType set:language", function (e) {
                 if (isMapViewVisible()) {
                     renderMapView("#view-map");
                 }
             });
 
-            GC.Preferences.bind("set:metrics set:nicu set:currentColorPreset", function(e) {
+            GC.Preferences.bind("set:metrics set:nicu set:currentColorPreset", function (e) {
                 if (isMapViewVisible()) {
                     renderMapView("#view-map");
                 }
             });
 
-            GC.Preferences.bind("set", function(e) {
+            GC.Preferences.bind("set", function (e) {
                 if (e.data.path == "roundPrecision.velocity.nicu" ||
                     e.data.path == "roundPrecision.velocity.std") {
                     if (isMapViewVisible()) {
@@ -484,30 +481,30 @@ XDate, setTimeout, getDataSet*/
                 }
             });
 
-/*            GC.Preferences.bind("set:fontSize", function(e) {
-                setTimeout(updateDataTableLayout, 0);
-            });
-*/
-            GC.Preferences.bind("set:timeFormat", function(e) {
+            /*            GC.Preferences.bind("set:fontSize", function(e) {
+                            setTimeout(updateDataTableLayout, 0);
+                        });
+            */
+            GC.Preferences.bind("set:timeFormat", function (e) {
                 renderMapView("#view-map");
             });
 
-/*            $("#stage")
-            .on("dblclick", ".datatable td", function() {
-                var i = $(this).closest("tr").find("td").index(this);
-                GC.App.editEntry(GC.App.getPatient().getModel()[i]);
-            })
-            .on("dblclick", ".datatable th", function() {
-                var i = $(this).closest("tr").find("th").index(this);
-                GC.App.editEntry(GC.App.getPatient().getModel()[i]);
-            });
-*/
-/*            $("html").bind("appSelectionChange", function(e, selType, sel) {
-                if (selType == "selected") {
-                    selectByAge(sel.age.getMilliseconds());
-                }
-            });
-*/        }
+            /*            $("#stage")
+                        .on("dblclick", ".datatable td", function() {
+                            var i = $(this).closest("tr").find("td").index(this);
+                            GC.App.editEntry(GC.App.getPatient().getModel()[i]);
+                        })
+                        .on("dblclick", ".datatable th", function() {
+                            var i = $(this).closest("tr").find("th").index(this);
+                            GC.App.editEntry(GC.App.getPatient().getModel()[i]);
+                        });
+            */
+            /*            $("html").bind("appSelectionChange", function(e, selType, sel) {
+                            if (selType == "selected") {
+                                selectByAge(sel.age.getMilliseconds());
+                            }
+                        });
+            */        }
     });
 
 }(GC, jQuery));
