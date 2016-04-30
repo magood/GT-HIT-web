@@ -120,47 +120,106 @@
 
             <div id="time-ranges">
                 <div class="row">
-                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-13').prop('checked', true);">0 - 13 Weeks</a>
-                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-26').prop('checked', true);">0 - 6 Months</a>
-                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-104').prop('checked', true);">0 - 2 Years</a>
-                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-1043').prop('checked', true);">0 - 20 Years</a>
+                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-13').click();">0 - 13 Weeks</a>
+                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-26').click();">0 - 6 Months</a>
+                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-104').click();">0 - 2 Years</a>
+                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-1043').click();">0 - 20 Years</a>
                     <span class="vertical-divider" style="margin-left:4px;margin-right:4px"></span>
-                    <a class="waves-effect waves-light btn" data-translatecontent="STR_3050" onclick="$('#htr-0-1').prop('checked', true); GC.App.fitToData();">Fit to Age</a>
-                    <a id="btn-toggle-zoom" class="waves-effect waves-light btn" data-translatecontent="STR_3051">Zoom</a>
-
-
-                    <span id="hidden-time-ranges">
-                            <input id="htr-0-13" name="time-range" value="0:13" type="radio">
-                            <input id="htr-0-26" name="time-range" value="0:26.08928571428572" checked="" type="radio">
-                            <input id="htr-0-104" name="time-range" value="0:104.3571428571429" type="radio">
-                            <input id="htr-0-1043" name="time-range" value="0:1043.571428571429" type="radio">
-                            <input id="htr-0-1" type="radio" name="time-range" value="0:1">
-                    </span>
+                    <div id="htr-0-1" class="btn" style="width:120px;white-space:nowrap;" id="btn-fit-to-age" onclick="GC.App.fitToData();">
+                        <label class="rollback-btn">
+                            <input type="radio" name="time-range" value="0:1">
+                            <span data-translatecontent="STR_3050"></span>
+                        </label>
+                    </div>
+                    <div class="btn" style="width:140px;white-space:nowrap;" id="btn-toggle-zoom">
+                        <label class="rollback-btn" data-translatecontent="STR_3051"></label>
+                    </div>
                 </div>
+
+                <div id="hidden-time-ranges" class="row">
+                    <div class="cell">
+                        <label>
+                            <input id="htr-0-13" name="time-range" value="0:13" type="radio">
+                            0 – 13 <span data-translatecontent="STR_19">Weeks</span>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label class="">
+                            <input id="htr-0-26" name="time-range" value="0:26.08928571428572" checked="" type="radio">
+                            0 – 6 <span data-translatecontent="STR_17">Months</span>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label>
+                            <input id="htr-0-104" name="time-range" value="0:104.3571428571429" type="radio">
+                            0 – 2 <span data-translatecontent="STR_15">Years</span>
+                        </label>
+                    </div>
+                    <div class="cell">
+                        <label class="active">
+                            <input id="htr-0-1043" name="time-range" value="0:1043.571428571429" type="radio">
+                            0 – 20 <span data-translatecontent="STR_15">Years</span>
+                        </label>
+                    </div>
+                    <div class="cell" style="width:9px">
+                        <span class="vertical-divider" style="margin-left:4px;margin-right:4px"></span>
+                    </div>
+
+                </div>
+
                 <div class="disable-overlay"></div>
             </div>
 
-            <div id="info-bar" style="padding-right: 11em;overflow: hidden">
+            <div id="info-bar" style="overflow: hidden">
 
                 <span class="last-recording"> <span data-translatecontent="STR_3052"></span> <b><span class="date"></span>&nbsp;&nbsp;<span class="age"></span></b> </span>
-                <span style="float:right;">
-                    <span>
-                      <input type="checkbox" name="nicu" class="checkbox-button" data-label="NICU" />
-                      <span class="vertical-divider"></span>
-                    </span>
-                    <span class="hide-on-parental hide-on-table">
+
+                <span class="switch-bar" style="float:right;">
+                    <div class="inline-switch switch">
+                    <label>
+                        NICU Off
+                        <input id="switch-nicu" name="nicu" type="checkbox" data-label="NICU">
+                        <span class="lever"></span>
+                        NICU On
+                    </label>
+                    </div>
+
+                    <span class="vertical-divider"></span>
+
+                    <!-- WARNING: This part is absolutely hoppin' mad. Don't try this at home. -->
+                    <div class="inline-switch switch">
+                    <label>
+                        %
+                        <input id="switch-pct" type="checkbox" onchange="this.checked ? $('#legacy-pct table tbody tr td:nth-child(3) label').click() : $('#legacy-pct table tbody tr td:nth-child(1) label').click();">
+                        <span class="lever"></span>
+                        Z
+                    </label>
+                    </div>
+
+                    <span class="vertical-divider"></span>
+
+                    <div class="inline-switch switch">
+                    <label>
+                        kg/cm
+                        <input id="switch-metric" type="checkbox" onchange="this.checked ? $('#legacy-metric table tbody tr td:nth-child(3) label').click() : $('#legacy-metric table tbody tr td:nth-child(1) label').click();">
+                        <span class="lever"></span>
+                        lb/ft
+                    </label>
+                    </div>
+
+                    <span id="legacy-pct" class="legacy-hidden hide-on-parental hide-on-table">
                         <input class="toggle-button" type="hidden" name="pctz" value="pct" data-value1="pct" data-value2="z" data-label1="%" data-label2="Z" />
                         <span class="vertical-divider"></span>
                     </span>
-                    <span class="hide-on-parental">
+                    <span id="legacy-metric" class="legacy-hidden legacy-hidden hide-on-parental">
                         <input class="toggle-button" type="hidden" name="metrics" value="metric" data-value1="metric" data-value2="eng" data-label1="kg/cm" data-label2="lb/ft" />
                         <span class="vertical-divider"></span>
                     </span>
-                    <span class="language-selector">
+                    <!-- <span class="language-selector"> -->
                         <!--input class="toggle-button" type="hidden" name="language" value="en" data-value1="en" data-value2="es" data-label1="English" data-label2="Spanish" /-->
-                    </span>
+                    <!-- </span> -->
                 </span>
-                <span class="add-entry" data-translatecontent="STR_178"></span>
+                <span class="legacy-hidden add-entry" data-translatecontent="STR_178"></span>
             </div>
         </div>
 

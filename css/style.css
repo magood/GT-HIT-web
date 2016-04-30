@@ -77,6 +77,17 @@ tr.odd {
 #time-ranges .btn:hover {
 	color: #FFF;
 }
+.inline-switch {
+	display: inline-block;
+}
+
+.inline-switch label input[type=checkbox]:checked + .lever {
+	background-color: #FC9A9F !important;
+}
+.inline-switch label input[type=checkbox]:checked + .lever:after {
+	background-color: #ee6e73 !important;
+}
+
 /* END_MONKEYPATCH */
 
 /* BEGIN_NEWSTYLE */
@@ -107,14 +118,14 @@ nav a {
 	padding-bottom: 0px;
 }
 #info-bar {
-	background-color: #ee6e73 !important;
-	color: #fff !important;
+	background-color: #fff !important;
+	color: #666 !important;
 }
 #the-tab {
 	float: right;
 }
 .last-recording {
-	color: #fff !important;
+	color: #666 !important;
 }
 #timeline-top .visible, .timeline .visible {
 	background-color: #FC9A9F !important;
@@ -122,8 +133,19 @@ nav a {
 .timeline div.active {
 	background-color: #ee6e73 !important;
 }
-#hidden-time-ranges, .legacy-ds-box {
+.legacy-ds-box, .legacy-hidden {
 	visibility: hidden;
+}
+#hidden-time-ranges {
+	display: none !important;
+}
+.rollback-btn {
+	font-size: 14px !important;
+	color: #fff !important;
+	font-weight: normal !important;
+}
+.switch-bar {
+	text-align: right;
 }
 /* END_NEWSTYLE */
 

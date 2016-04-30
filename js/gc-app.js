@@ -879,6 +879,9 @@ function gc_app_js (NS, $) {
                 $(".language-selector select").val(lang);
                 NS.Util.translateHTML();
             });
+
+            $('#switch-pct').prop('checked', NS.App.getPCTZ() == 'z')
+            $('#switch-metric').prop('checked', NS.App.getMetrics() != 'eng')
         }
 
         function renderPatient() {
