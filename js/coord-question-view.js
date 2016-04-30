@@ -117,7 +117,7 @@ XDate, setTimeout, getDataSet*/
             }
         });
 
-        function generateQuestionContainer(questionsResult, questionnaireAnswerSet) {
+        function generateQuestionContainer(questionsResult, questionnaireAnswerSet, disableControls) {
             var id = (questionsResult.id) ? questionsResult.id : "";
             var narrative = (questionsResult.text) ? questionsResult.text.div : "";
             var version = (questionsResult.version) ? questionsResult.version : "";
@@ -184,11 +184,20 @@ XDate, setTimeout, getDataSet*/
                 var optdom = $("<div></div>")
                     .addClass("btn-group btn-group-justified")
                     .attr("data-toggle", "buttons");
+
                 for (var optind = 0; optind < theoptions.length; optind++) {
                     var label = $("<label></label>")
-
                     label.addClass("btn btn-default btn-responsive questions-theoptions")
                     .attr("id", "questions-theoptions-" + qind + "-" + optind);
+
+                    if(disableControls) {
+                        label.addClass("disabled");
+                        label.attr("disabled","disabled");
+                        //workaround for bootstrap bug.
+                        label.click(function() {
+                          return false;
+                        });
+                    }
 
                     var input = $("<input />");
                     input.attr("type", "radio")
@@ -250,7 +259,7 @@ XDate, setTimeout, getDataSet*/
                 .attr("id", "collapse" + panelNumber)
 
                     //questions go here
-                    .append(generateQuestionContainer(questionsResult, questionnaireAnswerSet))
+                    .append(generateQuestionContainer(questionsResult, questionnaireAnswerSet, true))
                 );;
         }
 
@@ -275,7 +284,7 @@ XDate, setTimeout, getDataSet*/
 
                     //default goes here
                     //questions go here
-                        .append(generateQuestionContainer(questionsResult, undefined))
+                        .append(generateQuestionContainer(questionsResult, undefined, false))
                     )
                 );
         }
