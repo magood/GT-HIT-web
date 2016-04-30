@@ -193,7 +193,15 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	width: auto !important;
 }
 .thequestions .btn {
-	background-color: #fc9a9f !important;
+	background-color: #eaeaea;
+	color: #666;
+}
+.thequestions .btn.active, .thequestions .btn.active:hover, .thequestions .btn:active {
+	background-color: #fc9a9f;
+	color: #fff;
+}
+.thequestions .btn:hover {
+	background-color: #ffd6d8;
 }
 #loading-metainfo {
 	margin-top: 3em;

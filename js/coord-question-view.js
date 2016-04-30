@@ -166,7 +166,7 @@ XDate, setTimeout, getDataSet*/
                 for (var optind = 0; optind < theoptions.length; optind++) {
                     var label = $("<label></label>")
 
-                    label.addClass("btn btn-default btn-responsive questions-theoptions")
+                    label.addClass("btn btn-default btn-responsive questions-theoptions waves-effect waves-light")
                     .attr("id", "questions-theoptions-" + qind + "-" + optind);
 
                     var input = $("<input />");
