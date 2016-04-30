@@ -90,12 +90,13 @@
                         <li class="waves-effect waves-light" data-value="parent"><a href="#">Parent</a></li>
                         <li class="waves-effect waves-light" data-value="maps"><a href="#">Map</a></li>
                         <li class="waves-effect waves-light" data-value="questions"><a href="#">Q&amp;A</a></li>
+                        <li class="waves-effect waves-light"><a href="#" onclick="$('#patient-info').toggleClass('fold'); $(this).toggleClass('on')" id="show-patient">◁</a></li>
                     </ul>
                 </div>
                 </nav>
             </div>
 
-            <ul id="patient-info" class="collection">
+            <ul id="patient-info" class="collection fold">
             <li class="collection-item avatar">
                 <img id="patient-gender-icon" src="img/avatar_m.png" alt="" class="circle">
                 <span class="patient-name title">Title</span>
@@ -115,7 +116,6 @@
                         <span data-translatecontent="STR_3006"></span>
                     )
                     </span>
-                    <br>
                     <span>Corrected Age</span>
                     <span id="corrected-age" class="title"></span>
                 </p>
