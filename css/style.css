@@ -209,6 +209,10 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 #loading-metainfo p {
 	font-weight: bold;
 }
+#loading-metainfo span {
+	font-size: 10px;
+	line-height: 4px;
+}
 #loading-indicator {
 	position: fixed;
 	z-index: 10000000;
