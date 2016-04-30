@@ -733,14 +733,26 @@ select.styled {
     width:270px;
     padding:1em;
 }
-.map-address-list .row {
-	padding-left: 8px;
-	padding-right: 4px;
+
+.map-address-list li h3 {
+	margin-top: 3px;
+}
+.map-address-list li {
+    cursor:pointer;
 }
 
+h5.infoWindowHeader {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+p.infoWindowParagraph {
+    margin-bottom:0px;
+}
 
-.map-address-list .row h3 {
-	margin-top: 3px;
+/*Maps tab resource selected styles*/
+li.resourceSelected {
+    background-color:#337ab7;
+    color:#fff;
 }
 
 /* ---------------------------- toggle-button ------------------------------- */
@@ -3207,3 +3219,4 @@ svg marker use {
         background: #575757;
         border-color: #575757;
 }
+
