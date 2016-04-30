@@ -21,6 +21,9 @@
 	background-color: #26a69a !important;
 	color: #fff !important;
 }
+.paginate_button a:focus {
+	outline:0;
+}
 #psmessages-table_paginate .paginate_button {
 	border:none !important;
 }
