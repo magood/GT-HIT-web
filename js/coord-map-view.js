@@ -107,8 +107,8 @@ XDate, setTimeout, getDataSet*/
                     getFromFHIR(addr.postalCode, addr.city, addr.state);
 
                     $('.map-address-list').append($("<div></div>")
-                                .addClass("btn btn-info")
-                                .html("Send Community<br />Resource Referrals")
+                                .addClass("btn btn-info patientmode")
+                                .html("Share Resource Referrals")
                                 .click(function() {
                                     var patientname = ""
                                     patientResults.name[0].given.forEach(function(firstname) {
@@ -265,7 +265,7 @@ XDate, setTimeout, getDataSet*/
                             .append($("<div></div>")
                                 .addClass("row")
                                 .append($("<h5>"+ addressString+ "</h5>")))
-                            
+
                             // Quality score is not available in this response
                             // If fetched uncomment this and replace <quality_score> with variable containing value
                             // .append($("<div></div>")
@@ -307,7 +307,7 @@ XDate, setTimeout, getDataSet*/
                                     }))
                                     .append("&nbsp; refer")))
                           );
-                
+
 
                 addedResources.push(r.id);
                 var m2 = new google.maps.Marker({

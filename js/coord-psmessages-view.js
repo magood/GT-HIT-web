@@ -74,7 +74,8 @@ XDate, setTimeout, getDataSet*/
             ]
         } );
 
-        $("<button>Reload Message List From Server</button>")
+        $("<div>Reload Message List From Server</div>")
+            .addClass("btn btn-info patientmode")
             .prop("style", "margin-left:100px")
             .click(function() {
                 window.sessionStorage.removeItem('psmessagestable');

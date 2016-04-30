@@ -2,7 +2,130 @@
 	/* FIXME: This is not the right way to do this. Unfortunately, the CSS in the
 	   original code is a titanic mess, and this was faster. */
 	font-family: "Roboto", "Helvetica Neue", Arial, Helvetica, sans-serif !important;
+	text-shadow: none !important;
 }
+
+/* BEGIN_MONKEYPATCH */
+/* Override datatable styles. Datatables does a lot of *magic* which requires disgusting monkey patching. */
+.paginate_button {
+	border:none !important;
+}
+.paginate_button:hover {
+	background: none !important;
+	border:none !important;
+}
+.paginate_button.active {
+	background-color: #26a69a !important;
+}
+.paginate_button.active:hover {
+	background-color: #26a69a !important;
+	color: #fff !important;
+}
+#psmessages-table_paginate .paginate_button {
+	border:none !important;
+}
+#psmessages-table_paginate .paginate_button:hover {
+	background: none !important;
+	border:none !important;
+}
+#psmessages-table_paginate .paginate_button.active:hover {
+	background-color: #ee6e73 !important;
+	color: #fff !important;
+}
+#psmessages-table tr.odd {
+	background-color: #fff4fc !important;
+}
+.dataTables_wrapper {
+	padding-top: 1em;
+}
+#allmessages-table_filter, #patient-table_filter {
+	margin-top: -5px !important;
+}
+.dataTable thead tr th {
+	border-radius: 0;
+	background-color: #26a69a !important;
+}
+/* This belongs in the patient view, so a different color is used. */
+#psmessages-table thead tr th {
+	background-color: #ee6e73 !important;
+}
+#psmessages-table thead .sorting_asc {
+  background-image: url("../img/sort_asc_2.png") !important;
+}
+#psmessages-table thead .sorting_desc {
+  background-image: url("../img/sort_desc_2.png") !important;
+}
+thead {
+	border-bottom: none !important;
+}
+tr.odd {
+	background-color: #f5fbf1 !important;
+}
+/* Override GC styles. */
+#time-ranges {
+	box-shadow: none !important;
+}
+/* Override Bootstrap styles. */
+.btn {
+	text-transform: none !important;
+}
+#time-ranges .btn {
+	background-color: #FC9A9F;
+	margin-right: 0.5em;
+	/*font-weight: normal !important;*/
+}
+#time-ranges .btn:hover {
+	color: #FFF;
+}
+/* END_MONKEYPATCH */
+
+/* BEGIN_NEWSTYLE */
+/* This application hereby is a tribute to the gods of unnecessary repaints. */
+/* This is how developers end up in hell. */
+
+.brand-logo {
+	margin-left: 0.5em;
+}
+
+.caremode {
+	background-color: #26a69a !important;
+}
+.patientmode {
+	background-color: #ee6e73 !important;
+}
+nav a {
+	text-decoration: none;
+	color: #fff;
+}
+#patient-info {
+
+}
+.title {
+	color: #666 !important;
+}
+#patient-info avatar {
+	padding-bottom: 0px;
+}
+#info-bar {
+	background-color: #ee6e73 !important;
+	color: #fff !important;
+}
+#the-tab {
+	float: right;
+}
+.last-recording {
+	color: #fff !important;
+}
+#timeline-top .visible, .timeline .visible {
+	background-color: #FC9A9F !important;
+}
+.timeline div.active {
+	background-color: #ee6e73 !important;
+}
+#hidden-time-ranges, .legacy-ds-box {
+	visibility: hidden;
+}
+/* END_NEWSTYLE */
 
 .prod .hide-on-prod { display: none !important; }
 .prod .show-on-prod { display: initial !important; }
@@ -20,7 +143,7 @@ html {
 body {
 	font-family: "Roboto", "Helvetica Neue", Arial, Helvetica, sans-serif;
 	font-size  : 16px;
-	background : #EEE;
+	background : #333;
 	/*min-width  : 92em;*/
 	min-height : 100%;
 	display    : block;
@@ -41,7 +164,7 @@ body {
 
 
 a {
-	color: #7A909E;
+	/*color: #7A909E;*/
 	text-decoration: none;
 }
 a:hover {
@@ -69,27 +192,48 @@ i {
 	right: 0;
 	height: 100%;
 	width: 100%;
-	background: #DFF;
+	background: #333;
 }
 
-#loading-indicator h2 {
+#loading-window {
 	position: absolute;
 	z-index: 2;
-	top: 50%;
-	left: 50%;
-	width  : 150px;
+	top: 30%;
+	left: 30%;
+	width  : 100%;
 	margin : -35px auto auto -110px;
 	line-height : 30px;
 	padding: 10px 10px 10px 60px;
 	color: #777;
-	background: url(../img/spinner2blue.gif) 10px 50% no-repeat #DEF;
-	font-size: 18px;
-	border-radius: 10px;
 }
 
-#loading-indicator h2 .msg {
-	font-size: 11px;
-	line-height: normal;
+.spinner {
+  width: 40px;
+  height: 40px;
+  background-color: #FFF;
+
+  margin: 100px auto;
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes sk-rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+  } 50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+  } 100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
 }
 
 .table-loading-spinner {
@@ -151,8 +295,7 @@ b, strong {
 #header {
 	position: relative;
 	z-index: 102;
-	color: #3AF;
-	background: #0AF;
+	/*color: #3AF;*/
 	padding : 10px 10px 0;
 	/*background: rgb(129,145,161);
 	background: -moz-linear-gradient(top,  rgba(129,145,161,1) 0%, #001C3C);
@@ -509,100 +652,7 @@ select.styled {
 	box-shadow: 0 0 3px -1px #FFF;
 }
 
-#view-mode {
-	padding: 0;
-	margin: 0;
-	border-radius: 8px 8px 0 0;
-	position: relative;
-	z-index: 4;
-	background: url(../img/mode-bg-blue.png) 0 0 repeat-x scroll #DEF;
-	border: 1px solid #DEF;
-	border-bottom: 1px solid #AAF;
-}
-#view-mode:after {
-	content: "";
-	display: block;
-	clear: both;
-}
-#view-mode span {
-	display: block;
-	float: right;
-	padding: 5px 20px 5px 12px;
-	border-left: 1px solid #AAF;
-	color: #777;
-	font-weight: bold;
-	font-size: 1em;
-	line-height: 25px;
-	cursor: pointer;
-	text-shadow: 0  1px 1px rgba(255, 255, 255, 0.15),
-				 0 -1px 1px rgba(0  , 0  , 0  , 0.15);
-}
-#view-mode span:first-child {
-	border-radius: 0 8px 0 0;
-}
-#view-mode span:before {
-	content: "";
-	width: 24px;
-	height: 24px;
-	margin: 0 8px 0 0;
-	background: url(../img/icons-new.png);
-	display: inline-block;
-	vertical-align: top;
-}
-#view-mode span[data-value="patients"]:before {
-	background-position: -50px -78px;
-}
-#view-mode span:hover[data-value="patients"]:before,
-#view-mode span.active[data-value="patients"]:before {
-	background-position: -50px -50px;
-}
-#view-mode span[data-value="allmessages"]:before {
-	background-position: -79px -77px;
-}
-#view-mode span:hover[data-value="allmessages"]:before,
-#view-mode span.active[data-value="allmessages"]:before {
-	background-position: -79px -54px;
-}
-#view-mode span[data-value="maps"]:before {
-	background-position: -110px 0;
-}
-#view-mode span:hover[data-value="maps"]:before,
-#view-mode span.active[data-value="maps"]:before {
-	background-position: -130px 0;
-}
-#view-mode span[data-value="questions"]:before {
-	background-position: -106px -25px;
-}
-#view-mode span:hover[data-value="questions"]:before,
-#view-mode span.active[data-value="questions"]:before {
-	background-position: -130px -25px;
-}
-#view-mode span[data-value="parent"]:before {
-	background-position: 0 -128px;
-}
-#view-mode span:hover[data-value="parent"]:before,
-#view-mode span.active[data-value="parent"]:before {
-	background-position: -24px -128px;
-}
-#view-mode span[data-value="table"]:before {
-	background-position: 0 -104px;
-}
-#view-mode span:hover[data-value="table"]:before,
-#view-mode span.active[data-value="table"]:before {
-	background-position: -24px -104px;
-}
-#view-mode span[data-value="graphs"]:before {
-	background-position: 0 -80px;
-}
-#view-mode span:hover[data-value="graphs"]:before,
-#view-mode span.active[data-value="graphs"]:before {
-	background-position: -24px -80px;
-}
-#view-mode span.active,
-#view-mode span:hover {
-	color: #0A2;
-	text-shadow: 0 1px 2px #5F7;
-}
+
 
 span span, label span, span label {
 	vertical-align: baseline;
@@ -1210,7 +1260,6 @@ table.toggle-button {
 	background: #4D5C68;
 	padding: 0 20px 0 20px;
 	position: relative;
-	margin: 0 -10px;
 	height: 35px;
 	line-height: 35px;
 	box-shadow: inset 0px -6px 6px -6px rgba(0, 0, 0, 0.5);
@@ -1398,7 +1447,6 @@ span.title {
 	box-shadow: 0 3px 0 -2px rgba(255, 255, 255, 0.5) inset, 0 -3px 2px -3px #A6A8AE inset, 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 10px #000000;
 	color: #585C60;
 	line-height: 20px;
-	margin: 0 -10px;
 	padding: 6px 8px;
 	text-shadow: 0 1px #FFFFFF;
 	position: relative;
@@ -1763,7 +1811,8 @@ span.title {
 
 #stage > .tab-panel {
 	position: relative;
-	width: 100%;
+	margin-left: 10px;
+	margin-right: 10px;
 	height: 100%;
 	display: none;
 }

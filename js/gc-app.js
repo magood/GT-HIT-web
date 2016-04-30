@@ -284,7 +284,7 @@ function gc_app_js (NS, $) {
                     NS.App.Pane = leftPane;
                     NS.App.ChartsView = leftPane;
                 }
-                
+
                 NS.App.Pane.draw();
                 $("#print-button").html("Print Graphs");
                 break;
@@ -498,7 +498,7 @@ function gc_app_js (NS, $) {
         });
     };
 
-    /** 
+    /**
      @param data data.resources should be an array of objects
      every resource object should contain
         resourcename,
@@ -886,6 +886,12 @@ function gc_app_js (NS, $) {
             var correctedAge = PATIENT.getCorrectedAge();
 
             $('.patient-name').text(PATIENT.name);
+
+            // FIXME: Naive algorithm alert. This won't i18nize well.
+            (PATIENT.gender.toLowerCase().indexOf('f') != -1) ?
+                $('#patient-gender-icon').attr('src', 'img/avatar_f.png') :
+                $('#patient-gender-icon').attr('src', 'img/avatar_f.png');
+
             $('.patient-gender').text(GC.str("STR_SMART_GENDER_" + PATIENT.gender));
             $('.patient-gender').attr("data-translatecontent", "STR_SMART_GENDER_" + PATIENT.gender);
             $("[name=GA]").val(PATIENT.getGestatonCorrection().toString(GC.chartSettings.timeInterval).replace(/^\-\s*/, ""));
@@ -1042,6 +1048,16 @@ function gc_app_js (NS, $) {
             // =================================================================
 
             $("html").bind("set:viewType", function(e, type) {
+
+                if (type == 'allmessages' || type == 'patients') {
+                    $('nav').addClass('caremode');
+                    $('#patient-info').css('display', 'none');
+                    $('.brand-logo').text('Care Coordinator')
+                } else {
+                    $('nav').removeClass('caremode')
+                    $('#patient-info').css('display', 'block');
+                    $('.brand-logo').text('Patient Details')
+                }
 
                 $("#view-mode > [data-value]").each(function() {
                     $(this).toggleClass("active", this.getAttribute("data-value") == type);
