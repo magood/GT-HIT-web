@@ -149,7 +149,6 @@ XDate, setTimeout, getDataSet*/
             var statusType = questionsResult.text.div.match(/<p> <b>status<\/b>: (.*?)<\/p>/)[1];
 
             var questionContainer = $("<div></div>")
-                .addClass("container")
                 .addClass("panel-body");
 
             //build the title
@@ -171,7 +170,6 @@ XDate, setTimeout, getDataSet*/
             //build the questions
 
             var questiondom = $("<div></div>")
-                .addClass("container");
 
             for (var qind = 0; qind < llgroup.question.length; qind++) {
                 var questiondata = llgroup.question[qind];
