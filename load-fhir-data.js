@@ -129,7 +129,7 @@ GC.get_data = function() {
 
       var units = smart.units;
       process(vitalsByCode['3141-9'], units.kg, p.vitals.weightData);
-      process(vitalsByCode['8302-2'],  units.cm,  p.vitals.lengthData);
+      //process(vitalsByCode['8302-2'],  units.cm,  p.vitals.lengthData);
       process(vitalsByCode['8287-5'],  units.cm,  p.vitals.headCData);
       process(vitalsByCode['39156-5'], units.any, p.vitals.BMIData);
       processBA(vitalsByCode['37362-1'], p.boneAge);

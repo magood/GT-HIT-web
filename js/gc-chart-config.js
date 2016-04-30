@@ -57,9 +57,8 @@ function gc_chart_config_js($, GC) {
         patientFamilyHistoryEditable : false,
         patientDataEditable : false,
         role : (GC.Util.urlParam("role") ? GC.Util.urlParam("role") : 'coordinator'),
-        serverBase : (GC.Util.urlParam("server") == "MiHIN" ?
-                                "http://52.72.172.54:8080/fhir/baseDstu2" :
-                                "https://fhir-open-api-dstu2.smarthealthit.org" ),
+        serverBase : (isSMART ? "https://fhir-open-api-dstu2.smarthealthit.org"
+                : "http://52.72.172.54:8080/fhir/baseDstu2" ),
         defaultPatient : (isSMART ? "1137192" : "18791941" ), // 5722014c0cf20e9addb273be SMART
         defaultMessage : (isSMART ? "572205110cf20e9addb273c4" : "19179016" ),
         defaultQuestionnaire : (isSMART ? "" : "18791835" ),
