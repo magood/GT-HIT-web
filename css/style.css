@@ -109,6 +109,9 @@ th, tr, td {
 #patient-table, #psmessages-table, #psallmessages-table {
 	width: 100% !important;
 }
+.dataTables_length .btn {
+	margin-left: 2em;
+}
 /* END_MONKEYPATCH */
 
 /* BEGIN_NEWSTYLE */
@@ -243,12 +246,20 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 #loading-window .card {
 	min-height: 200px !important;
 }
+.table-loading-spinner {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    /*width: 60px;*/
+    /*height: 60px;*/
+    /*background: url(../img/spinner.gif) no-repeat;*/
+}
 .spinner {
   position: absolute;
   top: calc(22% - 25px);
   left: calc(83% - 25px);
 }
-
 .spinner, .spinner:before, .spinner:after {
   position: absolute;
   border: 3px solid transparent;
@@ -257,7 +268,9 @@ nav a, nav a:active, nav a:hover, nav a:visited {
   animation: rotate linear infinite;
   content: '';
 }
-
+.table-loading-spinner .spinner, .table-loading-spinner .spinner:before, .table-loading-spinner .spinner:after {
+  border-top: 3px solid rgb(40, 40, 40) !important;
+}
 .spinner {
   height: 100px;
   width: 100px;
@@ -345,16 +358,6 @@ a:hover {
 
 i {
 	font-style: italic;
-}
-
-.table-loading-spinner {
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    left: 50%;
-    width: 60px;
-    height: 60px;
-    background: url(../img/spinner.gif) no-repeat;
 }
 
 b, strong {

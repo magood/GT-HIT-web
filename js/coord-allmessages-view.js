@@ -59,6 +59,9 @@ XDate, setTimeout, getDataSet*/
     function renderAllMessagesView( container ) {
         $(container).empty();
 
+        var loadingdiv = $("<div><div class='spinner'></div></div>").addClass("table-loading-spinner").hide();
+        $(container).append(loadingdiv);
+
         var thetable = $("<table></table>").addClass("stripe hover");
         thetable.prop("id", "allmessages-table").prop("width", "100%");
         $(container).append(thetable);
@@ -98,11 +101,17 @@ XDate, setTimeout, getDataSet*/
         }
 
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
+        loadingdiv.show();
         $.ajax({
             url: GC.chartSettings.serverBase + "/Communication" +
                 '?sent=%3C%3D' + todayDateStr + '&_count=50',
             dataType: 'json',
-            success: function(allMessagesResult) { mergeHTML(allMessagesResult, true);}
+            success: function(allMessagesResult) {
+                mergeHTML(allMessagesResult, true);
+            },
+            complete: function() {
+                loadingdiv.hide();
+            }
         });
         function mergeHTML(allMessagesResult, initialCall) {
             if (!allMessagesResult) return;

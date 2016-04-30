@@ -59,6 +59,9 @@ XDate, setTimeout, getDataSet*/
     function renderPSMessagesView( container ) {
         $(container).empty();
 
+        var loadingdiv = $("<div><div class='spinner'></div></div>").addClass("table-loading-spinner").hide();
+        $(container).append(loadingdiv);
+
         var thetable = $("<table></table>").addClass("stripe hover");
         thetable.prop("id", "psmessages-table").prop("width", "100%");
         $(container).append(thetable);
@@ -98,6 +101,7 @@ XDate, setTimeout, getDataSet*/
         }
 
         var todayDateStr = moment().startOf("day").format("YYYY-MM-DD");
+        loadingdiv.show();
         $.ajax({
             url: GC.chartSettings.serverBase + "/Communication?subject=" +
                     (GC.chartSettings.serverSMART ? "" : "Patient%2F") +
@@ -106,7 +110,12 @@ XDate, setTimeout, getDataSet*/
                         GC.chartSettings.defaultPatient
                     ) + '&_count=50',
             dataType: 'json',
-            success: function(psMessagesResult) { mergeHTML(psMessagesResult, true);}
+            success: function(psMessagesResult) {
+                mergeHTML(psMessagesResult, true);
+            },
+            complete: function() {
+                loadingdiv.hide();
+            }
         });
         function mergeHTML(psMessagesResult, initialCall) {
             if (!psMessagesResult || psMessagesResult.total == "0") return;
@@ -190,6 +199,7 @@ XDate, setTimeout, getDataSet*/
                     break;
                 }
             }
+            loadingdiv.hide();
         }
     }
 

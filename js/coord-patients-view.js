@@ -59,7 +59,7 @@ XDate, setTimeout, getDataSet*/
     function renderPatientsView( container ) {
         $(container).empty();
 
-        var loadingdiv = $("<div></div>").addClass("table-loading-spinner").hide();
+        var loadingdiv = $("<div><div class='spinner'></div></div>").addClass("table-loading-spinner").hide();
         $(container).append(loadingdiv);
 
         var thetable = $("<table></table>").addClass("stripe hover");
@@ -111,7 +111,10 @@ XDate, setTimeout, getDataSet*/
                 '?birthdate=%3E%3D' + minorDateStr + '&birthdate=%3C%3D' +
                 todayDateStr + '&_count=50',
             dataType: 'json',
-            success: function(patientResult) { mergeHTML(patientResult, true);}
+            success: function(patientResult) { mergeHTML(patientResult, true);},
+            complete: function() {
+                loadingdiv.hide();
+            }
         });
         function mergeHTML(patientResult, initialCall) {
             if (!patientResult) return;
