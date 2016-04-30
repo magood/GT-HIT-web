@@ -40,6 +40,19 @@ XDate, setTimeout, getDataSet*/
             separator : " "
         };
 
+    var resourceTypes = {
+        "CommunityResource/HealthClub": "Health Club",
+        "CommunityResource/Playground": "Playground",
+        "CommunityResource/HikingTrail": "Hiking Trail"
+    };
+    function getTypeName(typeCode) {
+        var rTypeName = "Unknown";
+        try {
+            rTypeName = resourceTypes[typeCode];
+        } catch (e) { }
+        return rTypeName;
+    }
+
     function isMapViewVisible() {
         return GC.App.getViewType() == "maps";
     }
@@ -72,8 +85,8 @@ XDate, setTimeout, getDataSet*/
         }
 
         function setPatientMarker(glatlng) {
-            var marker = new google.maps.Marker({ map: map, position: glatlng });
-            var infowindow = new google.maps.InfoWindow({ content: '<strong>Patient\'s House</strong>' });
+            var marker = new google.maps.Marker({ map: map, position: glatlng, label: "P" });
+            var infowindow = new google.maps.InfoWindow({ content: "<h5 class='infoWindowHeader'>Patient's House</h5>" });
             google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
             infowindow.open(map, marker);
             google.maps.event.trigger(map, 'resize');
@@ -83,7 +96,13 @@ XDate, setTimeout, getDataSet*/
         function attachWindowListener(marker, loc) {
             google.maps.event.addListener(marker, 'click', function () {
                 var o = marker.locationObj;
-                var iw = new google.maps.InfoWindow({ content: '<strong>' + o.name + "(" + o.type + ")"+ '</strong>' });
+                //build infowindow html
+                var contentDom = $("<div>")
+                    .append($("<h5 class='infoWindowHeader'>").text(o.name))
+                    .append($("<p class='infoWindowParagraph'>").text(getTypeName(o.type)));
+
+
+                var iw = new google.maps.InfoWindow({ content: contentDom.html() });
                 iw.open(map, marker);
             });
         }
@@ -106,7 +125,8 @@ XDate, setTimeout, getDataSet*/
                     var addr = patientResults.address[0];
                     getFromFHIR(addr.postalCode, addr.city, addr.state);
 
-                    $('.map-address-list').append($("<div></div>")
+                    $('.map-address-list')
+                        .append($("<div></div>")
                                 .addClass("btn btn-info")
                                 .html("Send Community<br />Resource Referrals")
                                 .click(function() {
@@ -122,7 +142,9 @@ XDate, setTimeout, getDataSet*/
                                         patient_id: pId,
                                         resources: referrals
                                     });
-                                }));
+                                }))
+                        .append($("<p style='margin-top:.5em'>").text("Click to select resource for referral:"))
+                        .append($("<ul class='list-group'>"));
                     var addrText = "";
                     if (addr.line.length > 0)
                         addrText = addr.line[0] + ", ";
@@ -189,7 +211,6 @@ XDate, setTimeout, getDataSet*/
                     '?address-city=' + city + '&address-state=' + state + '&_count=50',
                 dataType: 'json',
                 success: function (cityResults) {
-                    //todo
                     console.log("got " + cityResults.total + " " + city + " results");
                     if (cityResults.total > 0) {
                         var results = [];
@@ -251,62 +272,97 @@ XDate, setTimeout, getDataSet*/
                     }
                 });
 
-                $('.map-address-list').append($("<div></div>")
-                            .addClass("well")
-                            .append($("<div></div>")
-                                .addClass("row")
-                                .append($("<h3>"+ r.name +"</h3>")))
-                            .append($("<div></div>")
-                                .addClass("row")
-                                .append($("<h5>"+ r.type +"</h5>")))
-                            .append($("<div></div>")
-                                .addClass("row")
-                                .append($("<h5>"+ r.dispAddr +"</h5>")))
-                            .append($("<div></div>")
-                                .addClass("row")
-                                .append($("<h5>"+ addressString+ "</h5>")))
-                            
-                            // Quality score is not available in this response
-                            // If fetched uncomment this and replace <quality_score> with variable containing value
-                            // .append($("<div></div>")
-                            //     .addClass("row")
-                            //     .append($("<h5></h5>")
-                            //         .append($("<span></span>")
-                            //             .addClass("label label-default")
-                            //             .append("Quality Score"))
-                            // If fetched needs to be added here
-                            //         .append(<quality_score>)))
+                var rTypeName = getTypeName(r.type);
+                var listItem = $("<li class='list-group-item communityResource'>")
+                    .append($("<h3>").text(r.name))
+                    .append($("<h5>").text(rTypeName))
+                    .append($("<p>").text(r.dispAddr))
+                    .append($("<p>").text(r.addressString))
+                    .click(function (e) {
+                        //console.log("this: " + this);
+                        //console.log("e.target: " + e.target);
+                        var $li = $(this);
+                        $li.toggleClass("resourceSelected");
+                        if ($li.hasClass("resourceSelected")) {
+                            console.log("selecting resournce");
+                            var dup = false;
+                            referrals.forEach(function (referral) {
+                                if (referral.resourcename == r.name) dup = true;
+                            });
+                            if (dup) return;
+                            referrals.push({
+                                resourcename: r.name,
+                                resourcetiming: r.type, //TODO timing != type
+                                resourceaddress: r.dispAddr
+                            });
+                        } else {
+                            console.log("removing resournce");
+                            for (var ri = 0; ri < referrals.length; ri++) {
+                                if (referrals[ri].resourcename == r.name) {
+                                    referrals.splice(ri,1);
+                                }
+                            }
+                        }
+                        sessionStorage.setItem("pending_referrals", JSON.stringify(referrals));
+                    });
+                $('.map-address-list ul.list-group').append(listItem);
 
-                            .append($("<div></div>")
-                                .addClass('checkbox')
-                                .append($("<label></label>")
-                                    .append($("<input>")
-                                    .attr("type", "checkbox")
-                                    .prop("value", "")
-                                    .prop("checked", ispendingreferral)
-                                    .click(function(event){
-                                        if (event.target.checked) {
-                                            var dup = false;
-                                            referrals.forEach(function (referral) {
-                                                if (referral.resourcename == r.name) dup = true;
-                                            });
-                                            if (dup) return;
-                                            referrals.push({
-                                                resourcename: r.name,
-                                                resourcetiming: r.type, //TODO timing != type
-                                                resourceaddress: r.dispAddr
-                                            });
-                                        } else {
-                                            for (var ri = 0; ri < referrals.length; ri++) {
-                                                if (referrals[ri].resourcename == r.name) {
-                                                    referrals.splice(ri,1);
-                                                }
-                                            }
-                                        }
-                                        sessionStorage.setItem("pending_referrals", JSON.stringify(referrals));
-                                    }))
-                                    .append("&nbsp; refer")))
-                          );
+                //$('.map-address-list').append($("<div></div>")
+                //            .addClass("well")
+                //            .append($("<div></div>")
+                //                .addClass("row")
+                //                .append($("<h3>"+ r.name +"</h3>")))
+                //            .append($("<div></div>")
+                //                .addClass("row")
+                //                .append($("<h5>"+ r.type +"</h5>")))
+                //            .append($("<div></div>")
+                //                .addClass("row")
+                //                .append($("<h5>"+ r.dispAddr +"</h5>")))
+                //            .append($("<div></div>")
+                //                .addClass("row")
+                //                .append($("<h5>"+ addressString+ "</h5>")))
+                            
+                //            // Quality score is not available in this response
+                //            // If fetched uncomment this and replace <quality_score> with variable containing value
+                //            // .append($("<div></div>")
+                //            //     .addClass("row")
+                //            //     .append($("<h5></h5>")
+                //            //         .append($("<span></span>")
+                //            //             .addClass("label label-default")
+                //            //             .append("Quality Score"))
+                //            // If fetched needs to be added here
+                //            //         .append(<quality_score>)))
+
+                //            .append($("<div></div>")
+                //                .addClass('checkbox')
+                //                .append($("<label></label>")
+                //                    .append($("<input>")
+                //                    .attr("type", "checkbox")
+                //                    .prop("value", "")
+                //                    .prop("checked", ispendingreferral)
+                //                    .click(function(event){
+                //                        if (event.target.checked) {
+                //                            var dup = false;
+                //                            referrals.forEach(function (referral) {
+                //                                if (referral.resourcename == r.name) dup = true;
+                //                            });
+                //                            if (dup) return;
+                //                            referrals.push({
+                //                                resourcename: r.name,
+                //                                resourcetiming: r.type, //TODO timing != type
+                //                                resourceaddress: r.dispAddr
+                //                            });
+                //                        } else {
+                //                            for (var ri = 0; ri < referrals.length; ri++) {
+                //                                if (referrals[ri].resourcename == r.name) {
+                //                                    referrals.splice(ri,1);
+                //                                }
+                //                            }
+                //                        }
+                //                        sessionStorage.setItem("pending_referrals", JSON.stringify(referrals));
+                //                    }))
+                //                    .append("&nbsp; refer")))
+                //          );
                 
 
                 addedResources.push(r.id);
