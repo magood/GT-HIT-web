@@ -91,19 +91,17 @@ tr.odd {
 .inline-switch label input[type=checkbox]:checked + .lever:after {
 	background-color: #ee6e73 !important;
 }
-table {
+.datatable-headers, .datatable-scroller table {
     width: auto !important;
-    min-width: 0 !important;
-    display: table !important;
-}
-#patient-table, #psmessages-table, #psallmessages-table {
-	width: 100% !important;
 }
 #view-table .datatable-headers th {
 	/*background-color: #ee6e73 !important;*/
 }
 th, tr, td {
 	border-radius: 0 !important;
+}
+#patient-table, #psmessages-table, #psallmessages-table {
+	width: 100% !important;
 }
 /* END_MONKEYPATCH */
 
@@ -157,7 +155,7 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	display: none !important;
 }
 .rollback-btn {
-	font-size: 14px !important;
+	font-size: auto !important;
 	color: #fff !important;
 	font-weight: normal !important;
 }
@@ -176,13 +174,20 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	background-color: #ee6e73 !important;
 	color: #fff !important;
 }
+.switch-bar {
+	height: 35px;
+	max-height: 35px;
+}
 /* Commented out for the time being as it's a bit ugly. */
 /*.datatable-scroller .active {
 	background-color: #ee6e73 !important;
 	color: #fff !important;
 }*/
-.view-questions .container {
+.thequestions .container {
 	width: auto !important;
+}
+.thequestions .btn {
+	background-color: #fc9a9f !important;
 }
 /* END_NEWSTYLE */
 
