@@ -91,7 +91,20 @@ tr.odd {
 .inline-switch label input[type=checkbox]:checked + .lever:after {
 	background-color: #ee6e73 !important;
 }
-
+table {
+    width: auto !important;
+    min-width: 0 !important;
+    display: table !important;
+}
+#patient-table, #psmessages-table, #psallmessages-table {
+	width: 100% !important;
+}
+#view-table .datatable-headers th {
+	/*background-color: #ee6e73 !important;*/
+}
+th, tr, td {
+	border-radius: 0 !important;
+}
 /* END_MONKEYPATCH */
 
 /* BEGIN_NEWSTYLE */
@@ -132,7 +145,7 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	color: #666 !important;
 }
 #timeline-top .visible, .timeline .visible {
-	background-color: #FC9A9F !important;
+	background-color: #fc9a9f !important;
 }
 .timeline div.active {
 	background-color: #ee6e73 !important;
@@ -150,6 +163,26 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 }
 .switch-bar {
 	text-align: right;
+}
+.datatable-patient {
+	background-color: #ee6e73 !important;
+	color: #fff !important;
+}
+.datatable-patient-alt {
+	background-color: #fc9a9f !important;
+	color: #fff !important;
+}
+.datatable-headers .heading td:first-child {
+	background-color: #ee6e73 !important;
+	color: #fff !important;
+}
+/* Commented out for the time being as it's a bit ugly. */
+/*.datatable-scroller .active {
+	background-color: #ee6e73 !important;
+	color: #fff !important;
+}*/
+.view-questions .container {
+	width: auto !important;
 }
 /* END_NEWSTYLE */
 
