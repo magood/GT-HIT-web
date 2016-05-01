@@ -94,7 +94,6 @@ tr.odd {
 .inline-switch {
 	display: inline-block;
 }
-
 .inline-switch label input[type=checkbox]:checked + .lever {
 	background-color: #2196f3 !important;
 }
@@ -115,6 +114,9 @@ th, tr, td {
 }
 .dataTables_length .btn {
 	margin-left: 2em;
+}
+.force-display-inline {
+	display: inline !important;
 }
 /* END_MONKEYPATCH */
 

@@ -907,8 +907,10 @@ function gc_app_js (NS, $) {
             $('.patient-birth').text(PATIENT.DOB.toString(GC.chartSettings.dateFormat));
             if (PATIENT.weeker) {
                 $(".weeker").show().find(".value").html(PATIENT.weeker);
+                // $(".weeker").addClass("force-display-inline");
             } else {
                 $(".weeker").hide();
+                // $(".weeker").removeClass("force-display-inline");
             }
 
             if (correctedAge > currentAge || correctedAge < currentAge) {
@@ -1577,6 +1579,8 @@ function gc_app_js (NS, $) {
             window.setInterval(function() {
                 $('#patient-info .nav-wrapper').css('display', 'block');
                 $('#patient-info .nav-wrapper *').css('display', 'inline');
+                // FIXME: We'll deal with this problem later^Wnever.
+                $('#patient-info .yolo').css('display', 'none');
             }, 500)
 
             done();
