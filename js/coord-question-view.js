@@ -193,7 +193,7 @@ XDate, setTimeout, getDataSet*/
             var qdate = questionsResult.date ? questionsResult.date : "";
             var publisher = questionsResult.publisher ? questionsResult.publisher : "";
             var llgroup = questionsResult.group;
-            var status = questionnaireResponse.status;
+            //var status = questionnaireResponse.status;
             while (true) {
                 if (typeof llgroup != 'undefined' && llgroup.group) {
                     llgroup = llgroup.group[0];
@@ -217,7 +217,7 @@ XDate, setTimeout, getDataSet*/
             questionContainer.append($("<div></div>")
                 .addClass("questions-id")
                 .attr("id", "questions-id")
-                .html("<h5>ID: " + questionId + " " + id + "</h5>"))
+                .html("ID: " + questionId + " " + id))
             // questionContainer.append($("<div></div>")
             //     .attr("id", "questions-type")
             //     .html("<h5>Type: " + questionType + "</h5>"))
