@@ -3222,11 +3222,14 @@ svg marker use {
 .brand-logo {
 	margin-left: 0.5em;
 }
-.tab-panel {
-	margin-top: 64px;
-}
-.caremode {
+nav.caremode {
 	background-color: #26a69a !important;
+}
+#stage {
+    top:0px;
+}
+body.singlepatient #stage {
+    top:46px !important;
 }
 .patientmode {
 	background-color: #1976D2 !important;
