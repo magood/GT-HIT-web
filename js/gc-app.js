@@ -547,6 +547,7 @@ function gc_app_js (NS, $) {
             success: function(ret_data) {
                 console.log(ret_data);
                 if (ret_data.total < 1) {
+                    alert("Please accept a referral from a referral message first");
                     console.log("ret_data.total < 1, returning...");
                     return;
                 }
