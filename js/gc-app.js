@@ -922,7 +922,6 @@ function gc_app_js (NS, $) {
         }
 
         function setInitialState(done) {
-
             var testEl = $("<div/>"), $body = $("body");
 
             testEl.css({
@@ -1063,15 +1062,19 @@ function gc_app_js (NS, $) {
                 if (type == 'allmessages' || type == 'patients') {
                     $('nav').addClass('caremode');
                     $('body').removeClass('singlepatient');
-                    $('#config-panel').css('display', 'none');
                     $('#patient-info').css('display', 'none');
                     $('.brand-logo').text('Care Coordinator')
                 } else {
-                    $('nav').removeClass('caremode');
+                    $('nav').removeClass('caremode')
                     $('body').addClass('singlepatient');
-                    $('#config-panel').css('display', 'block');
                     $('#patient-info').css('display', 'block');
                     $('.brand-logo').text('Patient Details')
+                }
+
+                if (type == 'parent' || type == 'graphs' || type == 'table') {
+                    $('#config-panel').css('display', 'block');
+                } else {
+                    $('#config-panel').css('display', 'none');
                 }
 
                 $("#view-mode > [data-value]").each(function() {
@@ -1715,6 +1718,17 @@ function gc_app_js (NS, $) {
                 }
             });
         }
+
+        var c = ['Anshul Goel', 'Collin Campbell', 'Mark Benjamin', 'Matthew Good', 'Sangwhan Moon', 'Tyler Pitchford']
+
+        for (var i = c.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = c[i];
+            c[i] = c[j];
+            c[j] = t;
+        }
+
+        $('#credit-people').text(c.join(', '));
 
         setStageHeight();
         NS.Util.translateHTML();

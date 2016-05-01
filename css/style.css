@@ -3268,6 +3268,7 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	z-index: 2;
 	margin: 10px 24px 0px 24px;
 	opacity: 0.88;
+	border: solid 1px #666;
     -webkit-transition: opacity 400ms, transform 400ms, -webkit-transform 400ms;
     transition: opacity 400ms, transform 400ms, transform 400ms;
     transition-timing-function: ease-out;
