@@ -3256,32 +3256,19 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	max-height: 20px;
 	margin-right: 0.5em;
 }
-/*#patient-info {
-	top: 70px;
-	position: fixed;
-	width: 96%;
-	z-index: 2;
-	margin: 10px 24px 0px 24px;
-	opacity: 1;
-    -webkit-transition: opacity 400ms, transform 400ms, -webkit-transform 400ms;
-    transition: opacity 400ms, transform 400ms, transform 400ms;
-    transition-timing-function: ease-out;
-}
-#patient-info.fold {
-	opacity: 0;
-	transform: translateY(-200px);
-}*/
 #config-panel {
 	top: 100px;
 	position: fixed;
 	width: 96%;
 	z-index: 2;
 	margin: 10px 24px 0px 24px;
-	opacity: 0.8;
-	border: solid 1px #999;
+	opacity: 0.88;
     -webkit-transition: opacity 400ms, transform 400ms, -webkit-transform 400ms;
     transition: opacity 400ms, transform 400ms, transform 400ms;
     transition-timing-function: ease-out;
+}
+#config-panel .disable-overlay {
+	opacity: 0.2;
 }
 #config-panel.fold {
 	opacity: 0;
