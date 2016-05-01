@@ -634,7 +634,7 @@ function gc_app_js (NS, $) {
             },
             contentType: 'application/json'
         });
-        
+
     };
 
     NS.App.setPatientId = function(new_patient_id) {
@@ -899,9 +899,9 @@ function gc_app_js (NS, $) {
                 $('#patient-gender-icon').attr('src', 'img/avatar_f.png') :
                 $('#patient-gender-icon').attr('src', 'img/avatar_m.png');
 
-            $('.patient-gender').text(GC.str("STR_SMART_GENDER_" + PATIENT.gender));
-            $('.patient-gender').attr("data-translatecontent", "STR_SMART_GENDER_" + PATIENT.gender);
-            $("[name=GA]").val(PATIENT.getGestatonCorrection().toString(GC.chartSettings.timeInterval).replace(/^\-\s*/, ""));
+            // $('.patient-gender').text(GC.str("STR_SMART_GENDER_" + PATIENT.gender));
+            // $('.patient-gender').attr("data-translatecontent", "STR_SMART_GENDER_" + PATIENT.gender);
+            // $("[name=GA]").val(PATIENT.getGestatonCorrection().toString(GC.chartSettings.timeInterval).replace(/^\-\s*/, ""));
             $(".patient-age").text(currentAge.toString(GC.chartSettings.timeInterval));
             $('.patient-birth').text(PATIENT.DOB.toString(GC.chartSettings.dateFormat));
             if (PATIENT.weeker) {
@@ -1058,10 +1058,12 @@ function gc_app_js (NS, $) {
 
                 if (type == 'allmessages' || type == 'patients') {
                     $('nav').addClass('caremode');
+                    $('#config-panel').css('display', 'none');
                     $('#patient-info').css('display', 'none');
                     $('.brand-logo').text('Care Coordinator')
                 } else {
                     $('nav').removeClass('caremode')
+                    $('#config-panel').css('display', 'block');
                     $('#patient-info').css('display', 'block');
                     $('.brand-logo').text('Patient Details')
                 }
@@ -1566,6 +1568,15 @@ function gc_app_js (NS, $) {
             $("#edit-enabled").change(function() {
                 togglePatientEditable(this.checked);
             });
+
+            // HACK: Something (I'm suspecting data tables) is messing with the display
+            // properties of something that has data bindings, but has a nasty bug
+            // where the display:none; never gets cleared, so this is my way of saying f it.
+
+            window.setInterval(function() {
+                $('#patient-info .nav-wrapper').css('display', 'block');
+                $('#patient-info .nav-wrapper *').css('display', 'inline');
+            }, 500)
 
             done();
         }

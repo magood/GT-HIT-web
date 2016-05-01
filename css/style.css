@@ -3241,6 +3241,23 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	color: #fff !important;
 }
 #patient-info {
+	background-color: #2196f3 !important;
+	top: 64px;
+	padding-left: 1em;
+	width: 100%;
+	max-height: 35px;
+    height: 35px !important;
+    line-height: 35px !important;
+}
+#patient-info .title {
+	color: #fff !important;
+}
+#patient-gender-icon {
+	max-width: 20px;
+	max-height: 20px;
+	margin-right: 0.5em;
+}
+/*#patient-info {
 	top: 70px;
 	position: fixed;
 	width: 96%;
@@ -3252,6 +3269,22 @@ nav a, nav a:active, nav a:hover, nav a:visited {
     transition-timing-function: ease-out;
 }
 #patient-info.fold {
+	opacity: 0;
+	transform: translateY(-200px);
+}*/
+#config-panel {
+	top: 100px;
+	position: fixed;
+	width: 96%;
+	z-index: 2;
+	margin: 10px 24px 0px 24px;
+	opacity: 0.8;
+	border: solid 1px #999;
+    -webkit-transition: opacity 400ms, transform 400ms, -webkit-transform 400ms;
+    transition: opacity 400ms, transform 400ms, transform 400ms;
+    transition-timing-function: ease-out;
+}
+#config-panel.fold {
 	opacity: 0;
 	transform: translateY(-200px);
 }
@@ -3282,6 +3315,7 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 }
 #info-bar {
 	background-color: #fff !important;
+	box-shadow: none;
 	color: #666 !important;
 	height: 40px;
 }
@@ -3444,7 +3478,7 @@ nav a, nav a:active, nav a:hover, nav a:visited {
   }
 }
 #stage {
-	margin-top: 18px;
+	margin-top: 53px;
 }
 /* END_NEWSTYLE */
 

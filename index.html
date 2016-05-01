@@ -75,154 +75,159 @@
 
         <div id="header">
             <div class="header-inner">
-                <nav>
-                <div class="nav-wrapper">
-                    <span class="brand-logo">Care Coordinator</span>
+                <nav id="main-nav">
+                    <div class="nav-wrapper">
+                        <span class="brand-logo">Care Coordinator</span>
 
-                    <ul id="view-mode" class="right hide-on-med-and-down">
-                        <li class="divider-new">&nbsp;</li>
-                        <li class="waves-effect waves-light" data-value="patients"><a href="#">View Patients</a></li>
-                        <li class="waves-effect waves-light" data-value="allmessages"><a href="#">All Messages</a></li>
-                        <li class="divider-new">&nbsp;</li>
-                        <li class="waves-effect waves-light" data-value="psmessages"><a href="#">Inbox</a></li>
-                        <li class="waves-effect waves-light" data-value="graphs"><a href="#">Graphs</a></li>
-                        <li class="waves-effect waves-light" data-value="table"><a href="#">Table</a></li>
-                        <li class="waves-effect waves-light" data-value="parent"><a href="#">Parent</a></li>
-                        <li class="waves-effect waves-light" data-value="maps"><a href="#">Map</a></li>
-                        <li class="waves-effect waves-light" data-value="questions"><a href="#">Q&amp;A</a></li>
-                        <li class="waves-effect waves-light"><a href="#" onclick="$('#patient-info').toggleClass('fold'); $(this).toggleClass('on')" id="show-patient">◁</a></li>
-                    </ul>
-                </div>
+                        <ul id="view-mode" class="right hide-on-med-and-down">
+                            <li class="divider-new">&nbsp;</li>
+                            <li class="waves-effect waves-light" data-value="patients"><a href="#">View Patients</a></li>
+                            <li class="waves-effect waves-light" data-value="allmessages"><a href="#">All Messages</a></li>
+                            <li class="divider-new">&nbsp;</li>
+                            <li class="waves-effect waves-light" data-value="psmessages"><a href="#">Inbox</a></li>
+                            <li class="waves-effect waves-light" data-value="graphs"><a href="#">Graphs</a></li>
+                            <li class="waves-effect waves-light" data-value="table"><a href="#">Table</a></li>
+                            <li class="waves-effect waves-light" data-value="parent"><a href="#">Parent</a></li>
+                            <li class="waves-effect waves-light" data-value="maps"><a href="#">Map</a></li>
+                            <li class="waves-effect waves-light" data-value="questions"><a href="#">Q&amp;A</a></li>
+                            <li class="waves-effect waves-light"><a href="#" onclick="$('#config-panel').toggleClass('fold'); $(this).toggleClass('on')" id="show-patient">◁</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <nav id="patient-info">
+                    <div class="nav-wrapper">
+                        <img id="patient-gender-icon" src="img/avatar_m.png" alt="" class="circle">
+                        <span class="patient-name title">Title</span>
+                        <span>Date of Birth</span>
+                        <span class="patient-birth title"></span>
+                        <span>Age</span>
+                        <span class="patient-age title"></span>
+                        <span class="weeker" style="display:none;">
+                        (
+                            <span class="value title" style="margin-right: 0"></span>
+                            <span data-translatecontent="STR_3006"></span>
+                        )
+                        </span>
+                        <span>Corrected Age</span>
+                        <span id="corrected-age" class="title"></span>
+<!--                     <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="sass.html">Sass</a></li>
+                        <li><a href="badges.html">Components</a></li>
+                        <li><a href="collapsible.html">JavaScript</a></li>
+                    </ul> -->
+                    <!-- The chart depends on this. -->
+                    <span class="legacy-ds-box">
+                        <span id="primary-ds" class="menu-button arrow-left button" title="Choose the primary data source"></span>
+                        <span id="secondary-ds" class="menu-button arrow-right button secondary" title="Choose the secondary data source"></span>
+                    </span>
+                    </div>
                 </nav>
             </div>
 
-            <ul id="patient-info" class="collection fold">
-            <li class="collection-item avatar">
-                <img id="patient-gender-icon" src="img/avatar_m.png" alt="" class="circle">
-                <span class="patient-name title">Title</span>
-                <!-- The chart depends on this. -->
-                <span class="legacy-ds-box">
-                    <span id="primary-ds" class="menu-button arrow-left button" title="Choose the primary data source"></span>
-                    <span id="secondary-ds" class="menu-button arrow-right button secondary" title="Choose the secondary data source"></span>
-                </span>
-                <p>
-                    <span>Date of Birth</span>
-                    <span class="patient-birth title"></span>
-                    <span>Age</span>
-                    <span class="patient-age title"></span>
-                    <span class="weeker" style="display:none;">
-                    (
-                        <span class="value title" style="margin-right: 0"></span>
-                        <span data-translatecontent="STR_3006"></span>
-                    )
-                    </span>
-                    <span>Corrected Age</span>
-                    <span id="corrected-age" class="title"></span>
-                </p>
-            </li>
-
-            <div id="time-ranges">
-                <div class="row">
-                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-13').click();">0 - 13 Weeks</a>
-                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-26').click();">0 - 6 Months</a>
-                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-104').click();">0 - 2 Years</a>
-                    <a class="waves-effect waves-light btn" onclick="$('#htr-0-1043').click();">0 - 20 Years</a>
-                    <span class="vertical-divider" style="margin-left:4px;margin-right:4px"></span>
-                    <div id="htr-0-1" class="btn" style="width:120px;white-space:nowrap;" id="btn-fit-to-age" onclick="GC.App.fitToData();">
-                        <label class="rollback-btn">
-                            <input type="radio" name="time-range" value="0:1">
-                            <span data-translatecontent="STR_3050"></span>
-                        </label>
-                    </div>
-                    <div class="btn" style="width:140px;white-space:nowrap;" id="btn-toggle-zoom">
-                        <label class="rollback-btn" data-translatecontent="STR_3051"></label>
-                    </div>
-                </div>
-
-                <div id="hidden-time-ranges" class="row">
-                    <div class="cell">
-                        <label>
-                            <input id="htr-0-13" name="time-range" value="0:13" type="radio">
-                            0 – 13 <span data-translatecontent="STR_19">Weeks</span>
-                        </label>
-                    </div>
-                    <div class="cell">
-                        <label class="">
-                            <input id="htr-0-26" name="time-range" value="0:26.08928571428572" checked="" type="radio">
-                            0 – 6 <span data-translatecontent="STR_17">Months</span>
-                        </label>
-                    </div>
-                    <div class="cell">
-                        <label>
-                            <input id="htr-0-104" name="time-range" value="0:104.3571428571429" type="radio">
-                            0 – 2 <span data-translatecontent="STR_15">Years</span>
-                        </label>
-                    </div>
-                    <div class="cell">
-                        <label class="active">
-                            <input id="htr-0-1043" name="time-range" value="0:1043.571428571429" type="radio">
-                            0 – 20 <span data-translatecontent="STR_15">Years</span>
-                        </label>
-                    </div>
-                    <div class="cell" style="width:9px">
+            <div id="config-panel" class="fold">
+                <div id="time-ranges">
+                    <div class="row">
+                        <a class="waves-effect waves-light btn" onclick="$('#htr-0-13').click();">0 - 13 Weeks</a>
+                        <a class="waves-effect waves-light btn" onclick="$('#htr-0-26').click();">0 - 6 Months</a>
+                        <a class="waves-effect waves-light btn" onclick="$('#htr-0-104').click();">0 - 2 Years</a>
+                        <a class="waves-effect waves-light btn" onclick="$('#htr-0-1043').click();">0 - 20 Years</a>
                         <span class="vertical-divider" style="margin-left:4px;margin-right:4px"></span>
+                        <div id="htr-0-1" class="btn" style="width:120px;white-space:nowrap;" id="btn-fit-to-age" onclick="GC.App.fitToData();">
+                            <label class="rollback-btn">
+                                <input type="radio" name="time-range" value="0:1">
+                                <span data-translatecontent="STR_3050"></span>
+                            </label>
+                        </div>
+                        <div class="btn" style="width:140px;white-space:nowrap;" id="btn-toggle-zoom">
+                            <label class="rollback-btn" data-translatecontent="STR_3051"></label>
+                        </div>
                     </div>
 
+                    <div id="hidden-time-ranges" class="row">
+                        <div class="cell">
+                            <label>
+                                <input id="htr-0-13" name="time-range" value="0:13" type="radio">
+                                0 – 13 <span data-translatecontent="STR_19">Weeks</span>
+                            </label>
+                        </div>
+                        <div class="cell">
+                            <label class="">
+                                <input id="htr-0-26" name="time-range" value="0:26.08928571428572" checked="" type="radio">
+                                0 – 6 <span data-translatecontent="STR_17">Months</span>
+                            </label>
+                        </div>
+                        <div class="cell">
+                            <label>
+                                <input id="htr-0-104" name="time-range" value="0:104.3571428571429" type="radio">
+                                0 – 2 <span data-translatecontent="STR_15">Years</span>
+                            </label>
+                        </div>
+                        <div class="cell">
+                            <label class="active">
+                                <input id="htr-0-1043" name="time-range" value="0:1043.571428571429" type="radio">
+                                0 – 20 <span data-translatecontent="STR_15">Years</span>
+                            </label>
+                        </div>
+                        <div class="cell" style="width:9px">
+                            <span class="vertical-divider" style="margin-left:4px;margin-right:4px"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="disable-overlay"></div>
                 </div>
 
-                <div class="disable-overlay"></div>
-            </div>
+                <div id="info-bar" style="overflow: hidden">
 
-            <div id="info-bar" style="overflow: hidden">
+                    <span class="last-recording"> <span data-translatecontent="STR_3052"></span> <b><span class="date"></span>&nbsp;&nbsp;<span class="age"></span></b> </span>
 
-                <span class="last-recording"> <span data-translatecontent="STR_3052"></span> <b><span class="date"></span>&nbsp;&nbsp;<span class="age"></span></b> </span>
+                    <span class="switch-bar" style="float:right;">
+                        <div class="inline-switch switch">
+                        <label>
+                            NICU Off
+                            <input id="switch-nicu" name="nicu" type="checkbox" data-label="NICU">
+                            <span class="lever"></span>
+                            NICU On
+                        </label>
+                        </div>
 
-                <span class="switch-bar" style="float:right;">
-                    <div class="inline-switch switch">
-                    <label>
-                        NICU Off
-                        <input id="switch-nicu" name="nicu" type="checkbox" data-label="NICU">
-                        <span class="lever"></span>
-                        NICU On
-                    </label>
-                    </div>
-
-                    <span class="vertical-divider"></span>
-
-                    <!-- WARNING: This part is absolutely hoppin' mad. Don't try this at home. -->
-                    <div class="inline-switch switch">
-                    <label>
-                        %
-                        <input id="switch-pct" type="checkbox" onchange="this.checked ? $('#legacy-pct table tbody tr td:nth-child(3) label').click() : $('#legacy-pct table tbody tr td:nth-child(1) label').click();">
-                        <span class="lever"></span>
-                        Z
-                    </label>
-                    </div>
-
-                    <span class="vertical-divider"></span>
-
-                    <div class="inline-switch switch">
-                    <label>
-                        kg/cm
-                        <input id="switch-metric" type="checkbox" onchange="this.checked ? $('#legacy-metric table tbody tr td:nth-child(3) label').click() : $('#legacy-metric table tbody tr td:nth-child(1) label').click();">
-                        <span class="lever"></span>
-                        lb/ft
-                    </label>
-                    </div>
-
-                    <span id="legacy-pct" class="legacy-hidden hide-on-parental hide-on-table">
-                        <input class="toggle-button" type="hidden" name="pctz" value="pct" data-value1="pct" data-value2="z" data-label1="%" data-label2="Z" />
                         <span class="vertical-divider"></span>
-                    </span>
-                    <span id="legacy-metric" class="legacy-hidden legacy-hidden hide-on-parental">
-                        <input class="toggle-button" type="hidden" name="metrics" value="metric" data-value1="metric" data-value2="eng" data-label1="kg/cm" data-label2="lb/ft" />
+
+                        <!-- WARNING: This part is absolutely hoppin' mad. Don't try this at home. -->
+                        <div class="inline-switch switch">
+                        <label>
+                            %
+                            <input id="switch-pct" type="checkbox" onchange="this.checked ? $('#legacy-pct table tbody tr td:nth-child(3) label').click() : $('#legacy-pct table tbody tr td:nth-child(1) label').click();">
+                            <span class="lever"></span>
+                            Z
+                        </label>
+                        </div>
+
                         <span class="vertical-divider"></span>
+
+                        <div class="inline-switch switch">
+                        <label>
+                            kg/cm
+                            <input id="switch-metric" type="checkbox" onchange="this.checked ? $('#legacy-metric table tbody tr td:nth-child(3) label').click() : $('#legacy-metric table tbody tr td:nth-child(1) label').click();">
+                            <span class="lever"></span>
+                            lb/ft
+                        </label>
+                        </div>
+
+                        <span id="legacy-pct" class="legacy-hidden hide-on-parental hide-on-table">
+                            <input class="toggle-button" type="hidden" name="pctz" value="pct" data-value1="pct" data-value2="z" data-label1="%" data-label2="Z" />
+                            <span class="vertical-divider"></span>
+                        </span>
+                        <span id="legacy-metric" class="legacy-hidden legacy-hidden hide-on-parental">
+                            <input class="toggle-button" type="hidden" name="metrics" value="metric" data-value1="metric" data-value2="eng" data-label1="kg/cm" data-label2="lb/ft" />
+                            <span class="vertical-divider"></span>
+                        </span>
+                        <span class="language-selector" class="legacy-hidden">
+                            <!--input class="toggle-button" type="hidden" name="language" value="en" data-value1="en" data-value2="es" data-label1="English" data-label2="Spanish" /-->
+                        </span>
                     </span>
-                    <span class="language-selector" class="legacy-hidden">
-                        <!--input class="toggle-button" type="hidden" name="language" value="en" data-value1="en" data-value2="es" data-label1="English" data-label2="Spanish" /-->
-                    </span>
-                </span>
-                <span class="legacy-hidden add-entry" data-translatecontent="STR_178"></span>
+                    <span class="legacy-hidden add-entry" data-translatecontent="STR_178"></span>
+                </div>
             </div>
         </div>
 
