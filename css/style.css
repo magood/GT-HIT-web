@@ -32,15 +32,15 @@
 	border:none !important;
 }
 #psmessages-table_paginate .paginate_button.active:hover {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 	color: #fff !important;
 }
 #psmessages-table_paginate .paginate_button.active {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 	color: #fff !important;
 }
 #psmessages-table tr.odd {
-	background-color: #fff4fc !important;
+	background-color: #e3f2fd !important;
 }
 .dataTables_wrapper {
 	padding-top: 1em;
@@ -57,7 +57,7 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
 }
 /* This belongs in the patient view, so a different color is used. */
 #psmessages-table thead tr th {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 }
 #psmessages-table thead .sorting_asc {
   background-image: url("../img/sort_asc_2.png") !important;
@@ -84,7 +84,7 @@ tr.odd {
 	text-transform: none !important;
 }
 #time-ranges .btn {
-	background-color: #FC9A9F;
+	background-color: #2196f3;
 	margin-right: 0.5em;
 	/*font-weight: normal !important;*/
 }
@@ -96,16 +96,16 @@ tr.odd {
 }
 
 .inline-switch label input[type=checkbox]:checked + .lever {
-	background-color: #FC9A9F !important;
+	background-color: #2196f3 !important;
 }
 .inline-switch label input[type=checkbox]:checked + .lever:after {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 }
 .datatable-headers, .datatable-scroller table {
     width: auto !important;
 }
 #view-table .datatable-headers th {
-	/*background-color: #ee6e73 !important;*/
+	/*background-color: #1976D2 !important;*/
 }
 th, tr, td {
 	border-radius: 0 !important;
@@ -3228,9 +3228,10 @@ svg marker use {
 	background-color: #26a69a !important;
 }
 .patientmode {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 }
 nav {
+	background-color: #1976D2 !important;
 	position: fixed;
 	width: 100%;
 	z-index: 5;
@@ -3291,10 +3292,10 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	color: #666 !important;
 }
 #timeline-top .visible, .timeline .visible {
-	background-color: #fc9a9f !important;
+	background-color: #2196f3 !important;
 }
 .timeline div.active {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 }
 .legacy-ds-box, .legacy-hidden {
 	visibility: hidden;
@@ -3314,15 +3315,15 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	text-align: right;
 }
 .datatable-patient {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 	color: #fff !important;
 }
 .datatable-patient-alt {
-	background-color: #fc9a9f !important;
+	background-color: #2196f3 !important;
 	color: #fff !important;
 }
 .datatable-headers .heading td:first-child {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 	color: #fff !important;
 }
 .switch-bar {
@@ -3335,7 +3336,7 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 }
 /* Commented out for the time being as it's a bit ugly. */
 /*.datatable-scroller .active {
-	background-color: #ee6e73 !important;
+	background-color: #1976D2 !important;
 	color: #fff !important;
 }*/
 .thequestions .container {
@@ -3346,7 +3347,7 @@ nav a, nav a:active, nav a:hover, nav a:visited {
 	color: #666;
 }
 .thequestions .btn.active, .thequestions .btn.active:hover, .thequestions .btn:active {
-	background-color: #fc9a9f;
+	background-color: #2196f3;
 	color: #fff;
 }
 .thequestions .btn:hover {
