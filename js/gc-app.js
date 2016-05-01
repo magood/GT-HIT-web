@@ -534,11 +534,12 @@ function gc_app_js (NS, $) {
 //        http://52.72.172.54:8080/fhir/baseDstu2/ReferralRequest?patient._id=18791941&recipient._id=Organization%2F19178873&status=accepted
         var request_id = GC.chartSettings.defaultReferralRequest;
         var refreq = null;
-        $.ajax({
-            url: GC.chartSettings.serverBase + "/ReferralRequest?patient._id=" +
+        var rrUrl = GC.chartSettings.serverBase + "/ReferralRequest?patient._id=" +
                     data.patient_id + "&recipient._id=" +
                     (GC.chartSettings.serverSMART ? "" : "Organization%2F") +
-                    GC.chartSettings.defaultSelf + "&status=accepted",
+                    GC.chartSettings.defaultSelf + "&status=accepted";
+        $.ajax({
+            url: rrUrl,
             type: "GET",
             async: false,
             global: false,
@@ -546,88 +547,92 @@ function gc_app_js (NS, $) {
             success: function(ret_data) {
                 console.log(ret_data);
                 if (ret_data.total < 1) {
+                    console.log("ret_data.total < 1, returning...");
                     return;
                 }
                 refreq = ret_data.entry[0].resource; // TODO possibly handle sorting multiple results
                 request_id = refreq.id;
-            },
-            contentType: 'application/json'
-        });
-        if (!refreq) {
-            alert("Please accept a referral from a referral message first");
-            return;
-        }
-        console.log(thecontent);
-        var thecomm = {
-            resourceType: "Communication",
-            text:{
-                status: "generated",
-                div: "<div>the childhood healthy weight patient coordinator is referring you to some community resources</div>"
-            },
-            category: {
-                coding: [
-                    {
-                        system: "http://acme.org/messagetypes",
-                        code: "notification"
-                    }
-                ],
-                text: "notification"
-            },
-            sender: {
-                display: "Childhood Healthy Weight Coordinator",
-                reference: "Organization/" + GC.chartSettings.defaultSelf
-            },
-            recipient: [
-                    {
-                        reference: 'Patient/' + data.patient_id,
+
+                if (!refreq) {
+                    alert("Please accept a referral from a referral message first");
+                    return;
+                }
+                console.log(thecontent);
+                var thecomm = {
+                    resourceType: "Communication",
+                    text: {
+                        status: "generated",
+                        div: "<div>the childhood healthy weight patient coordinator is referring you to some community resources</div>"
+                    },
+                    category: {
+                        coding: [
+                            {
+                                system: "http://acme.org/messagetypes",
+                                code: "notification"
+                            }
+                        ],
+                        text: "notification"
+                    },
+                    sender: {
+                        display: "Childhood Healthy Weight Coordinator",
+                        reference: "Organization/" + GC.chartSettings.defaultSelf
+                    },
+                    recipient: [
+                            {
+                                reference: 'Patient/' + data.patient_id,
+                                display: data.patient_name
+                            }
+                    ],
+                    payload: [
+                        {
+                            contentString: thecontent
+                        },
+                        {
+                            contentReference: {
+                                reference: "ReferralRequest/" + request_id
+                            }
+                        }
+                    ],
+                    status: "in-progress",
+                    sent: moment().format(),
+                    subject: {
+                        reference: "Patient/" + data.patient_id,
                         display: data.patient_name
                     }
-            ],
-            payload: [
-                {
-                    contentString: thecontent
-                },
-                {
-                    contentReference: {
-                        reference: "ReferralRequest/" + request_id
-                    }
-                }
-            ],
-            status: "in-progress",
-            sent: moment().format(),
-            subject: {
-                reference: "Patient/" + data.patient_id,
-                display: data.patient_name
-            }
-        };
-        //console.log(JSON.stringify(thecomm));
-        $.ajax({
-            url: GC.chartSettings.serverBase + "/Communication/",
-            type: "POST",
-            async: false,
-            global: false,
-            data: JSON.stringify(thecomm),
-            dataType: 'json',
-            success: function(ret_data) {
-                alert('patient referral to community resources sent!');
-                sessionStorage.removeItem("pending_referrals");
-                if (refreq) {
-                    delete refreq.meta;
-                    refreq.status = "completed";
-                    $.ajax({
-                        url: GC.chartSettings.serverBase + "/ReferralRequest/" + request_id,
-                        type: "PUT",
-                        async: false,
-                        global: false,
-                        data: JSON.stringify(refreq),
-                        dataType: 'json',
-                        success: function(refreq_ret_data) {
-                            console.log(refreq_ret_data);
-                        },
-                        contentType: 'application/json'
-                    });
-                }
-                console.log(ret_data);
+                };
+                console.log("The Communication:");
+                console.log(JSON.stringify(thecomm));
+                $.ajax({
+                    url: GC.chartSettings.serverBase + "/Communication/",
+                    type: "POST",
+                    async: false,
+                    global: false,
+                    data: JSON.stringify(thecomm),
+                    dataType: 'json',
+                    success: function (ret_data) {
+                        alert('patient referral to community resources sent!');
+                        sessionStorage.removeItem("pending_referrals");
+                        if (refreq) {
+                            delete refreq.meta;
+                            refreq.status = "completed";
+                            $.ajax({
+                                url: GC.chartSettings.serverBase + "/ReferralRequest/" + request_id,
+                                type: "PUT",
+                                async: false,
+                                global: false,
+                                data: JSON.stringify(refreq),
+                                dataType: 'json',
+                                success: function (refreq_ret_data) {
+                                    console.log("The refreq_ret_data:");
+                                    console.log(refreq_ret_data);
+                                },
+                                contentType: 'application/json'
+                            });
+                        }
+                        console.log(ret_data);
+                    },
+                    contentType: 'application/json'
+                });
             },
             contentType: 'application/json'
         });
