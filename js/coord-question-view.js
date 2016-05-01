@@ -202,9 +202,6 @@ XDate, setTimeout, getDataSet*/
                 break;
             }
 
-            var questionId = questionsResult.text.div.match(/<p>\s*<b>id<\/b>:\s*(.*?)<\/p>/)[1];
-            var status = questionsResult.text.div.match(/<p>\s*<b>status<\/b>:\s*(.*?)<\/p>/)[1];
-
             var questionContainer = $("<div></div>")
                 .addClass("container")
                 .addClass("panel-body");
@@ -214,10 +211,10 @@ XDate, setTimeout, getDataSet*/
             //     .attr("id", "questions-title")
             //     .html("<h4>Title: " + questionsResult.group.title + "</h4>"))
             // var questionId = questionsResult.text.div.match(/<p> <b>id<\/b>: (.*?)<\/p>/)[1];
-            questionContainer.append($("<div></div>")
-                .addClass("questions-id")
-                .attr("id", "questions-id")
-                .html("ID: " + questionId + " " + id))
+            // questionContainer.append($("<div></div>")
+            //     .addClass("questions-id")
+            //     .attr("id", "questions-id")
+            //     .html("<h5>ID: " + questionId + "</h5>"))
             // questionContainer.append($("<div></div>")
             //     .attr("id", "questions-type")
             //     .html("<h5>Type: " + questionType + "</h5>"))

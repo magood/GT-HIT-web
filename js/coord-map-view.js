@@ -127,7 +127,7 @@ XDate, setTimeout, getDataSet*/
 
                     $('.map-address-list')
                         .append($("<div></div>")
-                                .addClass("btn btn-info")
+                                .addClass("btn btn-info patientmode")
                                 .html("Send Referrals")
                                 .click(function () {
                                     var patientname = ""

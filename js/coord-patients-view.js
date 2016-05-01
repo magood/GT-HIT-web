@@ -59,7 +59,7 @@ XDate, setTimeout, getDataSet*/
     function renderPatientsView( container ) {
         $(container).empty();
 
-        var loadingdiv = $("<div></div>").addClass("table-loading-spinner").hide();
+        var loadingdiv = $("<div><div class='spinner'></div></div>").addClass("table-loading-spinner").hide();
         $(container).append(loadingdiv);
 
         var thetable = $("<table></table>").addClass("stripe hover");

@@ -39,7 +39,7 @@ XDate, setTimeout, getDataSet*/
             "Day"     : "d",
             separator : " "
         };
-    
+
     function isMessageViewVisible() {
         return GC.App.getViewType() == "message";
     }
@@ -47,17 +47,24 @@ XDate, setTimeout, getDataSet*/
     function renderMessageView( container ) {
         $(container).empty();
 
+        var loadingdiv = $("<div><div class='spinner'></div></div>").addClass("table-loading-spinner").hide();
+        $(container).append(loadingdiv);
+
         var themessage = $("<div></div>").addClass("themessage");
         themessage.attr("id", "themessage-div").attr("width", "100%");
         $(container).append(themessage);
         var message_id = (window.sessionStorage.getItem('message_id')) ?
                                 window.sessionStorage.getItem('message_id') :
                                 GC.chartSettings.defaultMessage;
-        
+
+        loadingdiv.show();
         $.ajax({
             url: GC.chartSettings.serverBase + "/Communication/" + message_id,
             dataType: 'json',
-            success: mergeHTML
+            success: mergeHTML,
+            complete: function() {
+                loadingdiv.hide();
+            }
         });
         function mergeHTML(messageResult) {
             console.log("mergeHTML");
@@ -72,11 +79,11 @@ XDate, setTimeout, getDataSet*/
                             ((messageResult.sender.reference) ? messageResult.sender.reference : "") : "");
             var recipient = ((messageResult.recipient) ?
                               ((messageResult.recipient[0].display) ?
-                                  messageResult.recipient[0].display + " " : "") + 
+                                  messageResult.recipient[0].display + " " : "") +
                               ((messageResult.recipient[0].reference) ?
                                   messageResult.recipient[0].reference : "") : "");
             var subject = ((messageResult.subject) ?
-                            ((messageResult.subject.display) ? messageResult.subject.display + " " : "") + 
+                            ((messageResult.subject.display) ? messageResult.subject.display + " " : "") +
                             ((messageResult.subject.reference) ? messageResult.subject.reference : "") : "");
             var category = (messageResult.category) ?
                             ((messageResult.category.text) ? messageResult.category.text + " " : "") +

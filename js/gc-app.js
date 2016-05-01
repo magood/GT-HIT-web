@@ -284,7 +284,7 @@ function gc_app_js (NS, $) {
                     NS.App.Pane = leftPane;
                     NS.App.ChartsView = leftPane;
                 }
-                
+
                 NS.App.Pane.draw();
                 $("#print-button").html("Print Graphs");
                 break;
@@ -498,7 +498,7 @@ function gc_app_js (NS, $) {
         });
     };
 
-    /** 
+    /**
      @param data data.resources should be an array of objects
      every resource object should contain
         resourcename,
@@ -884,6 +884,9 @@ function gc_app_js (NS, $) {
                 $(".language-selector select").val(lang);
                 NS.Util.translateHTML();
             });
+
+            $('#switch-pct').prop('checked', NS.App.getPCTZ() == 'z')
+            $('#switch-metric').prop('checked', NS.App.getMetrics() == 'eng')
         }
 
         function renderPatient() {
@@ -891,9 +894,15 @@ function gc_app_js (NS, $) {
             var correctedAge = PATIENT.getCorrectedAge();
 
             $('.patient-name').text(PATIENT.name);
-            $('.patient-gender').text(GC.str("STR_SMART_GENDER_" + PATIENT.gender));
-            $('.patient-gender').attr("data-translatecontent", "STR_SMART_GENDER_" + PATIENT.gender);
-            $("[name=GA]").val(PATIENT.getGestatonCorrection().toString(GC.chartSettings.timeInterval).replace(/^\-\s*/, ""));
+
+            // FIXME: Naive algorithm alert. This won't i18nize well.
+            (PATIENT.gender.toLowerCase().indexOf('f') != -1) ?
+                $('#patient-gender-icon').attr('src', 'img/avatar_f.png') :
+                $('#patient-gender-icon').attr('src', 'img/avatar_m.png');
+
+            // $('.patient-gender').text(GC.str("STR_SMART_GENDER_" + PATIENT.gender));
+            // $('.patient-gender').attr("data-translatecontent", "STR_SMART_GENDER_" + PATIENT.gender);
+            // $("[name=GA]").val(PATIENT.getGestatonCorrection().toString(GC.chartSettings.timeInterval).replace(/^\-\s*/, ""));
             $(".patient-age").text(currentAge.toString(GC.chartSettings.timeInterval));
             $('.patient-birth').text(PATIENT.DOB.toString(GC.chartSettings.dateFormat));
             if (PATIENT.weeker) {
@@ -1019,7 +1028,7 @@ function gc_app_js (NS, $) {
                 data.vitals,
                 null, //allergies,
                 data.familyHistory,
-                null,//	annotations,
+                null,// annotations,
                 data.boneAge
               );
               GC.translatePreemieDatasets(PATIENT);
@@ -1047,6 +1056,18 @@ function gc_app_js (NS, $) {
             // =================================================================
 
             $("html").bind("set:viewType", function(e, type) {
+
+                if (type == 'allmessages' || type == 'patients') {
+                    $('nav').addClass('caremode');
+                    $('#config-panel').css('display', 'none');
+                    $('#patient-info').css('display', 'none');
+                    $('.brand-logo').text('Care Coordinator')
+                } else {
+                    $('nav').removeClass('caremode')
+                    $('#config-panel').css('display', 'block');
+                    $('#patient-info').css('display', 'block');
+                    $('.brand-logo').text('Patient Details')
+                }
 
                 $("#view-mode > [data-value]").each(function() {
                     $(this).toggleClass("active", this.getAttribute("data-value") == type);
@@ -1548,6 +1569,15 @@ function gc_app_js (NS, $) {
             $("#edit-enabled").change(function() {
                 togglePatientEditable(this.checked);
             });
+
+            // HACK: Something (I'm suspecting data tables) is messing with the display
+            // properties of something that has data bindings, but has a nasty bug
+            // where the display:none; never gets cleared, so this is my way of saying f it.
+
+            window.setInterval(function() {
+                $('#patient-info .nav-wrapper').css('display', 'block');
+                $('#patient-info .nav-wrapper *').css('display', 'inline');
+            }, 500)
 
             done();
         }

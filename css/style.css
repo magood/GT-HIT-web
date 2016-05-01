@@ -2,7 +2,121 @@
 	/* FIXME: This is not the right way to do this. Unfortunately, the CSS in the
 	   original code is a titanic mess, and this was faster. */
 	font-family: "Roboto", "Helvetica Neue", Arial, Helvetica, sans-serif !important;
+	text-shadow: none !important;
 }
+
+/* BEGIN_MONKEYPATCH */
+/* Override datatable styles. Datatables does a lot of *magic* which requires disgusting monkey patching. */
+.paginate_button {
+	border:none !important;
+}
+.paginate_button:hover {
+	background: none !important;
+	border:none !important;
+}
+.paginate_button.active {
+	background-color: #26a69a !important;
+}
+.paginate_button.active:hover {
+	background-color: #26a69a !important;
+	color: #fff !important;
+}
+.paginate_button a:focus {
+	outline:0;
+}
+#psmessages-table_paginate .paginate_button {
+	border:none !important;
+}
+#psmessages-table_paginate .paginate_button:hover {
+	background: none !important;
+	border:none !important;
+}
+#psmessages-table_paginate .paginate_button.active:hover {
+	background-color: #1976D2 !important;
+	color: #fff !important;
+}
+#psmessages-table_paginate .paginate_button.active {
+	background-color: #1976D2 !important;
+	color: #fff !important;
+}
+#psmessages-table tr.odd {
+	background-color: #e3f2fd !important;
+}
+.dataTables_wrapper {
+	padding-top: 1em;
+}
+#allmessages-table_filter, #patient-table_filter {
+	margin-top: -5px !important;
+}
+.dataTable thead tr th {
+	border-radius: 0;
+	background-color: #26a69a !important;
+}
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+	background-color: #fafafa;
+}
+/* This belongs in the patient view, so a different color is used. */
+#psmessages-table thead tr th {
+	background-color: #1976D2 !important;
+}
+#psmessages-table thead .sorting_asc {
+  background-image: url("../img/sort_asc_2.png") !important;
+}
+#psmessages-table thead .sorting_desc {
+  background-image: url("../img/sort_desc_2.png") !important;
+}
+thead {
+	border-bottom: none !important;
+}
+tr.odd {
+	background-color: #f5fbf1 !important;
+}
+/* Override GC styles. */
+#time-ranges {
+	box-shadow: none !important;
+	border: none !important;
+}
+#time-ranges .row {
+	margin-bottom: 0px;
+}
+/* Override Bootstrap styles. */
+.btn {
+	text-transform: none !important;
+}
+#time-ranges .btn {
+	background-color: #2196f3;
+	margin-right: 0.5em;
+	/*font-weight: normal !important;*/
+}
+#time-ranges .btn:hover {
+	color: #FFF;
+}
+.inline-switch {
+	display: inline-block;
+}
+
+.inline-switch label input[type=checkbox]:checked + .lever {
+	background-color: #2196f3 !important;
+}
+.inline-switch label input[type=checkbox]:checked + .lever:after {
+	background-color: #1976D2 !important;
+}
+.datatable-headers, .datatable-scroller table {
+    width: auto !important;
+}
+#view-table .datatable-headers th {
+	/*background-color: #1976D2 !important;*/
+}
+th, tr, td {
+	border-radius: 0 !important;
+}
+#patient-table, #psmessages-table, #psallmessages-table {
+	width: 100% !important;
+}
+.dataTables_length .btn {
+	margin-left: 2em;
+}
+/* END_MONKEYPATCH */
 
 .prod .hide-on-prod { display: none !important; }
 .prod .show-on-prod { display: initial !important; }
@@ -20,7 +134,7 @@ html {
 body {
 	font-family: "Roboto", "Helvetica Neue", Arial, Helvetica, sans-serif;
 	font-size  : 16px;
-	background : #EEE;
+	background : #333;
 	/*min-width  : 92em;*/
 	min-height : 100%;
 	display    : block;
@@ -41,7 +155,7 @@ body {
 
 
 a {
-	color: #7A909E;
+	/*color: #7A909E;*/
 	text-decoration: none;
 }
 a:hover {
@@ -59,47 +173,6 @@ a:hover {
 
 i {
 	font-style: italic;
-}
-#loading-indicator {
-	position: fixed;
-	z-index: 10000000;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 100%;
-	width: 100%;
-	background: #DFF;
-}
-
-#loading-indicator h2 {
-	position: absolute;
-	z-index: 2;
-	top: 50%;
-	left: 50%;
-	width  : 150px;
-	margin : -35px auto auto -110px;
-	line-height : 30px;
-	padding: 10px 10px 10px 60px;
-	color: #777;
-	background: url(../img/spinner2blue.gif) 10px 50% no-repeat #DEF;
-	font-size: 18px;
-	border-radius: 10px;
-}
-
-#loading-indicator h2 .msg {
-	font-size: 11px;
-	line-height: normal;
-}
-
-.table-loading-spinner {
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    left: 50%;
-    width: 60px;
-    height: 60px;
-    background: url(../img/spinner.gif) no-repeat;
 }
 
 b, strong {
@@ -151,8 +224,7 @@ b, strong {
 #header {
 	position: relative;
 	z-index: 102;
-	color: #3AF;
-	background: #0AF;
+	/*color: #3AF;*/
 	padding : 10px 10px 0;
 	/*background: rgb(129,145,161);
 	background: -moz-linear-gradient(top,  rgba(129,145,161,1) 0%, #001C3C);
@@ -509,100 +581,7 @@ select.styled {
 	box-shadow: 0 0 3px -1px #FFF;
 }
 
-#view-mode {
-	padding: 0;
-	margin: 0;
-	border-radius: 8px 8px 0 0;
-	position: relative;
-	z-index: 4;
-	background: url(../img/mode-bg-blue.png) 0 0 repeat-x scroll #DEF;
-	border: 1px solid #DEF;
-	border-bottom: 1px solid #AAF;
-}
-#view-mode:after {
-	content: "";
-	display: block;
-	clear: both;
-}
-#view-mode span {
-	display: block;
-	float: right;
-	padding: 5px 20px 5px 12px;
-	border-left: 1px solid #AAF;
-	color: #777;
-	font-weight: bold;
-	font-size: 1em;
-	line-height: 25px;
-	cursor: pointer;
-	text-shadow: 0  1px 1px rgba(255, 255, 255, 0.15),
-				 0 -1px 1px rgba(0  , 0  , 0  , 0.15);
-}
-#view-mode span:first-child {
-	border-radius: 0 8px 0 0;
-}
-#view-mode span:before {
-	content: "";
-	width: 24px;
-	height: 24px;
-	margin: 0 8px 0 0;
-	background: url(../img/icons-new.png);
-	display: inline-block;
-	vertical-align: top;
-}
-#view-mode span[data-value="patients"]:before {
-	background-position: -50px -78px;
-}
-#view-mode span:hover[data-value="patients"]:before,
-#view-mode span.active[data-value="patients"]:before {
-	background-position: -50px -50px;
-}
-#view-mode span[data-value="allmessages"]:before {
-	background-position: -79px -77px;
-}
-#view-mode span:hover[data-value="allmessages"]:before,
-#view-mode span.active[data-value="allmessages"]:before {
-	background-position: -79px -54px;
-}
-#view-mode span[data-value="maps"]:before {
-	background-position: -110px 0;
-}
-#view-mode span:hover[data-value="maps"]:before,
-#view-mode span.active[data-value="maps"]:before {
-	background-position: -130px 0;
-}
-#view-mode span[data-value="questions"]:before {
-	background-position: -106px -25px;
-}
-#view-mode span:hover[data-value="questions"]:before,
-#view-mode span.active[data-value="questions"]:before {
-	background-position: -130px -25px;
-}
-#view-mode span[data-value="parent"]:before {
-	background-position: 0 -128px;
-}
-#view-mode span:hover[data-value="parent"]:before,
-#view-mode span.active[data-value="parent"]:before {
-	background-position: -24px -128px;
-}
-#view-mode span[data-value="table"]:before {
-	background-position: 0 -104px;
-}
-#view-mode span:hover[data-value="table"]:before,
-#view-mode span.active[data-value="table"]:before {
-	background-position: -24px -104px;
-}
-#view-mode span[data-value="graphs"]:before {
-	background-position: 0 -80px;
-}
-#view-mode span:hover[data-value="graphs"]:before,
-#view-mode span.active[data-value="graphs"]:before {
-	background-position: -24px -80px;
-}
-#view-mode span.active,
-#view-mode span:hover {
-	color: #0A2;
-	text-shadow: 0 1px 2px #5F7;
-}
+
 
 span span, label span, span label {
 	vertical-align: baseline;
@@ -742,7 +721,7 @@ select.styled {
 .map-address-list li h5 {
 	margin-top: 3px;
     margin-bottom: 3px;
-    color:#999;
+    font-size:1em;
 }
 .map-address-list li {
     cursor:pointer;
@@ -751,6 +730,7 @@ select.styled {
 h5.infoWindowHeader {
     margin-top:5px;
     margin-bottom:5px;
+    font-size:1.25em;
 }
 p.infoWindowParagraph {
     margin-bottom:0px;
@@ -760,6 +740,10 @@ p.infoWindowParagraph {
 li.resourceSelected {
     background-color:#337ab7;
     color:#fff;
+}
+
+.map-address-list .row h3 {
+	margin-top: 3px;
 }
 
 /* ---------------------------- toggle-button ------------------------------- */
@@ -1229,7 +1213,6 @@ table.toggle-button {
 	background: #4D5C68;
 	padding: 0 20px 0 20px;
 	position: relative;
-	margin: 0 -10px;
 	height: 35px;
 	line-height: 35px;
 	box-shadow: inset 0px -6px 6px -6px rgba(0, 0, 0, 0.5);
@@ -1417,7 +1400,6 @@ span.title {
 	box-shadow: 0 3px 0 -2px rgba(255, 255, 255, 0.5) inset, 0 -3px 2px -3px #A6A8AE inset, 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 10px #000000;
 	color: #585C60;
 	line-height: 20px;
-	margin: 0 -10px;
 	padding: 6px 8px;
 	text-shadow: 0 1px #FFFFFF;
 	position: relative;
@@ -1782,7 +1764,8 @@ span.title {
 
 #stage > .tab-panel {
 	position: relative;
-	width: 100%;
+	margin-left: 24px;
+	margin-right: 24px;
 	height: 100%;
 	display: none;
 }
@@ -3226,4 +3209,275 @@ svg marker use {
         background: #575757;
         border-color: #575757;
 }
+
+/* BEGIN_NEWSTYLE */
+/* This application hereby is a tribute to the gods of unnecessary repaints. */
+/* This is how developers end up in hell. */
+#header {
+	width: 100%;
+	padding: 0;
+}
+.brand-logo {
+	margin-left: 0.5em;
+}
+.tab-panel {
+	margin-top: 64px;
+}
+.caremode {
+	background-color: #26a69a !important;
+}
+.patientmode {
+	background-color: #1976D2 !important;
+}
+nav {
+	background-color: #1976D2 !important;
+	position: fixed;
+	width: 100%;
+	z-index: 5;
+}
+nav a, nav a:active, nav a:hover, nav a:visited {
+	text-decoration: none !important;
+	color: #fff !important;
+}
+#patient-info {
+	background-color: #2196f3 !important;
+	top: 64px;
+	padding-left: 1em;
+	width: 100%;
+	max-height: 35px;
+    height: 35px !important;
+    line-height: 35px !important;
+}
+#patient-info .title {
+	color: #fff !important;
+}
+#patient-gender-icon {
+	max-width: 20px;
+	max-height: 20px;
+	margin-right: 0.5em;
+}
+/*#patient-info {
+	top: 70px;
+	position: fixed;
+	width: 96%;
+	z-index: 2;
+	margin: 10px 24px 0px 24px;
+	opacity: 1;
+    -webkit-transition: opacity 400ms, transform 400ms, -webkit-transform 400ms;
+    transition: opacity 400ms, transform 400ms, transform 400ms;
+    transition-timing-function: ease-out;
+}
+#patient-info.fold {
+	opacity: 0;
+	transform: translateY(-200px);
+}*/
+#config-panel {
+	top: 100px;
+	position: fixed;
+	width: 96%;
+	z-index: 2;
+	margin: 10px 24px 0px 24px;
+	opacity: 0.8;
+	border: solid 1px #999;
+    -webkit-transition: opacity 400ms, transform 400ms, -webkit-transform 400ms;
+    transition: opacity 400ms, transform 400ms, transform 400ms;
+    transition-timing-function: ease-out;
+}
+#config-panel.fold {
+	opacity: 0;
+	transform: translateY(-200px);
+}
+#show-patient {
+    -webkit-transition: opacity 400ms, transform 400ms, -webkit-transform 400ms;
+    transition: opacity 400ms, transform 400ms, transform 400ms;
+    transition-timing-function: ease-out;
+}
+#show-patient.on {
+	transform: rotate(-90deg);
+}
+#timeline-top {
+	display: none;
+}
+#patient-info .collection-item.avatar {
+	max-height: 64px !important;
+	min-height: 64px !important;
+}
+#patient-info #fold-button {
+	margin-top: -3em;
+	float: right;
+}
+.title {
+	color: #666 !important;
+}
+#patient-info avatar {
+	padding-bottom: 0px;
+}
+#info-bar {
+	background-color: #fff !important;
+	box-shadow: none;
+	color: #666 !important;
+	height: 40px;
+}
+#the-tab {
+	float: right;
+}
+.last-recording {
+	color: #666 !important;
+}
+#timeline-top .visible, .timeline .visible {
+	background-color: #2196f3 !important;
+}
+.timeline div.active {
+	background-color: #1976D2 !important;
+}
+.legacy-ds-box, .legacy-hidden {
+	visibility: hidden;
+}
+#hidden-time-ranges {
+	display: none !important;
+}
+.timeline .gest .labels div {
+	color: #fff !important;
+}
+.rollback-btn {
+	font-size: auto !important;
+	color: #fff !important;
+	font-weight: normal !important;
+}
+.switch-bar {
+	text-align: right;
+}
+.datatable-patient {
+	background-color: #1976D2 !important;
+	color: #fff !important;
+}
+.datatable-patient-alt {
+	background-color: #2196f3 !important;
+	color: #fff !important;
+}
+.datatable-headers .heading td:first-child {
+	background-color: #1976D2 !important;
+	color: #fff !important;
+}
+.switch-bar {
+	height: 35px;
+	max-height: 35px;
+}
+.divider-new {
+	width: 0px;
+	border-right: solid 1px rgba(255, 255, 255, 0.3);
+}
+/* Commented out for the time being as it's a bit ugly. */
+/*.datatable-scroller .active {
+	background-color: #1976D2 !important;
+	color: #fff !important;
+}*/
+.thequestions .container {
+	width: auto !important;
+}
+.thequestions .btn {
+	background-color: #eaeaea;
+	color: #666;
+}
+.thequestions .btn.active, .thequestions .btn.active:hover, .thequestions .btn:active {
+	background-color: #2196f3;
+	color: #fff;
+}
+.thequestions .btn:hover {
+	background-color: #ffd6d8;
+}
+#loading-metainfo {
+	margin-top: 3em;
+}
+#loading-metainfo p {
+	font-weight: bold;
+}
+#loading-metainfo span {
+	font-size: 10px;
+	line-height: 4px;
+}
+#loading-indicator {
+	position: fixed;
+	z-index: 10000000;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	background: #333;
+}
+#loading-window {
+	position: absolute;
+	z-index: 2;
+	top: 30%;
+	left: 30%;
+	width  : 100%;
+	margin : -35px auto auto -110px;
+	line-height : 30px;
+	padding: 10px 10px 10px 60px;
+	color: #777;
+}
+#loading-window .card {
+	min-height: 200px !important;
+}
+.table-loading-spinner {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    /*width: 60px;*/
+    /*height: 60px;*/
+    /*background: url(../img/spinner.gif) no-repeat;*/
+}
+.spinner {
+  position: absolute;
+  top: calc(22% - 25px);
+  left: calc(83% - 25px);
+}
+.spinner, .spinner:before, .spinner:after {
+  position: absolute;
+  border: 3px solid transparent;
+  border-top: 3px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  animation: rotate linear infinite;
+  content: '';
+}
+.table-loading-spinner .spinner, .table-loading-spinner .spinner:before, .table-loading-spinner .spinner:after {
+  border-top: 3px solid rgb(40, 40, 40) !important;
+}
+.spinner {
+  height: 100px;
+  width: 100px;
+  animation-duration: 1.05s;
+}
+
+.spinner:before {
+  height: 75px;
+  width: 75px;
+  top: 10px;
+  left: 10px;
+  animation-duration: 10s;
+}
+
+.spinner:after {
+  height: 50px;
+  width: 50px;
+  top: 22px;
+  left: 22px;
+  animation-duration: 4s;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateZ(360deg);
+  }
+  to {
+    transform: rotateZ(0deg);
+  }
+}
+#stage {
+	margin-top: 53px;
+}
+/* END_NEWSTYLE */
 
