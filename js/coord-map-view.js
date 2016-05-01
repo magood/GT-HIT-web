@@ -130,7 +130,7 @@ XDate, setTimeout, getDataSet*/
                                 .addClass("btn btn-info patientmode")
                                 .html("Send Referrals")
                                 .click(function () {
-                                    var patientname = ""
+                                    var patientname = "";
                                     patientResults.name[0].given.forEach(function (firstname) {
                                         patientname += firstname + ' ';
                                     });
@@ -414,7 +414,7 @@ XDate, setTimeout, getDataSet*/
                 }
                 console.log("retrieved " + results.length + " results from OSM Overpass");
 
-                for (var i = 0; i < results.length; i++) {
+                for (i = 0; i < results.length; i++) {
                     var r = results[i];
                     if (addedResources.indexOf(r.id) == -1) {
                         addedResources.push(r.id);

@@ -91,7 +91,7 @@ XDate, setTimeout, getDataSet*/
             console.log(thedatatable.row(this).data());
             var new_patient_id = thedatatable.row(this).data()[1];
             if (!new_patient_id || (new_patient_id == "")) return;
-            GC.App.setPatientId(new_patient_id)
+            GC.App.setPatientId(new_patient_id);
             GC.App.setViewType("psmessages");
         });
 

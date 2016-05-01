@@ -170,7 +170,7 @@ XDate, setTimeout, getDataSet*/
                         .append($("<a></a>")
                             .attr("data-toggle", "collapse")
                             .attr("href","#collapse-default")
-                            .text("New Questionnaire")
+                            .text("Add New Questionnaire")
                         )
                     )
                 )
@@ -242,7 +242,7 @@ XDate, setTimeout, getDataSet*/
                     .attr("data-toggle", "buttons");
 
                 for (var optind = 0; optind < theoptions.length; optind++) {
-                    var label = $("<label></label>")
+                    var label = $("<label></label>");
                     label.addClass("btn btn-default btn-responsive questions-theoptions waves-effect waves-light")
                         .attr("id", "questions-theoptions-" + qind + "-" + optind);
 
