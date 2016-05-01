@@ -828,6 +828,12 @@ function gc_app_js (NS, $) {
                     $("#loading-indicator .msg").text(task.description);
                 },
                 onComplete : function() {
+                    document.addEventListener('keyup', function(e) {
+                        if (e.keyCode == 112) {
+                            GC.App.aboutAppDialog();
+                        }
+                    }, false);
+
                     $("#loading-indicator").delay(500).fadeOut(400, function() {
                         $(this).hide();
                     });
