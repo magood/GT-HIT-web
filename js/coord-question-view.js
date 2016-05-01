@@ -48,9 +48,10 @@ XDate, setTimeout, getDataSet*/
         var thepatient_id = window.sessionStorage.getItem("patient_id");
         thepatient_id = (thepatient_id ? thepatient_id : GC.chartSettings.defaultPatient);
         $.ajax({
-            url: GC.chartSettings.serverBase + "/QuestionnaireResponse/?patient=" + thepatient_id,
+            url: GC.chartSettings.serverBase + "/QuestionnaireResponse/?patient="
+                + thepatient_id + "&_sort=_lastUpdated",
             dataType: 'json',
-            success: processQuestions
+            success: processQuestionnaires
         });
 
         function buildPanelContainer() {
@@ -63,20 +64,17 @@ XDate, setTimeout, getDataSet*/
                 .addClass("panel-group");
         }
 
-        function processQuestions(questionsResult) {
+        function processQuestionnaires(questionnairesResult) {
             $(container).empty();
 
             var thequestions = $("<div></div>").addClass("thequestions");
             thequestions.attr("id", "thequestions-div").attr("width", "100%");
             $(container).append(thequestions);
 
-            var questionnaireLink;
-            var questionnaireAnswerSet;
+            if (!questionnairesResult) return;
 
-            if (!questionsResult) return;
-
-            if (questionsResult.data) {
-                questionsResult = questionsResult.data;
+            if (questionnairesResult.data) {
+                questionnairesResult = questionnairesResult.data;
             }
 
             //setup the panel containers
@@ -86,68 +84,126 @@ XDate, setTimeout, getDataSet*/
             thequestions.append(panelContainer);
             panelContainer.append(panelGroup);
 
+            var questionnaireLink;
+            var questionnaireResponse;
+
             //build the panelGroups
-            if(questionsResult.total < 1) {
-                //no questionarie for this account
-                //-- use the default
+            if(questionnairesResult.total < 1) {
+                // no questionarie for this account
+                // use the default
                 questionnaireLink = "/Questionnaire/" + GC.chartSettings.defaultQuestionnaire
             } else {
-                for(var i = 0; i < questionsResult.total; i++) {
+                for(var i = 0; i < questionnairesResult.total; i++) {
                     //we have questionnaires
-                    questionnaireLink = "/" + questionsResult.entry[i].resource.questionnaire.reference;
-
-                    questionnaireAnswerSet = questionsResult.entry[i].resource.group.question;
-
-                    renderQuestions(questionsResult.entry[i].resource.id, panelGroup, questionnaireLink, questionnaireAnswerSet);
+                    questionnaireLink = "/" + questionnairesResult.entry[i].resource.questionnaire.reference;
+                    questionnaireResponse = questionnairesResult.entry[i].resource;
+                    renderQuestionnaires(i + 1, panelGroup, questionnaireLink, questionnaireResponse);
                 }
             }
+
             //always render the default panel
-            renderQuestions(undefined, panelGroup, questionnaireLink, undefined);
+            renderQuestionnaires(undefined, panelGroup, questionnaireLink, undefined);
         }
     }
 
-    function renderQuestions(panelNumber, panelGroup, questionnaireLink, questionnaireAnswerSet) {
-
+    function renderQuestionnaires(panelNumber, panelGroup, questionnaireLink, questionnaireResponse) {
         $.ajax({
             url: GC.chartSettings.serverBase + questionnaireLink,
             dataType: 'json',
             async: false,
             success: function(questionsResult) {
-                buildDom(panelNumber, panelGroup, questionsResult, questionnaireAnswerSet);
+                buildDom(panelNumber, panelGroup, questionsResult, questionnaireResponse);
             }
         });
 
-        function generateQuestionContainer(questionsResult, questionnaireAnswerSet, disableControls) {
+        function buildDom(panelNumber, panelGroup, questionsResult, questionnaireResponse) {
+            if (!questionsResult) return;
+            if (questionsResult.data) {
+                questionsResult = questionsResult.data;
+            }
+            console.log(questionsResult);
+
+            //build the question panels
+            panelGroup.append(buildPanel(panelNumber, questionsResult, questionnaireResponse));
+        }
+
+        function buildPanel(panelNumber, questionsResult, questionnaireResponse) {
+            if(questionnaireResponse !== undefined) {
+                return buildQuestionnairePanel(panelNumber, questionsResult, questionnaireResponse);
+            } else {
+                //always build the default panel
+                return buildDefaultPanel(questionsResult);
+            }
+        }
+
+        function buildQuestionnairePanel(panelNumber, questionsResult, questionnaireResponse) {
+            return $("<div></div>")
+                .addClass("panel")
+                .append($("<div></div>")
+                    .addClass("panel-heading")
+                    .append($("<div></div>")
+                        .addClass("panel-title")
+                        .append($("<a></a>")
+                            .attr("data-toggle", "collapse")
+                            .attr("href","#collapse" + panelNumber)
+                            .text("Questionnaire " + panelNumber + " - "
+                                + new Date(questionnaireResponse.meta.lastUpdated)))
+                    )
+                )
+                .append($("<div></div>")
+                    .addClass("panel-collapse collapse")
+                    .attr("id", "collapse" + panelNumber)
+
+                    //questions go here
+                    .append(generateQuestionContainer(questionsResult, questionnaireResponse, true))
+                );
+        }
+
+        function buildDefaultPanel(questionsResult) {
+            return $("<div></div>")
+                .addClass("panel panel-default")
+                .append($("<div></div>")
+                    .addClass("panel-heading")
+                    .append($("<div></div>")
+                        .addClass("panel-title")
+                        .append($("<a></a>")
+                            .attr("data-toggle", "collapse")
+                            .attr("href","#collapse-default")
+                            .text("New Questionnaire"))
+                    )
+                )
+                .append($("<div></div>")
+                    .addClass("panel-collapse collapse")
+                    .attr("id", "collapse-default")
+                    .append($("<div></div>")
+                        .addClass("panel-body")
+
+                        //default goes here
+                        //questions go here
+                        .append(generateQuestionContainer(questionsResult, undefined, false))
+                    )
+                );
+        }
+
+        function generateQuestionContainer(questionsResult, questionnaireResponse, disableControls) {
             var id = (questionsResult.id) ? questionsResult.id : "";
             var narrative = (questionsResult.text) ? questionsResult.text.div : "";
+            var questionType = (questionsResult.resourceType) ? questionsResult.resourceType : "";
             var version = (questionsResult.version) ? questionsResult.version : "";
-            var status = questionsResult.status;
             var qdate = questionsResult.date ? questionsResult.date : "";
             var publisher = questionsResult.publisher ? questionsResult.publisher : "";
-            var contact = (questionsResult.telecom ?
-                (questionsResult.telecom[0].system ?
-                    questionsResult.telecom[0].system + " " : "") +
-                (questionsResult.telecom[0].value ?
-                    questionsResult.telecom[0].value : "") : "");
             var llgroup = questionsResult.group;
             while (true) {
                 if (typeof llgroup != 'undefined' && llgroup.group) {
                     llgroup = llgroup.group[0];
                     continue;
                 }
-                /* else if
-                (llgroup.question[0].group) {
-                                    llgroup = llgroup.question[0].group;
-                                    continue;
-                                }*/
                 break;
-            } // temporary for initial code; TODO replace with loop / more advanced logic
-            // TODO presentation, style, etcetera
+            }
 
-            var title = questionsResult.text.div.match(/<p> <b>title<\/b>: (.*?)<\/p>/)[1];
-            var questionType = questionsResult.text.div.match(/<p> <b>id<\/b>: (.*?)<\/p>/)[1];
-            var statusType = questionsResult.text.div.match(/<p> <b>status<\/b>: (.*?)<\/p>/)[1];
-
+            var questionId = questionsResult.text.div.match(/<p> <b>id<\/b>: (.*?)<\/p>/)[1];
+            var status = questionsResult.text.div.match(/<p> <b>status<\/b>: (.*?)<\/p>/)[1];
+            
             var questionContainer = $("<div></div>")
                 .addClass("container")
                 .addClass("panel-body");
@@ -155,18 +211,18 @@ XDate, setTimeout, getDataSet*/
             //build the title
             questionContainer.append($("<div></div>")
                 .attr("id", "questions-title")
-                .html("<h3>Title: " + title + "</h3>"))
+                .html("<h4>Title: " + questionsResult.group.title + "</h4>"))
             questionContainer.append($("<div></div>")
                 .addClass("questions-id")
                 .attr("id", "questions-id")
-                .html("<h4>ID: " + id + "</h4>"))
+                .html("<h5>ID: " + questionId + "</h5>"))
             questionContainer.append($("<div></div>")
                 .attr("id", "questions-type")
-                .html("<h4>Type: " + questionType + "</h4>"))
+                .html("<h5>Type: " + questionType + "</h5>"))
             questionContainer.append($("<div></div>")
                 .addClass("questions-status")
                 .attr("id", "questions-status")
-                .html("<h4>Status: " + statusType + "</h4>"))
+                .html("<h5>Status: " + status + "</h5>"))
 
             //build the questions
 
@@ -207,7 +263,8 @@ XDate, setTimeout, getDataSet*/
                         .attr("name", "qopt-" + qind)
                         .attr("value", theoptions[optind][0]);
 
-                    if ((typeof questionnaireAnswerSet != 'undefined') && questionnaireAnswerSet[qind].answer[0].valueInteger == optind+1) {
+                    if (questionnaireResponse !== undefined
+                        && questionnaireResponse.group.question[qind].answer[0].valueInteger == optind+1) {
                         label.addClass("active");
                         input.prop("checked");
                     }
@@ -232,75 +289,6 @@ XDate, setTimeout, getDataSet*/
             questionContainer.append(questiondom);
 
             return questionContainer;
-        }
-
-        function buildPanel(panelNumber, questionsResult, questionnaireAnswerSet) {
-            if(typeof questionnaireAnswerSet != 'undefined') {
-                return buildQuestionPanel(panelNumber, questionsResult, questionnaireAnswerSet);
-            } else {
-                //always build the default panel
-                return buildDefaultPanel(questionsResult);
-            }
-        }
-
-        function buildQuestionPanel(panelNumber, questionsResult, questionnaireAnswerSet) {
-            return $("<div></div>")
-                .addClass("panel")
-                .append($("<div></div>")
-                    .addClass("panel-heading")
-                    .append($("<div></div>")
-                        .addClass("panel-title")
-                        .append($("<a></a>")
-                            .attr("data-toggle", "collapse")
-                            .attr("href","#collapse" + panelNumber)
-                            .text("Questionnaire - " + panelNumber + " "
-                                + new Date(questionsResult.meta.lastUpdated)))
-                    )
-                )
-                .append($("<div></div>")
-                    .addClass("panel-collapse collapse")
-                    .attr("id", "collapse" + panelNumber)
-
-                    //questions go here
-                    .append(generateQuestionContainer(questionsResult, questionnaireAnswerSet, true))
-                );
-        }
-
-        function buildDefaultPanel(questionsResult) {
-            return $("<div></div>")
-                .addClass("panel panel-default")
-                .append($("<div></div>")
-                    .addClass("panel-heading")
-                    .append($("<div></div>")
-                        .addClass("panel-title")
-                        .append($("<a></a>")
-                            .attr("data-toggle", "collapse")
-                            .attr("href","#collapse-default")
-                            .text("New Questionnaire"))
-                    )
-                )
-                .append($("<div></div>")
-                    .addClass("panel-collapse collapse")
-                    .attr("id", "collapse-default")
-                    .append($("<div></div>")
-                        .addClass("panel-body")
-
-                        //default goes here
-                        //questions go here
-                        .append(generateQuestionContainer(questionsResult, undefined, false))
-                    )
-                );
-        }
-
-        function buildDom(panelNumber, panelGroup, questionsResult, questionnaireAnswerSet) {
-            if (!questionsResult) return;
-            if (questionsResult.data) {
-                questionsResult = questionsResult.data;
-            }
-            console.log(questionsResult);
-
-            //build the question panels
-            panelGroup.append(buildPanel(panelNumber, questionsResult, questionnaireAnswerSet));
         }
     }
 
