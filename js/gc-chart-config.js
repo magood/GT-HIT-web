@@ -22,7 +22,7 @@ function gc_chart_config_js($, GC) {
     // These settings are always loaded from here (doesn't matter if they has
     // been stored on the server too)
     // =========================================================================
-    var isSMART = (GC.Util.urlParam("server") != "MiHIN");
+    var isSMART = (GC.Util.urlParam("server") == "smart");
     var readOnlySettings = {
 
         fileRevision : 202,

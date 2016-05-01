@@ -13,8 +13,8 @@ $ python3 -m http.server
 ```
 Then browse to [localhost:8000](http://localhost:8000)  
 For the patient/parent view, that's [localhost:8000/?role=patient](http://localhost:8000/?role=patient) or [localhost:8000/?role=parent](http://localhost:8000/?role=parent)  
-the default server is the SMART open API server  
-For the MiHIN server it's [localhost:8000/?server=MiHIN](http://localhost:8000/?server=MiHIN)
+the default server is the MiHIN open API server  
+For the SMART server it's [localhost:8000/?server=smart](http://localhost:8000/?server=smart)
 
 ### Development tutorials, useful resource URLs, etc
 [docs.smarthealthit.org/tutorials/javascript/](http://docs.smarthealthit.org/tutorials/javascript/)  
