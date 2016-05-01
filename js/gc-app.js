@@ -1062,14 +1062,18 @@ function gc_app_js (NS, $) {
 
                 if (type == 'allmessages' || type == 'patients') {
                     $('nav').addClass('caremode');
-                    $('#config-panel').css('display', 'none');
                     $('#patient-info').css('display', 'none');
                     $('.brand-logo').text('Care Coordinator')
                 } else {
                     $('nav').removeClass('caremode')
-                    $('#config-panel').css('display', 'block');
                     $('#patient-info').css('display', 'block');
                     $('.brand-logo').text('Patient Details')
+                }
+
+                if (type == 'parent' || type == 'graphs' || type == 'table') {
+                    $('#config-panel').css('display', 'block');
+                } else {
+                    $('#config-panel').css('display', 'none');
                 }
 
                 $("#view-mode > [data-value]").each(function() {
