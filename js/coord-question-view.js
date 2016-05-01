@@ -146,8 +146,9 @@ XDate, setTimeout, getDataSet*/
                         .append($("<a></a>")
                             .attr("data-toggle", "collapse")
                             .attr("href","#collapse" + panelNumber)
-                            .text("Questionnaire " + panelNumber + " - "
-                                + new Date(questionnaireResponse.meta.lastUpdated)))
+                            .text(questionsResult.group.title + " - "
+                                + new Date(questionnaireResponse.meta.lastUpdated))
+                        )
                     )
                 )
                 .append($("<div></div>")
@@ -169,7 +170,8 @@ XDate, setTimeout, getDataSet*/
                         .append($("<a></a>")
                             .attr("data-toggle", "collapse")
                             .attr("href","#collapse-default")
-                            .text("New Questionnaire"))
+                            .text("New Questionnaire")
+                        )
                     )
                 )
                 .append($("<div></div>")
@@ -177,9 +179,7 @@ XDate, setTimeout, getDataSet*/
                     .attr("id", "collapse-default")
                     .append($("<div></div>")
                         .addClass("panel-body")
-
-                        //default goes here
-                        //questions go here
+                        //default questions go here
                         .append(generateQuestionContainer(questionsResult, undefined, false))
                     )
                 );
@@ -193,6 +193,7 @@ XDate, setTimeout, getDataSet*/
             var qdate = questionsResult.date ? questionsResult.date : "";
             var publisher = questionsResult.publisher ? questionsResult.publisher : "";
             var llgroup = questionsResult.group;
+            var status = questionnaireResponse.status;
             while (true) {
                 if (typeof llgroup != 'undefined' && llgroup.group) {
                     llgroup = llgroup.group[0];
@@ -209,23 +210,23 @@ XDate, setTimeout, getDataSet*/
                 .addClass("panel-body");
 
             //build the title
-            questionContainer.append($("<div></div>")
-                .attr("id", "questions-title")
-                .html("<h4>Title: " + questionsResult.group.title + "</h4>"))
-            questionContainer.append($("<div></div>")
-                .addClass("questions-id")
-                .attr("id", "questions-id")
-                .html("<h5>ID: " + questionId + "</h5>"))
-            questionContainer.append($("<div></div>")
-                .attr("id", "questions-type")
-                .html("<h5>Type: " + questionType + "</h5>"))
-            questionContainer.append($("<div></div>")
-                .addClass("questions-status")
-                .attr("id", "questions-status")
-                .html("<h5>Status: " + status + "</h5>"))
+            // questionContainer.append($("<div></div>")
+            //     .attr("id", "questions-title")
+            //     .html("<h4>Title: " + questionsResult.group.title + "</h4>"))
+            // var questionId = questionsResult.text.div.match(/<p> <b>id<\/b>: (.*?)<\/p>/)[1];
+            // questionContainer.append($("<div></div>")
+            //     .addClass("questions-id")
+            //     .attr("id", "questions-id")
+            //     .html("<h5>ID: " + questionId + "</h5>"))
+            // questionContainer.append($("<div></div>")
+            //     .attr("id", "questions-type")
+            //     .html("<h5>Type: " + questionType + "</h5>"))
+            // questionContainer.append($("<div></div>")
+            //     .addClass("questions-status")
+            //     .attr("id", "questions-status")
+            //     .html("<h5>Status: " + status + "</h5>"))
 
-            //build the questions
-
+            // build the questions
             var questiondom = $("<div></div>")
                 .addClass("container");
 
@@ -287,7 +288,6 @@ XDate, setTimeout, getDataSet*/
             }
 
             questionContainer.append(questiondom);
-
             return questionContainer;
         }
     }
